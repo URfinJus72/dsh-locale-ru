@@ -1,3 +1,692 @@
 {
-  "tools": {}
+  "tools": {
+    "docker_action": {
+      "hash": "7a88265c927656577d8b63e7cc6c605fef1d265b",
+      "ru": "Выполняет операции жизненного цикла контейнера: start / stop / restart / remove. **Разрушительная операция**: remove удаляет контейнер (тома данных в него не входят, но конфигурация контейнера и записываемый слой теряются), поэтому перед выполнением обязательно подтвердите у пользователя целевой контейнер. Доступно только когда пользователь включил в настройках «Разрешить изменения».",
+      "paramHashes": {
+        "properties.action.description": "df179b82da5a8ecef6260962f2e32dbb3f97b545",
+        "properties.id.description": "b7b3e5e2e831635ec5b0400d4f6b25f2313e85c9",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.action.description": "start | stop | restart | remove (одно из четырёх)",
+        "properties.id.description": "имя контейнера или ID",
+        "properties.target.description": "имя цели (перечисляет docker_targets; можно опустить, если цель одна. `*` поддерживают только docker_ps / docker_attention, остальным инструментам передавайте конкретное имя цели)"
+      }
+    },
+    "docker_attention": {
+      "hash": "2b818f79f8c1a38e40256b792ffe1c97b0ba6af4",
+      "ru": "Перечисляет контейнеры, «требующие внимания»: нездоровые (unhealthy) / перезапускающиеся по кругу / убитые по OOM / завершившиеся с ненулевым кодом / зависшие. При target=`*` результат **собирается по всем целям** (недоступность одной цели не мешает остальным). Это точка входа в диагностику: если непонятно, с какой машины начать, вызовите его первым.",
+      "paramHashes": {
+        "properties.limit.description": "f4e544591fecf07742bdff818ffa9c032d9cdc14",
+        "properties.target.description": "5c980a3968d87b9786ac0e71c3a0d2540c5b8278"
+      },
+      "params": {
+        "properties.limit.description": "сколько записей максимум вернуть на каждую цель (1~500, по умолчанию 100)",
+        "properties.target.description": "имя цели; `*` означает все цели (перечисляет docker_targets)"
+      }
+    },
+    "docker_connect_local": {
+      "hash": "118f366b87a6b13eb4168f218674e512f790adbc",
+      "ru": "Добавляет или переиспользует цель Docker на этой машине и проверяет daemon; возвращает имя цели, признак создания, состояние подключения и причину отказа. Сохраняет существующую конфигурацию SSH; не запускает и не устанавливает Docker, не меняет context и не выдаёт разрешения. Полученное в ответе имя name затем передавайте как target в docker_ps и другие инструменты.",
+      "paramHashes": {},
+      "params": {}
+    },
+    "docker_diagnose": {
+      "hash": "10d0ca2299f0d8704e73449344b80f37f69f2803",
+      "ru": "Диагностирует, «почему контейнер не работает» (**только чтение**): за один вызов собирает inspect + logs + events + stats и по фиксированным критериям выдаёт заключение — OOM / ненулевой код выхода / повторяющиеся перезапуски / провал проверки здоровья / память или CPU вплотную к лимиту / ошибки в журнале. Заключение — это **критерий**, а не догадка: каждая находка (finding) несёт доказательство (detail), в evidence лежат структурированные поля, а **отсутствующее поле означает «не собрано», а не 0** (в findings для этого есть *-unavailable с причиной). Журнал по умолчанию берётся только хвостом в 80 строк: нужен больший объём или поиск по ключевым словам — используйте docker_logs_grep.",
+      "paramHashes": {
+        "properties.history.description": "b6394aa5b26f86e0f104c47779a5a15d3171c564",
+        "properties.id.description": "3fb80d01336a318073c9f2f28769c5e4527eb1ec",
+        "properties.logTail.description": "c4d55ba6fc1a0d52babd72b6092ff11e81489bba",
+        "properties.since.description": "b736d3a0968f15dd1655249dbbf9f280bb7a3ccf",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.history.description": "сколько исторических образцов вернуть (0~50, по умолчанию 10; значения вне диапазона прижимаются к границе). Каждый вызов записывает этот диагноз (полностью одинаковые повторы в пределах 30 секунд заново не записываются), поэтому несколько вызовов подряд показывают, «становится ли хуже»",
+        "properties.id.description": "имя контейнера или ID (из docker_ps)",
+        "properties.logTail.description": "число строк хвоста журнала (1~500, по умолчанию 80; значения вне диапазона прижимаются к границе)",
+        "properties.since.description": "временное окно событий и журнала (синтаксис docker --since, по умолчанию 1h, например 30m, 2h, 2026-09-09T10:00:00)",
+        "properties.target.description": "имя цели (перечисляет docker_targets; можно опустить, если цель одна. `*` поддерживают только docker_ps / docker_attention, остальным инструментам передавайте конкретное имя цели)"
+      }
+    },
+    "docker_disk_usage": {
+      "hash": "f31c454ce86cabcaa80424113c67e2e1c8231d7b",
+      "ru": "Читает занятое место на цели (docker system df): сводка по четырём категориям + детализация по образам / томам / кэшу сборки и **кто это использует** (число контейнеров у образа, число ссылок у тома) — эти два числа берутся из собственных `Images[].Containers` / `Volumes[].Links` docker, а не выводятся обратным счётом из ps. Только чтение; в детализации не больше 20 строк на категорию (при превышении будут truncated и total). **Перед удалением проверьте, что containers равно 0**: 0 — значит, не используется. На старых docker детализация недоступна и приходит degraded=true, но сводка остаётся рабочей.",
+      "paramHashes": {
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.target.description": "имя цели (перечисляет docker_targets; можно опустить, если цель одна. `*` поддерживают только docker_ps / docker_attention, остальным инструментам передавайте конкретное имя цели)"
+      }
+    },
+    "docker_events": {
+      "hash": "2647da5a17e21335a8bc5fec41c9f0b3cfe604bc",
+      "ru": "Читает последние события контейнеров на цели (снимок docker events): девять типов start / die / stop / kill / oom / health_status / destroy / rename / update; шум вроде exec_* уже отфильтрован. По умолчанию — последние 10m. Для постоянного наблюдения попросите пользователя включить полосу «Активность» в списке контейнеров панели.",
+      "paramHashes": {
+        "properties.since.description": "d7b00325be230ab481502635f383bfc0a7bc7090",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.since.description": "начало периода (синтаксис docker --since, например 30m, 2h; по умолчанию 10m)",
+        "properties.target.description": "имя цели (перечисляет docker_targets; можно опустить, если цель одна. `*` поддерживают только docker_ps / docker_attention, остальным инструментам передавайте конкретное имя цели)"
+      }
+    },
+    "docker_exec": {
+      "hash": "c72bc19900cf08544aa3466218cd9764b013787f",
+      "ru": "Выполняет в контейнере одну разовую команду (docker exec, без TTY): например `ls -la /app`, `cat /etc/nginx/nginx.conf`, `env`. Доступно только когда пользователь включил в настройках «Разрешить exec»; не выполняйте в контейнере разрушительных операций, а для интерактивной диагностики попросите пользователя запустить в панели терминала `docker exec -it <контейнер> sh`.",
+      "paramHashes": {
+        "properties.command.description": "cccf4804e99fc3eb8d5789bfcfd35be75302039c",
+        "properties.id.description": "b7b3e5e2e831635ec5b0400d4f6b25f2313e85c9",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83",
+        "properties.timeoutSec.description": "02e2af1a728db858b3925478c18524abaa31fc15"
+      },
+      "params": {
+        "properties.command.description": "команда для выполнения (запускается через sh -c внутри контейнера)",
+        "properties.id.description": "имя контейнера или ID",
+        "properties.target.description": "имя цели (перечисляет docker_targets; можно опустить, если цель одна. `*` поддерживают только docker_ps / docker_attention, остальным инструментам передавайте конкретное имя цели)",
+        "properties.timeoutSec.description": "таймаут в секундах (1~120, по умолчанию берётся из настройки плагина execTimeoutSec; значения вне диапазона молча прижимаются к границе)"
+      }
+    },
+    "docker_image_inspect": {
+      "hash": "7cc5e8083d3eb5bf46f6ab20e767d4121065f9db",
+      "ru": "Читает подробности образа (docker image inspect) и историю сборки (docker history): размер / время создания / платформа / число слоёв и их список / entrypoint и команда / открытые порты / digest / команда и размер каждого шага сборки.",
+      "paramHashes": {
+        "properties.ref.description": "f57c664c7fb5856a8be5f7acad8faca2201e16bf",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.ref.description": "ссылка на образ: repository:tag, ID образа (sha256:…) или digest",
+        "properties.target.description": "имя цели (перечисляет docker_targets; можно опустить, если цель одна. `*` поддерживают только docker_ps / docker_attention, остальным инструментам передавайте конкретное имя цели)"
+      }
+    },
+    "docker_image_prune": {
+      "hash": "3c643ae2e8d1e9442ca06c11f5b6c4a4288c6b3a",
+      "ru": "Удаляет dangling-образы (без тега, <none>:<none>) командой docker image prune -f. Удаляются только образы без тегов, образы с тегом не затрагиваются (--all намеренно не передаётся, чтобы случайно не снести обычные неиспользуемые образы). Возвращает список удалённого и освобождённое место. Доступно только когда пользователь включил в настройках «Разрешить изменения».",
+      "paramHashes": {
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.target.description": "имя цели (перечисляет docker_targets; можно опустить, если цель одна. `*` поддерживают только docker_ps / docker_attention, остальным инструментам передавайте конкретное имя цели)"
+      }
+    },
+    "docker_image_pull": {
+      "hash": "970c0cd092e10c0e2ba3a97947ae7974aa670219",
+      "ru": "Загружает образ (docker pull), например nginx:1.27, ghcr.io/org/app:latest. **Может занять несколько минут** (загрузка идёт послойно); верхнюю границу задаёт timeoutSec (10~1800 секунд, по умолчанию 600). Доступно только когда пользователь включил в настройках «Разрешить изменения». Чтобы следить за прогрессом вживую, попросите пользователя открыть «Загрузка» на странице образов панели — там идёт поток прогресса SSE.",
+      "paramHashes": {
+        "properties.ref.description": "b648d9fafd454a59500cb117c3e83dc2650c44c6",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83",
+        "properties.timeoutSec.description": "e9678e115e58853cfeb3da71242a635ecf620d9c"
+      },
+      "params": {
+        "properties.ref.description": "ссылка на образ: repository:tag или digest",
+        "properties.target.description": "имя цели (перечисляет docker_targets; можно опустить, если цель одна. `*` поддерживают только docker_ps / docker_attention, остальным инструментам передавайте конкретное имя цели)",
+        "properties.timeoutSec.description": "таймаут в секундах (10~1800, по умолчанию 600; значения вне диапазона молча прижимаются к границе)"
+      }
+    },
+    "docker_image_remove": {
+      "hash": "e0eb8c310a994a83b31d2c6a0a5445a362578969",
+      "ru": "Удаляет образ (docker image rm, без -f). **Разрушительная операция**: если на образ ссылается контейнер или дочерний образ, удаление завершится ошибкой; перед выполнением подтвердите у пользователя целевой образ и перескажите последствия (восстановить его можно только повторной загрузкой или сборкой). Доступно только когда пользователь включил в настройках «Разрешить изменения».",
+      "paramHashes": {
+        "properties.ref.description": "89d279bb07e256bcfeb10aeef74fa845994980be",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.ref.description": "ссылка на образ: repository:tag или ID образа (sha256:…)",
+        "properties.target.description": "имя цели (перечисляет docker_targets; можно опустить, если цель одна. `*` поддерживают только docker_ps / docker_attention, остальным инструментам передавайте конкретное имя цели)"
+      }
+    },
+    "docker_images": {
+      "hash": "d5e3397d2a88a8cb249736e4d2643634d63d6794",
+      "ru": "Перечисляет образы на цели (репозиторий:тег, размер, время создания, короткий ID).",
+      "paramHashes": {
+        "properties.limit.description": "8998ed1433123bad2d4a96807d39ab2e7d8b80c2",
+        "properties.offset.description": "bde5281c777d97c4dbe44d83660432ec53e26499",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.limit.description": "сколько записей максимум вернуть на страницу (1~500, по умолчанию 100)",
+        "properties.offset.description": "сколько записей пропустить (по умолчанию 0); при листании передавайте offset из подсказки предыдущей страницы",
+        "properties.target.description": "имя цели (перечисляет docker_targets; можно опустить, если цель одна. `*` поддерживают только docker_ps / docker_attention, остальным инструментам передавайте конкретное имя цели)"
+      }
+    },
+    "docker_inspect": {
+      "hash": "1993cfef74052504d8368424761b076c0c6a2d70",
+      "ru": "Читает авторитетные подробности контейнера (docker inspect): состояние / проверка здоровья / код выхода / число перезапусков / проброс портов / монтирования / сеть / команда запуска.",
+      "paramHashes": {
+        "properties.id.description": "3fb80d01336a318073c9f2f28769c5e4527eb1ec",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.id.description": "имя контейнера или ID (из docker_ps)",
+        "properties.target.description": "имя цели (перечисляет docker_targets; можно опустить, если цель одна. `*` поддерживают только docker_ps / docker_attention, остальным инструментам передавайте конкретное имя цели)"
+      }
+    },
+    "docker_logs": {
+      "hash": "b2470c3c393123619f1ec81a7ebbed373b97fee9",
+      "ru": "Читает хвост журнала контейнера (docker logs --tail). Число строк по умолчанию берётся из настройки плагина logTailDefault (изначально 200), временные метки не выводятся; можно добавить timestamps / since / until. Журнал бывает очень большим, поэтому предпочитайте tail, а не полный объём. Если ошибка закопана глубже или нужно конкретное временное окно — используйте docker_logs_grep (поиск на стороне сервера).",
+      "paramHashes": {
+        "properties.id.description": "b7b3e5e2e831635ec5b0400d4f6b25f2313e85c9",
+        "properties.since.description": "29b3aa5764b31b7f2428eabb6fcc470835482257",
+        "properties.tail.description": "7517d22aff7bd65f8f9e013d808eb31502f69727",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83",
+        "properties.timestamps.description": "10534297b912956e1bb275684e6f295b8971304b",
+        "properties.until.description": "f6da926a5485f5ae2802b036975b5119497c93b2"
+      },
+      "params": {
+        "properties.id.description": "имя контейнера или ID",
+        "properties.since.description": "начало периода (синтаксис docker --since, например 10m, 2026-09-09T10:00:00)",
+        "properties.tail.description": "число строк хвоста (1~5000, по умолчанию берётся из настройки logTailDefault; значения вне диапазона молча прижимаются к границе)",
+        "properties.target.description": "имя цели (перечисляет docker_targets; можно опустить, если цель одна. `*` поддерживают только docker_ps / docker_attention, остальным инструментам передавайте конкретное имя цели)",
+        "properties.timestamps.description": "при true каждая строка сопровождается временной меткой",
+        "properties.until.description": "конец периода (синтаксис docker --until, та же шкала, что у since, например 2026-09-09T10:05:00; вместе с since задаёт временное окно)"
+      }
+    },
+    "docker_logs_grep": {
+      "hash": "5c81dbfae2b4239b7f8724f04f0e857f06d617bc",
+      "ru": "Выполняет **поиск на стороне сервера** по журналу контейнера: сканирует всю историю (окно можно ограничить через since/until) и возвращает совпавшие строки вместе с соседними строками context. Разделение с docker_logs: ошибка лежит в самом хвосте → docker_logs (дешевле); ошибка закопана в большом объёме журнала / нужен поиск по ключевым словам, кодам ошибок, request ID / нужен конкретный интервал → этот инструмент. По умолчанию ищется буквальная подстрока (семантика grep -F, без риска ReDoS); только при regexp=true pattern трактуется как регулярное выражение JS. Ответ честно сообщает matched (всего совпадений, даже если они не возвращены) / scanned (число просканированных строк) / limited / truncated — «просканировано только это» и «досканировано до конца, больше нет» различимы. Есть и отдельный предел на число возвращаемых строк (4000): при превышении вывод обрезается до предела и приходят truncatedForSize и notes (уменьшите limit / context или добавьте since·until), при этом matched по-прежнему показывает полное число.",
+      "paramHashes": {
+        "properties.context.description": "7206397f0432b61f987d9b654ab1185f21b8517b",
+        "properties.id.description": "b7b3e5e2e831635ec5b0400d4f6b25f2313e85c9",
+        "properties.ignoreCase.description": "0f3833d0f80349c132f47bb570516d0e12bc1a02",
+        "properties.limit.description": "c74c906c098c0236f890c88138743e1e9f944fca",
+        "properties.pattern.description": "317934b1b6567ee8766c7829d2f25bc08b440d83",
+        "properties.regexp.description": "60fa688a0e6774dab01b02b4e08aabd6cff0d5c3",
+        "properties.since.description": "408032755ef738547fbf5a61b0389385d4268643",
+        "properties.tail.description": "6ebfa36058ebaa250eeca46379fc63939f437057",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83",
+        "properties.timestamps.description": "fb0158ab7d1519569f8602f9150c553ada2e50d2",
+        "properties.until.description": "5f725cde256978cb0f73a64125c7e7614e9182dd"
+      },
+      "params": {
+        "properties.context.description": "сколько строк контекста оставлять до и после каждого совпадения (0~20, по умолчанию 2; для стектрейсов нужно больше)",
+        "properties.id.description": "имя контейнера или ID",
+        "properties.ignoreCase.description": "true = не учитывать регистр (в буквальном режиме эквивалентно grep -i, в режиме регулярного выражения добавляется флаг i)",
+        "properties.limit.description": "предел числа возвращаемых совпадений (1~500, по умолчанию 200; matched всё равно сообщает полное число)",
+        "properties.pattern.description": "искомая буквальная подстрока (по умолчанию) или исходник регулярного выражения JS при regexp=true; ≤512 символов",
+        "properties.regexp.description": "true = трактовать pattern как регулярное выражение JS; по умолчанию false = буквальная подстрока. В регулярных выражениях избегайте вложенных квантификаторов (риск катастрофического бэктрекинга)",
+        "properties.since.description": "начало периода (та же шкала, что у docker_logs, например 2h, 2026-09-09T10:00:00); для больших журналов настоятельно рекомендуется задавать окно через since/until",
+        "properties.tail.description": "предел числа просканированных строк (1~5000); по умолчанию = вся история (--tail all)",
+        "properties.target.description": "имя цели (перечисляет docker_targets; можно опустить, если цель одна. `*` поддерживают только docker_ps / docker_attention, остальным инструментам передавайте конкретное имя цели)",
+        "properties.timestamps.description": "временная метка на каждой строке (по умолчанию true — совпадение из глубины без времени бесполезно; false отключает)",
+        "properties.until.description": "конец периода (синтаксис docker --until, та же шкала, что у since)"
+      }
+    },
+    "docker_networks": {
+      "hash": "6a46e8c47a45fa4b033ded0bb6ff83525d8a4394",
+      "ru": "Перечисляет сети docker на цели (имя / драйвер / область / признак internal / короткий ID). Список подключённых контейнеров смотрите на странице подробностей, а не через поштучный inspect в списке.",
+      "paramHashes": {
+        "properties.limit.description": "8998ed1433123bad2d4a96807d39ab2e7d8b80c2",
+        "properties.offset.description": "bde5281c777d97c4dbe44d83660432ec53e26499",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.limit.description": "сколько записей максимум вернуть на страницу (1~500, по умолчанию 100)",
+        "properties.offset.description": "сколько записей пропустить (по умолчанию 0); при листании передавайте offset из подсказки предыдущей страницы",
+        "properties.target.description": "имя цели (перечисляет docker_targets; можно опустить, если цель одна. `*` поддерживают только docker_ps / docker_attention, остальным инструментам передавайте конкретное имя цели)"
+      }
+    },
+    "docker_ps": {
+      "hash": "945122d2782d38b7f398aaa39222cd857479fa36",
+      "ru": "Перечисляет контейнеры (по умолчанию только запущенные; all:true включает остановленные). **target=`*` = перечислить все цели сразу** (по всем машинам, ответ сгруппирован по целям; недоступность одной цели не мешает остальным). Первый шаг диагностики. Внимание: пустой `ports` **не значит** «порты не открыты» — у контейнера в сети host порт и есть порт хоста, в ps проброса нет; в этом случае приходит поле `net` (например, `net:\"host\"`), не запускайте ради этого docker_inspect по одному.",
+      "paramHashes": {
+        "properties.all.description": "3b9fbbd3497334285d5a307e785163ea77599d87",
+        "properties.limit.description": "8998ed1433123bad2d4a96807d39ab2e7d8b80c2",
+        "properties.offset.description": "bde5281c777d97c4dbe44d83660432ec53e26499",
+        "properties.target.description": "4131d8192a8008e1994463d736f2da64102ed50d"
+      },
+      "params": {
+        "properties.all.description": "при true включает остановленные контейнеры (по умолчанию false)",
+        "properties.limit.description": "сколько записей максимум вернуть на страницу (1~500, по умолчанию 100)",
+        "properties.offset.description": "сколько записей пропустить (по умолчанию 0); при листании передавайте offset из подсказки предыдущей страницы",
+        "properties.target.description": "имя цели; `*` или пропуск (когда цель одна) означает текущую цель / все цели (перечисляет docker_targets)"
+      }
+    },
+    "docker_run_command": {
+      "hash": "1fe7a166c90e7277763808f2967e08dd514961ce",
+      "ru": "Восстанавливает по конфигурации контейнера **эквивалентную команду docker run** (только текст команды, **никаких действий не выполняется**): порты / монтирования / сеть / переменные окружения / ограничения ресурсов / устройства восстанавливаются. Всё, что **намеренно не восстановлено** (--privileged, анонимные тома, собственный ENTRYPOINT, проверка здоровья и т. п.), перечислено по именам в omitted — молча терять это нельзя; переменные окружения с чувствительными именами попадают в secretKeys (**значения не переписываются**, в команде они настоящие — проверьте перед тем, как куда-то вставить). Подходит для ручного воспроизведения / переноса. Для контейнеров под управлением Compose результат лишь приблизительный.",
+      "paramHashes": {
+        "properties.id.description": "3fb80d01336a318073c9f2f28769c5e4527eb1ec",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.id.description": "имя контейнера или ID (из docker_ps)",
+        "properties.target.description": "имя цели (перечисляет docker_targets; можно опустить, если цель одна. `*` поддерживают только docker_ps / docker_attention, остальным инструментам передавайте конкретное имя цели)"
+      }
+    },
+    "docker_stats": {
+      "hash": "80e70ff762e7820c68d6899349796806e09add65",
+      "ru": "Читает текущее потребление ресурсов контейнерами (docker stats --no-stream): CPU%, память (использовано/лимит), сетевой и дисковый ввод-вывод, PIDs. Без ids возвращает все запущенные контейнеры цели.",
+      "paramHashes": {
+        "properties.ids.description": "239bab0884c9ca9ecd648b86e0b0b0816ffeb6e8",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.ids.description": "имена/ID контейнеров через запятую (пропуск = все запущенные)",
+        "properties.target.description": "имя цели (перечисляет docker_targets; можно опустить, если цель одна. `*` поддерживают только docker_ps / docker_attention, остальным инструментам передавайте конкретное имя цели)"
+      }
+    },
+    "docker_targets": {
+      "hash": "879a294d7af3991fa5000b9b889c503bdd1489e2",
+      "ru": "Перечисляет настроенные цели Docker (эта машина / хосты SSH) и по желанию проверяет доступность docker daemon на каждой цели; для целей SSH дополнительно отдаёт имя записи книги подключений tty, на которую он ссылается (book — его можно сразу передавать в book у sftp_*). Значения target для остальных инструментов docker_* берутся отсюда.",
+      "paramHashes": {
+        "properties.probe.description": "3763d9acd1ebd1d935f2489279619781cedfb877"
+      },
+      "params": {
+        "properties.probe.description": "при true последовательно проверяет версию docker и доступность daemon (для целей SSH устанавливается соединение, это медленнее)"
+      }
+    },
+    "docker_top": {
+      "hash": "0bed865c4789751cd3c9e969f044fc94bad0aed9",
+      "ru": "Показывает снимок процессов внутри контейнера (docker top): PID / PPID / USER / STAT / время работы / CPU% / память% / команда. **Только чтение**; чтобы понять, «кто ест CPU / память», начинайте отсюда, а общий вопрос «почему не работает» — это docker_diagnose. Если контейнер не запущен, вернётся ошибка (а не пустой список).",
+      "paramHashes": {
+        "properties.id.description": "3fb80d01336a318073c9f2f28769c5e4527eb1ec",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.id.description": "имя контейнера или ID (из docker_ps)",
+        "properties.target.description": "имя цели (перечисляет docker_targets; можно опустить, если цель одна. `*` поддерживают только docker_ps / docker_attention, остальным инструментам передавайте конкретное имя цели)"
+      }
+    },
+    "docker_volumes": {
+      "hash": "6f931f50184d755319070010285b84516e726f6b",
+      "ru": "Перечисляет тома docker на цели (имя / драйвер / область / точка монтирования).",
+      "paramHashes": {
+        "properties.limit.description": "8998ed1433123bad2d4a96807d39ab2e7d8b80c2",
+        "properties.offset.description": "bde5281c777d97c4dbe44d83660432ec53e26499",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.limit.description": "сколько записей максимум вернуть на страницу (1~500, по умолчанию 100)",
+        "properties.offset.description": "сколько записей пропустить (по умолчанию 0); при листании передавайте offset из подсказки предыдущей страницы",
+        "properties.target.description": "имя цели (перечисляет docker_targets; можно опустить, если цель одна. `*` поддерживают только docker_ps / docker_attention, остальным инструментам передавайте конкретное имя цели)"
+      }
+    },
+    "loglens_context": {
+      "hash": "bd8ddc9bd749be4b195b2cb71670863bfd3b00e1",
+      "ru": "Берёт контекст одной строки: по ts (плюс id или message) из ответа loglens_search повторно запрашивает источник и возвращает несколько строк до и после неё (по возрастанию времени). Ни у одного из трёх бэкендов нет нативного «N строк вокруг строки», поэтому это повторный запрос, а не кэш.",
+      "paramHashes": {
+        "properties.after.description": "377007fe02a0ee1d213a408bc52e1819df5b39b2",
+        "properties.before.description": "7d90b7842a2f25eea454e3e6897658033e170541",
+        "properties.expand.description": "e55d04d65bd50534efcdc8a6ffef7a8a19d8fb12",
+        "properties.id.description": "c0169766fdfaab55a5181c23e4e69d00e9ff1571",
+        "properties.message.description": "73acc64c59e769e59294303ebeb69d05a6dfd1e6",
+        "properties.spanMs.description": "0520fe20ccd15a5b652433bbdf08009ec9e09c88",
+        "properties.target.description": "d1a67c8575ef1ef76adde344f5de4f42a2ee9f54",
+        "properties.ts.description": "83f3b3c2ff447562e03bfc5796f7b1c354388fa5"
+      },
+      "params": {
+        "properties.after.description": "сколько более поздних строк (по умолчанию 5, предел 50)",
+        "properties.before.description": "сколько более ранних строк (по умолчанию 5, предел 50)",
+        "properties.expand.description": "true = текст **разворачивается целиком** (многострочный стектрейс по умолчанию рендерится только в 20 строк, при превышении выводится «ещё N строк не показано»). Влияет только на **рендеринг текста**: в возвращаемом значении message у anchor / before / after всегда полный текст. При разборе длинных стектрейсов сначала используйте значения по умолчанию, убедитесь, что это нужная строка, и только потом повторяйте запрос с expand (экономия токенов).",
+        "properties.id.description": "id опорной строки (lines[].id из loglens_search); если он задан, используется для точного позиционирования",
+        "properties.message.description": "текст опорной строки (если id нет — используется вместе с ts для поиска)",
+        "properties.spanMs.description": "радиус временного окна повторного запроса (по умолчанию 60000, то есть по минуте до и после опорной строки)",
+        "properties.target.description": "id или имя источника (перечисляет loglens_sources); можно опустить, если источник один",
+        "properties.ts.description": "время опорной строки, epoch в миллисекундах (lines[].ts из loglens_search)"
+      }
+    },
+    "loglens_facets": {
+      "hash": "45035a0cafe927ac940d53d3d540777ba499e2d4",
+      "ru": "Агрегация: группировка по полю (terms) показывает, «кто именно сыпет ошибками» / разбивка по времени (date_histogram) показывает динамику. Это правильный инструмент для ответа «здоров ли сервис» — вытащить страницу строк и считать локально медленно и неверно. Поля otherCount (сколько записей в не показанных группах) и countErrorUpperBound (верхняя граница погрешности подсчёта) в ответе — **сигналы усечения и приблизительности**, не принимайте их за точные значения. Сейчас это поддерживают только ES / OpenSearch.",
+      "paramHashes": {
+        "properties.by.description": "19088c6f34f016609ca7d99ecdfe23daa1ff45e3",
+        "properties.filters.description": "25d1390bfc097c515a9319d2fe46b53d5c38642b",
+        "properties.from.description": "22b75ee212e1b12fb95190631f7c5324c9019a53",
+        "properties.from.oneOf.0.description": "67b968af136dfa549016c400db4d6e8e34b924be",
+        "properties.from.oneOf.1.description": "44b94932c790548d5f36fb1971808d2c82efeaba",
+        "properties.interval.description": "989f7730758edcef76a775adaa5e297db7d378fc",
+        "properties.q.description": "7be16173c41cf4c02564f8ab59af1cc798fc5771",
+        "properties.size.description": "b073bcc9145ab8c36ae6b87bd97f6e2bcffb63d0",
+        "properties.target.description": "d1a67c8575ef1ef76adde344f5de4f42a2ee9f54",
+        "properties.to.description": "32f08792f9498e892948ac25cd089154339ffffe",
+        "properties.to.oneOf.0.description": "67b968af136dfa549016c400db4d6e8e34b924be",
+        "properties.to.oneOf.1.description": "0469b5d5a5e0c3b1c8777bdedee85ee8e3c5acfe"
+      },
+      "params": {
+        "properties.by.description": "группировать по этому полю (terms), например container.name / host.name / log.level",
+        "properties.filters.description": "структурированный фильтр: поле → значение (та же семантика, что в loglens_search)",
+        "properties.from.description": "начало: целое число epoch в миллисекундах / ISO 8601 / относительное время; по умолчанию = 15 минут до to",
+        "properties.from.oneOf.0.description": "целое число epoch в миллисекундах",
+        "properties.from.oneOf.1.description": "ISO 8601 или относительное время (-30m / -2h)",
+        "properties.interval.description": "разбивка по времени на интервалы (например, 5m / 1h / 1d); можно запрашивать одновременно с by",
+        "properties.q.description": "строка запроса (сначала отбирает ту часть журналов, которую надо посчитать; пусто = всё). О ловушках синтаксиса ES / OpenSearch см. q в loglens_search: квадратные скобки задают интервал, `=` не имеет специального смысла, операторами являются только AND/OR в верхнем регистре — другая запись молча меняет то, что именно считается",
+        "properties.size.description": "предел числа групп (по умолчанию 10, жёсткий предел 100)",
+        "properties.target.description": "id или имя источника (перечисляет loglens_sources); можно опустить, если источник один",
+        "properties.to.description": "конец, запись как у from; по умолчанию — текущий момент",
+        "properties.to.oneOf.0.description": "целое число epoch в миллисекундах",
+        "properties.to.oneOf.1.description": "ISO 8601 или относительное время"
+      }
+    },
+    "loglens_fields": {
+      "hash": "1d57d6bb4891f11a3f33febdb98b3fa5db87e1d4",
+      "ru": "Перечисляет поля, доступные у источника журналов; часто используемые для фильтрации идут первыми. По умолчанию показываются только первые 200 (общее число — в total); поля, у которых в разных индексах конфликтуют типы, помечаются conflict; в именах полей .keyword указывать не нужно.",
+      "paramHashes": {
+        "properties.limit.description": "50903d7b216c1e799ae4d3d61a000e6bf05c243a",
+        "properties.target.description": "d1a67c8575ef1ef76adde344f5de4f42a2ee9f54"
+      },
+      "params": {
+        "properties.limit.description": "сколько полей максимум перечислить (по умолчанию 200; положительное целое, больше можно добирать порциями)",
+        "properties.target.description": "id или имя источника (перечисляет loglens_sources); можно опустить, если источник один"
+      }
+    },
+    "loglens_search": {
+      "hash": "4c35b818843dacb17bd3042f34bc478d2ecad8a8",
+      "ru": "Запрашивает один источник журналов: возвращает нормализованные строки плюс честные счётчики и сигналы усечения. За один раз опрашивается только один источник (в v1 нет fan-out по нескольким бэкендам). В возвращаемых значениях время всегда epoch в миллисекундах; во **входных параметрах** from / to можно писать ISO 8601 или относительное время вроде -30m (чтобы не считать миллисекунды самому).",
+      "paramHashes": {
+        "properties.cursor.description": "ef9cfdf628826cb65ba6a0b57c1fef604e61563c",
+        "properties.direction.description": "02acf4e63ca44d7c072de6feb3f021d139bfeef2",
+        "properties.expand.description": "93f874fed5f898a7eb4258e30f156eb7aa4c809f",
+        "properties.filters.description": "6cb2eeab74ac46ad0c47505011d44d1c247e2706",
+        "properties.from.description": "2f0b45e46972b6b4f11bd7fed4a70ae69b0e5cf1",
+        "properties.from.oneOf.0.description": "7962dd44abc390740bc97b4ec5becad558514515",
+        "properties.from.oneOf.1.description": "e47add8b302ee7da461541b7a1b05ffb2218153f",
+        "properties.level.description": "e0ab8698a9ca5b0cc2fad682e8c6f0ff6fb66739",
+        "properties.limit.description": "e376fd54c04d008df0096612e2809494decee44b",
+        "properties.q.description": "85d2be5e8a5941072b23e91677e9f3837e2e71a7",
+        "properties.target.description": "d1a67c8575ef1ef76adde344f5de4f42a2ee9f54",
+        "properties.to.description": "391cd69ee633f4e382eac970466f020601aa02e0",
+        "properties.to.oneOf.0.description": "67b968af136dfa549016c400db4d6e8e34b924be",
+        "properties.to.oneOf.1.description": "af1f5d5a98446fdc0c05260f3eeda55dc561880d"
+      },
+      "params": {
+        "properties.cursor.description": "nextCursor из предыдущей страницы; отсутствует, если источник объявил pagination=none",
+        "properties.direction.description": "forward (сначала старые) или backward (сначала новые, по умолчанию)",
+        "properties.expand.description": "true = текст **разворачивается целиком** (многострочный стектрейс по умолчанию рендерится только в 20 строк, при превышении выводится «ещё N строк не показано»). Влияет только на **рендеринг текста**: в возвращаемом значении `lines[].message` всегда полный текст. При разборе длинных стектрейсов сначала используйте значения по умолчанию, убедитесь, что это нужная строка, и только потом повторяйте запрос с expand (экономия токенов).",
+        "properties.filters.description": "структурированный фильтр: поле → значение (например, {\"container.name\":\"app-svc-1\",\"log.level\":\"error\"}). **Нужно ли полю .keyword, решает адаптер по _field_caps** — вам об этом думать не нужно; если поле имеет тип text и у него нет подполя, автоматически используется match_phrase (приблизительное совпадение). Loki это не поддерживает (фильтры пишутся в {} LogQL или в выражении фильтра)",
+        "properties.from.description": "начало: целое число epoch в миллисекундах, ISO 8601 (без часового пояса — по часовому поясу машины) или относительное время; по умолчанию = 15 минут до to",
+        "properties.from.oneOf.0.description": "целое число epoch в миллисекундах, например 1760000000000 (если указать секунды, будет ошибка)",
+        "properties.from.oneOf.1.description": "ISO 8601 (2026-10-11T14:00:00Z) или относительное время (-30m / -2h / -1d)",
+        "properties.level.description": "только строки этого уровня и выше (например, warn включает error и fatal). Фильтрация идёт по возвращаемой странице, counts по-прежнему относятся ко всей странице; нераспознанный уровень даёт ошибку",
+        "properties.limit.description": "предел числа возвращаемых строк (по умолчанию 100); если он превышает предел одной страницы источника, значение прижимается, а в warnings будет пояснение",
+        "properties.q.description": "строка запроса: в Loki это LogQL, в ES / OpenSearch — диалект Lucene; пусто = всё. Для точного совпадения используйте \"слово\" (фразу) — квадратные скобки, = и строчные and/or являются молчаливыми ловушками (ошибки не будет, просто числа окажутся не те)",
+        "properties.target.description": "id или имя источника (перечисляет loglens_sources); можно опустить, если источник один",
+        "properties.to.description": "конец, запись как у from; по умолчанию — текущий момент (достаточно указать только to, чтобы «посмотреть свежие журналы»). Фактически применённое окно смотрите в window возвращаемого значения",
+        "properties.to.oneOf.0.description": "целое число epoch в миллисекундах",
+        "properties.to.oneOf.1.description": "ISO 8601 или относительное время (-30m / now и т. п.)"
+      }
+    },
+    "loglens_sources": {
+      "hash": "bc40f2e665547bd7399b29e7b2758cbab98fd53c",
+      "ru": "Перечисляет настроенные источники журналов (тип / имя / адрес / диалект запросов / поддержка постраничной выдачи) и по желанию проверяет доступность. Значения target для остальных инструментов loglens_* берутся отсюда.",
+      "paramHashes": {
+        "properties.probe.description": "63c9edf3c3403434f974d60159cab514e61dc662"
+      },
+      "params": {
+        "properties.probe.description": "при true последовательно проверяет источники (у Loki — /ready); для удалённых источников устанавливается соединение, это медленнее"
+      }
+    },
+    "mcp_load": {
+      "hash": "b7ea0322834bf49002687a61f9982a48749eec6c",
+      "ru": "Загружает (или выгружает) инструменты MCP-серверов в текущую сессию: параметр — список serverName этих серверов (из mcp_servers), пустой массив = выгрузить все. Загружаются только известные серверы, неизвестные имена игнорируются и о них сообщается; возвращает имена MCP-инструментов, которые текущая сессия действительно может вызывать после загрузки.",
+      "paramHashes": {
+        "properties.servers.description": "43109be9d278fdb7b7d7e67d992480c64722b207"
+      },
+      "params": {
+        "properties.servers.description": "список serverName для загрузки; пустой массив = выгрузить все"
+      }
+    },
+    "mcp_servers": {
+      "hash": "69b881cfa1b1a2abda507fa881c12e65b128f89b",
+      "ru": "Перечисляет MCP-серверы, настроенные на этой машине (имя / транспорт / состояние включения / число инструментов / загружены ли они в текущую сессию). MCP-инструменты по умолчанию не загружаются: сначала этим инструментом посмотрите, какие серверы есть, затем загрузите нужные через mcp_load({servers:[…]}).",
+      "paramHashes": {},
+      "params": {}
+    },
+    "sftp_list": {
+      "hash": "779792086e3940ab6e8e4d1cfba361240c7526e0",
+      "ru": "Перечисляет содержимое удалённого каталога по SSH (имя/тип/размер/время изменения, каталоги идут первыми; isSymlink отличает символическую ссылку от настоящего каталога). book — имя записи книги подключений SSH; path по умолчанию — домашний каталог, в который выполняется вход. По умолчанию выводится не более 500 элементов (при превышении truncated:true; можно обходить по подкаталогам).",
+      "paramHashes": {
+        "properties.book.description": "19e11c08988dd5fc566b90d1d7b75fb20def7e38",
+        "properties.maxEntries.description": "301eb8cfdf098c1f6cf96a0e06a9e9fe77992238",
+        "properties.path.description": "d7b1219f59486178599241f6a3b78aba39b551a5"
+      },
+      "params": {
+        "properties.book.description": "имя записи книги подключений SSH (ведётся в «Настройки → Плагины → Панель терминала»)",
+        "properties.maxEntries.description": "максимальное число элементов (1~2000, по умолчанию 500)",
+        "properties.path.description": "путь удалённого каталога (по умолчанию = домашний каталог при входе)"
+      }
+    },
+    "sftp_mkdir": {
+      "hash": "8e1079b608c1c06568fda76c64b06566b0c21c2f",
+      "ru": "Создаёт каталог на удалённой машине по SSH (запись книги подключений book + path). При parents:true недостающие родительские каталоги создаются по цепочке (эквивалент mkdir -p; по умолчанию false — при отсутствии родителя сразу ошибка).",
+      "paramHashes": {
+        "properties.book.description": "19e11c08988dd5fc566b90d1d7b75fb20def7e38",
+        "properties.parents.description": "333c02f7e405ee644b4ae91640008eb49bd4d50f",
+        "properties.path.description": "62a854c8d62810659370a06a2cbefcb9ebdabd92"
+      },
+      "params": {
+        "properties.book.description": "имя записи книги подключений SSH",
+        "properties.parents.description": "true — последовательно создать недостающие родительские каталоги (по умолчанию false)",
+        "properties.path.description": "путь создаваемого удалённого каталога"
+      }
+    },
+    "sftp_read": {
+      "hash": "8326414335e76890947ec9aecded098e0bd2070c",
+      "ru": "Читает удалённый текстовый файл по SSH (запись книги подключений book + path). По умолчанию не более 256KB (можно поднять до 1MB; недопустимое значение сразу даёт ошибку); offset позволяет начать чтение с указанного байта (вместе с maxBytes это даёт постраничное чтение хвоста большого файла); двоичность определяется двойной проверкой — по NUL и по доле недопустимого UTF-8; при отказе причина объясняется.",
+      "paramHashes": {
+        "properties.book.description": "ca65c6e6d006b4983dcab276a2a3d02926b5f624",
+        "properties.maxBytes.description": "c2dc0051147c10afbd2283773f42884be2e87dab",
+        "properties.offset.description": "4c897f41b63a58a03dd2d975682da7214cb90f38",
+        "properties.path.description": "58ed6a4e85f6843f0f1e3245c4ad6de36db056bf"
+      },
+      "params": {
+        "properties.book.description": "имя записи книги подключений SSH",
+        "properties.maxBytes.description": "максимум прочитанных байт (1~1048576, по умолчанию 262144; при недопустимом значении — ошибка, молчаливого отката к умолчанию больше нет)",
+        "properties.offset.description": "начальное смещение в байтах (0~2^53-1, по умолчанию 0; при >0 префикс пропускается — удобно для чтения хвоста журнала)",
+        "properties.path.description": "путь удалённого файла"
+      }
+    },
+    "sftp_remove": {
+      "hash": "2f40fd94b3e55dfef1b040278e48d77ea02648cc",
+      "ru": "Удаляет удалённый файл или каталог по SSH (запись книги подключений book + path). Файл удаляется сразу; для каталога по умолчанию используется rmdir (непустой каталог даёт явную ошибку), а recursive:true удаляет каталог целиком рекурсивно (восстановить нельзя, применяйте осторожно). Корень / домашний каталог / пути с относительными сегментами . и .. отклоняются сразу (защита от случайного сноса всего дерева) — сначала получите конкретный абсолютный путь.",
+      "paramHashes": {
+        "properties.book.description": "ca65c6e6d006b4983dcab276a2a3d02926b5f624",
+        "properties.path.description": "da187b122ac37e616a189b067f601c562d3f8b34",
+        "properties.recursive.description": "5b2d27b132e020c58a3dc46ff08df153fde56190"
+      },
+      "params": {
+        "properties.book.description": "имя записи книги подключений SSH",
+        "properties.path.description": "удаляемый удалённый путь",
+        "properties.recursive.description": "для каталога: true — рекурсивно удалить всё содержимое (по умолчанию false)"
+      }
+    },
+    "sftp_rename": {
+      "hash": "174ceeb8b8d8ab8fc40e0d7dd96054e6c38e1718",
+      "ru": "Переименовывает / перемещает файл или каталог на удалённой машине по SSH (запись книги подключений book + from + to). Если to находится в другом каталоге, это перемещение (целевой каталог должен уже существовать); существующая цель не перезаписывается (семантика rename на стороне сервера).",
+      "paramHashes": {
+        "properties.book.description": "ca65c6e6d006b4983dcab276a2a3d02926b5f624",
+        "properties.from.description": "1f3278742e0f3bc800a9e4ebdfeaa7402f13fc60",
+        "properties.to.description": "f721dc44671cc41df7f1ee6c45a8a9635e8fd665"
+      },
+      "params": {
+        "properties.book.description": "имя записи книги подключений SSH",
+        "properties.from.description": "исходный удалённый путь",
+        "properties.to.description": "новый удалённый путь (другой каталог = перемещение)"
+      }
+    },
+    "sftp_tree": {
+      "hash": "4f7a3994386224972ee46fb03cd9e2d730ba068d",
+      "ru": "Рекурсивно перечисляет структуру удалённого каталога по SSH (запись книги подключений book + path): обход в глубину, каталоги первыми; maxDepth (1~8, по умолчанию 3) ограничивает глубину, maxEntries (1~2000, по умолчанию 500) — число элементов; при превышении truncated:true. Символические ссылки не раскрываются; подкаталоги, которые не удалось прочитать, попадают в errors. Удобно, чтобы сначала посмотреть структуру удалённого проекта, а затем найти нужный файл.",
+      "paramHashes": {
+        "properties.book.description": "ca65c6e6d006b4983dcab276a2a3d02926b5f624",
+        "properties.maxDepth.description": "6a1f185027e2986d2fc6499764bf7fc69b6c43e6",
+        "properties.maxEntries.description": "301eb8cfdf098c1f6cf96a0e06a9e9fe77992238",
+        "properties.path.description": "d7b1219f59486178599241f6a3b78aba39b551a5"
+      },
+      "params": {
+        "properties.book.description": "имя записи книги подключений SSH",
+        "properties.maxDepth.description": "максимальная глубина вложенности (1~8, по умолчанию 3)",
+        "properties.maxEntries.description": "максимальное число элементов (1~2000, по умолчанию 500)",
+        "properties.path.description": "путь удалённого каталога (по умолчанию = домашний каталог при входе)"
+      }
+    },
+    "sftp_write": {
+      "hash": "626465093f78707a10d06d3746ca0a308ed47709",
+      "ru": "Пишет удалённый текстовый файл по SSH (запись книги подключений book + path + content). По умолчанию файл перезаписывается, append:true дописывает в конец; за один раз не более 1MB. Подходит, чтобы записать конфигурацию на удалённой машине или сохранить файл с результатами.",
+      "paramHashes": {
+        "properties.append.description": "2bb1bc7595bfa1c13d5f1a323ee6f1fbaae643e8",
+        "properties.book.description": "ca65c6e6d006b4983dcab276a2a3d02926b5f624",
+        "properties.content.description": "6f35967203dc50298ffb47ab44c76dc5d06eea0e",
+        "properties.path.description": "58ed6a4e85f6843f0f1e3245c4ad6de36db056bf"
+      },
+      "params": {
+        "properties.append.description": "true — дописать в конец файла (по умолчанию перезапись)",
+        "properties.book.description": "имя записи книги подключений SSH",
+        "properties.content.description": "записываемый текст (≤1MB)",
+        "properties.path.description": "путь удалённого файла"
+      }
+    },
+    "tty_books": {
+      "hash": "c0bc5258c5517779bf0d85f96feb78a44902dc50",
+      "ru": "Перечисляет записи книги подключений SSH из tty (name / host / port / username / способ аутентификации / tmux-персистентность / наличие бастиона или прокси-команды), **без каких-либо учётных данных**. Отсюда берутся `name` для `book` в `sftp_*`, для `bookName` у туннелей и для выпадающего списка «книга подключений» у целей docker; `book` принимает также `host` / `user@host` (разрешается только при однозначном совпадении) и **имя цели docker** (разрешается по записи, на которую она ссылается, — см. `dockerTargets` в ответе). Если имя помнится неточно, сначала вызовите этот инструмент — не угадывайте и не читайте файлы конфигурации.",
+      "paramHashes": {},
+      "params": {}
+    },
+    "tty_capture": {
+      "hash": "a79ef9ee19833e8a876630a3989cae9229f542e0",
+      "ru": "Читает недавний вывод сессии панели терминала (sid даёт tty_list). По умолчанию читается хвост в N строк (60, максимум 500; ANSI-escape-последовательности уже сняты, перерисовка одной строки сведена к последнему состоянию); при last:true возвращаются только вывод и код выхода «последней завершённой команды» (это опирается на маркеры интеграции с shell и лучше подходит, когда нужен результат одной команды) — если команда ещё в работе (только отправлена / маркер завершения не получен), возвращается inProgress:true без старых результатов; повторите позже или используйте tty_expect. **Сессию с уже завершившимся процессом тоже можно читать** (в результате будут exited:true + код выхода/сигнал): в период хранения «только чтение» вывод остаётся на месте (хранится до явного закрытия или перезапуска хоста; так же поступают после выполнения одной команды через `tty_open command=...`); такую сессию уже нельзя писать — чтобы продолжить работу, откройте новую. **У командных сессий (`tty_open command=` / `tty_run`) нет «последней команды»** (в них не внедряются хуки интеграции с shell), поэтому last:true для них вернёт явную ошибку — читайте хвост обычным lines.",
+      "paramHashes": {
+        "properties.last.description": "b64394f4614ffb8e6e6379b9bdf930cc120af29d",
+        "properties.lines.description": "6f98b882dcb9877861d197a049c34fa8a8128989",
+        "properties.raw.description": "2105c876287daa2382d22f336d643797c950b58c",
+        "properties.sid.description": "78cf15ba15a3acd6429453b739d745d534357d60"
+      },
+      "params": {
+        "properties.last.description": "true — вернуть только вывод и код выхода последней команды (по умолчанию false — читать хвост)",
+        "properties.lines.description": "число строк хвоста для чтения (1~500, по умолчанию 60); при last:true игнорируется",
+        "properties.raw.description": "true — вернуть исходный вывод с ANSI-escape-последовательностями (по умолчанию false — очищенный до простого текста)",
+        "properties.sid.description": "id сессии (из tty_list)"
+      }
+    },
+    "tty_close": {
+      "hash": "0b58b6ba7b133e302ffa37b21c93bb40ba4fa566",
+      "ru": "Закрывает сессию терминала, открытую через tty_open (завершая процессы в ней). **Закрывать можно только сессии, открытые агентом**: вкладки, открытые пользователем в панели, будут отклонены — пусть пользователь закроет их сам; не завершайте терминал, которым пользователь пользуется, сверх своих полномочий. Инструмент работает и для сессий с **уже завершившимся процессом, но всё ещё удерживаемых только для чтения** — это их точка освобождения (экран и буфер возвращаются). Хранение «только чтение» по умолчанию длится до явного закрытия (перезапуск хоста его тоже очищает) и не освобождается по времени; одновременно хранится не более 16 сессий, при превышении вытесняются самые старые.",
+      "paramHashes": {
+        "properties.sid.description": "52751d847c028d33e2fea699c61524f1cfcc86b6"
+      },
+      "params": {
+        "properties.sid.description": "id сессии (из tty_open или tty_list)"
+      }
+    },
+    "tty_expect": {
+      "hash": "b0c3f15ebe7ee7f3e96d0a6c0f2e18299ba1ad82",
+      "ru": "Ждёт появления регулярного выражения в сессии панели терминала (sid даёт tty_list) — например, ready/URL от dev server, маркера завершения сборки, интерактивного приглашения. **Сначала просматривается назад** уже не прочитанный вывод (включая полный вывод «последней команды»), затем ожидается последующий вывод — поэтому команда, завершившаяся мгновенно, не заставит ждать зря; при совпадении сразу возвращается matched:true (matchedFrom объясняет, откуда пришло совпадение: live = появилось за время этого ожидания / last = вывод последней команды / buffered = буферизованный вывод, пришедший ранее) вместе с окрестным выводом. **Эхо только что отправленной команды совпадением не считается** (пока команда не выполняется, эхо приходит раньше; считать его совпадением — значит соврать); если ожидание истекло, а pattern совпал только с эхом, результат несёт echoOnly:true — значит, совпало лишь эхо, а не вывод (возможно, команда не выполнилась); сначала проверьте, запустилась ли она. Таймаут не бросает исключение: возвращается matched:false + хвост вывода; если за время ожидания команда завершилась (маркер интеграции с shell), результат тоже вернётся досрочно с кодом выхода. Подходит для схемы «отправить команду, запускающую долгую задачу, и ждать сигнала готовности через tty_expect». Внимание: инструмент отвечает только за «ещё не прочитанный вывод» — чтобы посмотреть более раннее, используйте tty_capture.",
+      "paramHashes": {
+        "properties.pattern.description": "1a2aa3fbda31068aa0a6a1af792db512d6b4fcd9",
+        "properties.sid.description": "78cf15ba15a3acd6429453b739d745d534357d60",
+        "properties.timeoutSec.description": "81c0ccccdfeebff488dd076841a831e38ec438aa"
+      },
+      "params": {
+        "properties.pattern.description": "регулярное выражение для ожидания (синтаксис JavaScript RegExp)",
+        "properties.sid.description": "id сессии (из tty_list)",
+        "properties.timeoutSec.description": "сколько секунд ждать (1~600, по умолчанию 30)"
+      }
+    },
+    "tty_list": {
+      "hash": "94b44d244839416ef01b53a7436b7195c8dd2272",
+      "ru": "Перечисляет текущие сессии панели терминала (sid / kind(local|ssh) / target / pid / cwd / время создания и последней активности), **включая сессии с завершившимся процессом, которые ещё удерживаются только для чтения** (с exited:true + код выхода/сигнал; при освобождении по времени дополнительно retainMs). Поле **running** говорит, выполняется ли в сессии команда (true = выполняется, сейчас не отправляйте туда команды — эти байты программа примет за ввод; false = команда завершена; **отсутствие поля = определить нельзя**, и это **не** «не выполняется» — тогда смотрите `runningUnknown`: ssh (удалённый shell не подконтролен, состояние неизвестно всегда) / tmux-attach (после подключения команда ещё не выполнялась, после одной команды всё восстановится) / no-integration (неподдерживаемый shell вроде fish·csh·cmd или отключённая «интеграция с shell»)); связанные lastExitCode / lastExitAt — код выхода и момент завершения «последней завершённой команды». Когда пользователь открыл панель терминала, читайте вывод нужного sid через tty_capture. **Доступность инструментов записи (отправка клавиш / открытие новой сессии) определяется вашей таблицей инструментов** — режим «Только чтение» вырезает их целиком (попросите пользователя переключиться в режим «Запись в рабочую область»: там они доступны, но **каждый вызов требует подтверждения пользователя**); в режиме «Запись в рабочую область» и выше они есть. Завершившиеся сессии доступны только для чтения (запись вернёт ошибку); чтобы продолжить работу, откройте новую.",
+      "paramHashes": {},
+      "params": {}
+    },
+    "tty_open": {
+      "hash": "9e86e63a6b75122604ac645934154edc0f7c5ea1",
+      "ru": "Открывает новую сессию терминала (локальный shell или, при `command`, сразу выполняет одну команду, например dev server). Сессия появляется в панели терминала пользователя, он её видит и может перехватить; для долгоживущих процессов и задач типа watch используйте её (не зависайте в ожидании внутри bash-инструмента). После открытия ждите сигнала готовности через tty_expect, результат забирайте через tty_capture{last:true}; закончили — закройте через tty_close. `command` выполняется **как цельный фрагмент по синтаксису хостового shell** (D78: в старых версиях обёртка `exec` выполняла только первую команду) — в POSIX shell работают `cd dir && cmd`, `a; b`, `for …; do …; done`, а **cmd / PowerShell в Windows — по своему синтаксису** (какой shell и синтаксис действуют сейчас, см. в строке про терминал в systemPrompt); **после завершения сессия не исчезает сразу**: она переходит в хранение «только чтение» (до явного закрытия, максимум 16 сессий), и последний вывод с кодом выхода всё ещё можно прочитать через tty_capture / tty_screen — поэтому для «выполнить команду, которая завершится, и потом забрать результат» не нужно оборачивать всё в `sh`. cwd по умолчанию — рабочий каталог из настроек плагина.",
+      "paramHashes": {
+        "properties.cols.description": "31178875c9f83c010c6afad613f687c99868ba1b",
+        "properties.command.description": "e9baf377b7b15522e685588a8e3bc9c206a4ca6a",
+        "properties.cwd.description": "e249fd836db1413933b640b4537f8c4f0854bd90",
+        "properties.persistName.description": "860057a0dbeb003400d4cac99b0159fb4dec8fd8",
+        "properties.rows.description": "746753ddf5dee791ec7c706cdd9a2792b2def717"
+      },
+      "params": {
+        "properties.cols.description": "число столбцов (2~500, по умолчанию 80)",
+        "properties.command.description": "команда для немедленного выполнения (неинтерактивно): выполняется как **цельный фрагмент кода shell**, допустимы `cd x && cmd`, `a; b`, конвейеры, многострочные скрипты (D78); если она задана, tmux-персистентность не используется. Пропуск или одни пробелы = интерактивный shell",
+        "properties.cwd.description": "рабочий каталог (должен быть существующим абсолютным путём); по умолчанию берётся cwd из настроек плагина",
+        "properties.persistName.description": "имя tmux-сессии для персистентности (действует при включённой «персистентности сессий»; при совпадении имени переиспользуется существующая сессия). Подходит для долгих задач, которые должны пережить перезапуск хоста",
+        "properties.rows.description": "число строк (2~200, по умолчанию 24)"
+      }
+    },
+    "tty_run": {
+      "hash": "6970af44b6981ffb9eceeaa84197aa2756ebfacc",
+      "ru": "**Разовая команда**: открывает сессию терминала, выполняет в ней `command`, дожидается завершения и сразу возвращает хвост вывода + код выхода (сессия появляется в панели пользователя, он её видит и может перехватить) — четыре шага «tty_open → ожидание → tty_capture{last} → tty_close» ужаты в один вызов. Команда **завершилась — сессия закрывается**: по умолчанию она закрывается (результат уже возвращён этим вызовом), а при `keep:true` остаётся в состоянии «только чтение» для последующего просмотра. Если к `timeoutSec` команда не закончилась, возвращается `running:true` (сессия продолжает работать, **убивать её или нет — решаете вы**); дальше смотрите через tty_expect / tty_capture либо закрывайте через tty_close. Когда использовать его вместо bash-инструмента: когда пользователь должен **видеть** эту команду или когда её нужно выполнить именно в сессии терминала (тот же PTY / лимит сессий / возможность потом перехватить); для чисто неинтерактивных команд, которые пользователю видеть не нужно, bash-инструмент проще. `command` выполняется как цельный фрагмент по синтаксису хостового shell (в POSIX работают `cd x && cmd`, многострочные скрипты; cmd / PowerShell в Windows — по своему синтаксису).",
+      "paramHashes": {
+        "properties.cols.description": "31178875c9f83c010c6afad613f687c99868ba1b",
+        "properties.command.description": "09fbce9a76bb2308e0661b8d87406383dd0aee0c",
+        "properties.cwd.description": "e249fd836db1413933b640b4537f8c4f0854bd90",
+        "properties.keep.description": "e030002fc7a5610ddaf5ff19770073e81ddb2556",
+        "properties.lines.description": "c1321e9e09a4dba068dfd99cb2f7073763fb58e6",
+        "properties.rows.description": "746753ddf5dee791ec7c706cdd9a2792b2def717",
+        "properties.timeoutSec.description": "cecfbebe667669521cd3a1e707044aa8c7c5b9d2"
+      },
+      "params": {
+        "properties.cols.description": "число столбцов (2~500, по умолчанию 80)",
+        "properties.command.description": "выполняемая команда (цельный код shell: поддерживаются `cd x && cmd`, конвейеры, многострочные скрипты)",
+        "properties.cwd.description": "рабочий каталог (должен быть существующим абсолютным путём); по умолчанию берётся cwd из настроек плагина",
+        "properties.keep.description": "true = после завершения оставить сессию в состоянии «только чтение» (для просмотра/перехвата); по умолчанию false = закрыть сразу после завершения (результат уже возвращён этим вызовом)",
+        "properties.lines.description": "сколько строк хвоста вывода вернуть (1~500, по умолчанию 60)",
+        "properties.rows.description": "число строк (2~200, по умолчанию 24)",
+        "properties.timeoutSec.description": "предел ожидания завершения команды в секундах (1~600, по умолчанию 120); если к этому моменту команда не закончилась, возвращается running:true, сессия не убивается"
+      }
+    },
+    "tty_screen": {
+      "hash": "1f05ce4c5c3a879ae5ca924ba4e09210b4f2c53b",
+      "ru": "Читает результат рендеринга текущего видимого экрана сессии панели терминала (sid даёт tty_list) — простой текст, эквивалентный картинке, которую пользователь видит в этот момент. Подходит, чтобы посмотреть текущее состояние полноэкранных интерактивных программ (vim / htop / выбор в меню); для прокручиваемого вывода истории используйте tty_capture. **Сессию с завершившимся процессом тоже можно читать** (в результате будет exited:true): экран не освобождается в период хранения «только чтение», и читается ровно то, что было в момент выхода.",
+      "paramHashes": {
+        "properties.sid.description": "78cf15ba15a3acd6429453b739d745d534357d60"
+      },
+      "params": {
+        "properties.sid.description": "id сессии (из tty_list)"
+      }
+    },
+    "tty_send": {
+      "hash": "c8bcdc8d0056d0fea86f2285965bf3309c42fb74",
+      "ru": "Отправляет текст и/или нажатия клавиш в PTY сессии панели терминала (sid даёт tty_list) (если data содержит перевод строки, команда отправляется по Enter; в локальных сессиях Windows плагин нормализует `\\n` в CRLF, так что пишите `\\n` как обычно). **Управляющие клавиши и стрелки передавайте именованными `keys`, не собирайте escape-последовательности в data сами**: записи вроде `\"\\x1b[B\"` / `\"^[[B\"` будут напечатаны в терминале как обычные символы (а счётчик sent при этом такой же — ошибку не видно). Нужно указать хотя бы одно из data и keys; если заданы оба, сначала отправляется data, затем по порядку keys (например, data=\":wq\" + keys=[\"Enter\"]). Подходит, чтобы подать интерактивный ввод программе, запущенной в терминале пользователя (например, клавишу q у dev server, выбор в menu, листание в vim/less, ответ на приглашение). Действия сразу отображаются в панели терминала пользователя. **Для сессии, которая уже завершилась (хранится только для чтения), вернётся ошибка** — такую сессию можно только читать; чтобы продолжить работу, откройте новую через tty_open.",
+      "paramHashes": {
+        "properties.data.description": "1a19d9fc47af0029aea2f98511b1270455714400",
+        "properties.keys.description": "cf339ae9686e2f0d46027d07dc13def89c507048",
+        "properties.sid.description": "78cf15ba15a3acd6429453b739d745d534357d60"
+      },
+      "params": {
+        "properties.data.description": "отправляемый текст (при наличии перевода строки команда отправляется сразу); нужно хотя бы одно из data и keys",
+        "properties.keys.description": "массив именованных клавиш, отправляемых по порядку: Enter / Tab / Shift+Tab / Esc / Backspace / Delete / Insert / Up / Down / Left / Right / Home / End / PageUp / PageDown / Space / F1~F12 / C-a~C-z, либо одиночный символ (отправляется буквально). Примеры: [\"C-c\"], [\"Down\",\"Down\",\"Enter\"], [\"Esc\", \":\", \"w\", \"q\", \"Enter\"]",
+        "properties.sid.description": "id сессии (из tty_list)"
+      }
+    },
+    "tty_stats": {
+      "hash": "9d25bc5a2b32f56e7cda565fb94676b324e26ed0",
+      "ru": "Читает текущие показатели машины, на которой находится сессия терминала (CPU / память / диск / число TCP-соединений / скорость сети / температура / время работы / нагрузка за 1 минуту / раздел подкачки / задержка SSH-соединения) — для локальной сессии берётся хост, для SSH-сессии та удалённая машина (открывается отдельный канал без PTY, на терминал это не влияет). Смотрите его перед развёртыванием, нагрузочным тестированием и разбором «машина не забита ли». Полный набор полей только для удалённого Linux; у удалённого Windows часть полей собирается, у удалённого macOS/BSD недоступна.",
+      "paramHashes": {
+        "properties.sid.description": "ba5dd6bb5edb69c5d3bcb5b6952b1ba4bae28077"
+      },
+      "params": {
+        "properties.sid.description": "id сессии (из tty_list)"
+      }
+    },
+    "tunnel_list": {
+      "hash": "0c7d93524493cb01779c78b8c1712c32e8247792",
+      "ru": "Перечисляет туннели перенаправления портов и их состояние в реальном времени (активен / подключается / ошибка / остановлен, правило, текущее и накопленное число соединений, последняя ошибка). Когда пользователь говорит «туннель не подключается / перенаправление отвалилось / порт не пробрасывается», начинайте диагностику с него; туннели настраиваются в карточке «Настройки → Плагины → Панель терминала».",
+      "paramHashes": {},
+      "params": {}
+    },
+    "tunnel_start": {
+      "hash": "0447f3e99978d32b628fe37db2fee0e8ccead650",
+      "ru": "Запустить туннель перенаправления портов (name берётся из tunnel_list). **Изменяет конфигурацию** — это то же самое, что поставить или снять галочку «Включить» в карточке «Настройки → Плагины → Панель терминала», поэтому изменение сохраняется и пользователь его видит. Возвращается снимок состояния после операции: state обычно всё ещё connecting (подключение выполняется асинхронно), окончательный результат смотрите позже через tunnel_list.",
+      "paramHashes": {
+        "properties.name.description": "67b580b49ee867dcbc0b706106c487cfb01bd05f"
+      },
+      "params": {
+        "properties.name.description": "имя туннеля (поле name из tunnel_list, вид <запись книги подключений>-L<порт>)"
+      }
+    },
+    "tunnel_stop": {
+      "hash": "2720ca825fe87f97cdc989843efcf2e36d147078",
+      "ru": "Остановить туннель перенаправления портов (name берётся из tunnel_list). **Изменяет конфигурацию** — это то же самое, что поставить или снять галочку «Включить» в карточке «Настройки → Плагины → Панель терминала», поэтому изменение сохраняется и пользователь его видит. Возвращается снимок состояния после операции: state обычно всё ещё connecting (подключение выполняется асинхронно), окончательный результат смотрите позже через tunnel_list.",
+      "paramHashes": {
+        "properties.name.description": "67b580b49ee867dcbc0b706106c487cfb01bd05f"
+      },
+      "params": {
+        "properties.name.description": "имя туннеля (поле name из tunnel_list, вид <запись книги подключений>-L<порт>)"
+      }
+    }
+  }
 }

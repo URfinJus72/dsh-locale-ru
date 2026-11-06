@@ -1,6 +1,6 @@
 {
   "harness": "0.2.0-rc.2",
-  "localeRu": "0.1.0",
+  "localeRu": "0.2.0",
   "plugins": [
     {
       "name": "@hyzyn/dsh-codegraph",

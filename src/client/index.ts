@@ -57,6 +57,15 @@ import * as trajectory from './dictionaries/trajectory.ts'
 import * as userQuestions from './dictionaries/user-questions.ts'
 import * as workflowRun from './dictionaries/workflow-run.ts'
 import * as workspace from './dictionaries/workspace.ts'
+import * as pluginAgentTeams from './dictionaries/plugins/agentTeams.ts'
+import * as pluginCodegraph from './dictionaries/plugins/codegraph.ts'
+import * as pluginDocker from './dictionaries/plugins/docker.ts'
+import * as pluginDshMarket from './dictionaries/plugins/dsh-market.ts'
+import * as pluginKitSettings from './dictionaries/plugins/kit-settings.ts'
+import * as pluginLoglens from './dictionaries/plugins/loglens.ts'
+import * as pluginMcp from './dictionaries/plugins/mcp.ts'
+import * as pluginRss from './dictionaries/plugins/rss.ts'
+import * as pluginTty from './dictionaries/plugins/tty.ts'
 
 /** One shipped dictionary contribution: namespace id plus ru entries. */
 interface Pack {
@@ -66,8 +75,8 @@ interface Pack {
   readonly dict: Record<string, string>
 }
 
-/** Every dictionary this pack ships, in registration order. */
-const PACKS: readonly Pack[] = [
+/** Core web GUI namespaces: registered as one strict transaction. */
+const CORE_PACKS: readonly Pack[] = [
   common,
   settingsLocale,
   settingsGeneral,
@@ -118,6 +127,25 @@ const PACKS: readonly Pack[] = [
   workspace,
 ]
 
+/**
+ * Namespaces owned by optional plugins (tty, docker, loglens, …). They are
+ * registered tolerantly: a plugin that is not installed simply never looks the
+ * namespace up, and a namespace some other registration already claimed (a
+ * plugin shipping its own ru, or a second copy of this pack) must not take the
+ * remaining dictionaries down with it.
+ */
+const PLUGIN_PACKS: readonly Pack[] = [
+  pluginCodegraph,
+  pluginMcp,
+  pluginRss,
+  pluginLoglens,
+  pluginKitSettings,
+  pluginTty,
+  pluginDocker,
+  pluginDshMarket,
+  pluginAgentTeams,
+]
+
 /** Stable id and selector label of the language this pack adds. */
 const RU_ID = 'ru'
 const RU_LABEL = 'Русский'
@@ -127,9 +155,12 @@ export const inject = ['locale']
 
 /**
  * Client plugin body: register the ru language definition and every shipped
- * dictionary as one transactional effect — a namespace already owned by a
- * rival registration rolls the whole pack back instead of squatting the
- * remaining seats.
+ * dictionary as one transactional effect. The core namespaces are all-or-
+ * nothing — a namespace already owned by a rival registration rolls the core
+ * set back instead of squatting the remaining seats. Plugin namespaces are
+ * registered one by one: a conflict there is reported and skipped, because an
+ * optional plugin (or the same plugin shipping its own ru) is not a reason to
+ * lose the rest of the pack.
  * @param ctx - client root context.
  */
 export function apply(ctx: ClientContext): void {
@@ -138,10 +169,18 @@ export function apply(ctx: ClientContext): void {
       ctx.locale.addLanguage({ id: RU_ID, label: RU_LABEL, fallback: 'en' }),
     ]
     try {
-      for (const pack of PACKS) disposers.push(ctx.locale.register(pack.ns, RU_ID, pack.dict))
+      for (const pack of CORE_PACKS) disposers.push(ctx.locale.register(pack.ns, RU_ID, pack.dict))
     } catch (error) {
       for (const dispose of disposers.reverse()) dispose()
       throw error
+    }
+    for (const pack of PLUGIN_PACKS) {
+      try {
+        disposers.push(ctx.locale.register(pack.ns, RU_ID, pack.dict))
+      } catch (error) {
+        const reason = error instanceof Error ? error.message : String(error)
+        console.warn(`[dsh-locale-ru] namespace "${pack.ns}" was not registered (${reason}); its strings stay in English`)
+      }
     }
     return () => { for (const dispose of disposers) dispose() }
   }, 'locale-ru: language and dictionaries')

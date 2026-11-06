@@ -1,0 +1,22 @@
+{
+  "package": "deepseek-ai/deepseek-harness",
+  "version": "0.2.0-rc.2",
+  "model": "ornith-9b",
+  "hashes": {
+    "charts": "3c1836f3a69c98f7",
+    "conditionalFormatting": "a1696c792b18f130",
+    "encoding": "0ab10ab4feb8b37d",
+    "featureSeparator": "d3bc9a378daaa1dd",
+    "formulaWarning": "5a6b6bcbefbaf22e",
+    "images": "19f49d852660fe0a",
+    "invalid": "1676f9487bc360f9",
+    "language": "094b0fe0e302854a",
+    "loading": "8e74d73623bc2d9e",
+    "retry": "9f5cd8a2e8807d73",
+    "shapes": "44d74dd33f0190bb",
+    "timeout": "412579f8da67b925",
+    "title": "cc6fdf1b0963eceb",
+    "tooLarge": "2363dea568e95417",
+    "unsupportedNotice": "641a320254313471"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "developerTools.description": "Показывает траекторию, различия кода и все предустановки агента",
+  "developerTools.error": "Не удалось сохранить. Попробуйте снова.",
+  "developerTools.title": "Показать режим программирования",
+  "general.currentVersion": "Текущая версия: {version}",
+  "shortcut.open": "Открыть настройки"
+}

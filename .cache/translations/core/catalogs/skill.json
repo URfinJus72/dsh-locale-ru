@@ -1,0 +1,11 @@
+{
+  "package": "deepseek-ai/deepseek-harness",
+  "version": "0.2.0-rc.2",
+  "ns": "skill",
+  "en": {
+    "row.preparing": "Preparing to load a skill"
+  },
+  "zh": {
+    "row.preparing": "准备加载技能"
+  }
+}

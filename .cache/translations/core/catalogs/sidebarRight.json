@@ -1,0 +1,35 @@
+{
+  "package": "deepseek-ai/deepseek-harness",
+  "version": "0.2.0-rc.2",
+  "ns": "sidebarRight",
+  "en": {
+    "command.budget": "Two panes is the limit",
+    "command.close": "Close current page or window",
+    "command.collapsed": "Expand the right sidebar first",
+    "command.empty": "Open a page first",
+    "command.float": "This action is unavailable in a floating panel",
+    "command.fullscreen": "Toggle panel fullscreen",
+    "command.noFocus": "Focus a right sidebar pane first",
+    "command.noRefresh": "This page cannot be refreshed",
+    "command.noSession": "Select a session first",
+    "command.refresh": "Refresh current page",
+    "command.stale": "The page changed; focus it again",
+    "command.toggle": "Toggle right sidebar",
+    "command.width": "Not enough width to split, widen the sidebar"
+  },
+  "zh": {
+    "command.budget": "已达两格上限",
+    "command.close": "关闭当前页面／窗口",
+    "command.collapsed": "请先展开右侧栏",
+    "command.empty": "请先打开页面",
+    "command.float": "浮动面板不支持此操作",
+    "command.fullscreen": "面板全屏／退出全屏",
+    "command.noFocus": "请先聚焦右侧面板",
+    "command.noRefresh": "当前页面不支持刷新",
+    "command.noSession": "请先选择会话",
+    "command.refresh": "刷新当前页面",
+    "command.stale": "页面已切换，请重新聚焦",
+    "command.toggle": "展开／收起右侧栏",
+    "command.width": "栏宽不足，拖宽侧边栏后再分栏"
+  }
+}

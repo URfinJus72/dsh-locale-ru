@@ -1,0 +1,303 @@
+{
+  "translated": 0,
+  "cached": 891,
+  "failed": 0,
+  "requests": 0,
+  "requestsThinkingOff": 0,
+  "requestsThinkingOn": 0,
+  "elapsedMs": 26,
+  "skipped": 0,
+  "model": "ornith-9b",
+  "baseUrl": "http://127.0.0.1:8080/v1",
+  "catalogs": [
+    {
+      "ns": "agent-team",
+      "translated": 0,
+      "cached": 5,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "chat",
+      "translated": 0,
+      "cached": 90,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "common",
+      "translated": 0,
+      "cached": 4,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "conversation",
+      "translated": 0,
+      "cached": 216,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "cordis",
+      "translated": 0,
+      "cached": 1,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "deliverables",
+      "translated": 0,
+      "cached": 2,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "job",
+      "translated": 0,
+      "cached": 24,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "model",
+      "translated": 0,
+      "cached": 4,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "open-in-app",
+      "translated": 0,
+      "cached": 9,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "pluginManager",
+      "translated": 0,
+      "cached": 48,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "question",
+      "translated": 0,
+      "cached": 16,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "schedule.catalog",
+      "translated": 0,
+      "cached": 53,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "session-log-download",
+      "translated": 0,
+      "cached": 1,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "settings.account",
+      "translated": 0,
+      "cached": 93,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "settings.agentLoop",
+      "translated": 0,
+      "cached": 1,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "settings.agentPreset",
+      "translated": 0,
+      "cached": 19,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "settings",
+      "translated": 0,
+      "cached": 5,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "settings.models",
+      "translated": 0,
+      "cached": 13,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "settings.pluginInventory",
+      "translated": 0,
+      "cached": 1,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "settings.shell",
+      "translated": 0,
+      "cached": 1,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "settings.webSearch",
+      "translated": 0,
+      "cached": 2,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "shortcuts",
+      "translated": 0,
+      "cached": 56,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "sidebarBrowser",
+      "translated": 0,
+      "cached": 6,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "sidebarDocumentPreview",
+      "translated": 0,
+      "cached": 3,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "sidebarExcel",
+      "translated": 0,
+      "cached": 15,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "sidebarFiles",
+      "translated": 0,
+      "cached": 4,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "sidebarImage",
+      "translated": 0,
+      "cached": 6,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "sidebarOffice",
+      "translated": 0,
+      "cached": 1,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "sidebarPdf",
+      "translated": 0,
+      "cached": 6,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "sidebarRight",
+      "translated": 0,
+      "cached": 13,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "sidebarTerminal",
+      "translated": 0,
+      "cached": 1,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "skill",
+      "translated": 0,
+      "cached": 1,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "subagent",
+      "translated": 0,
+      "cached": 4,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "trajectory",
+      "translated": 0,
+      "cached": 8,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "voice-input",
+      "translated": 0,
+      "cached": 101,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "workspace",
+      "translated": 0,
+      "cached": 58,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    }
+  ],
+  "failures": []
+}

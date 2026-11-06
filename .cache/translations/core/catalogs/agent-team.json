@@ -1,0 +1,19 @@
+{
+  "package": "deepseek-ai/deepseek-harness",
+  "version": "0.2.0-rc.2",
+  "ns": "agent-team",
+  "en": {
+    "current": "Current chat",
+    "failure": "Invalid persisted Team record: {message}",
+    "task.collapse": "Show less",
+    "task.expand": "Show more",
+    "unavailable": "Team is unavailable"
+  },
+  "zh": {
+    "current": "当前会话",
+    "failure": "团队持久记录无效：{message}",
+    "task.collapse": "收起",
+    "task.expand": "展开",
+    "unavailable": "Team 暂不可用"
+  }
+}

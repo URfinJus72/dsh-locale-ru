@@ -1,0 +1,21 @@
+{
+  "package": "deepseek-ai/deepseek-harness",
+  "version": "0.2.0-rc.2",
+  "ns": "sidebarBrowser",
+  "en": {
+    "address.unknown": "The page navigated; this carrier cannot read its new URL.",
+    "load.failed": "The page could not load; reload or open it in the system browser.",
+    "load.failed.detail": "Page load failed ({code}): {description}",
+    "restore.action": "Restore page",
+    "restore.previous": "Previously opened",
+    "shortcut.noSession": "Open a session first"
+  },
+  "zh": {
+    "address.unknown": "页面已跳转；当前载体无法读取新的 URL。",
+    "load.failed": "页面加载失败；请刷新重试或在系统浏览器中打开。",
+    "load.failed.detail": "页面加载失败 ({code}): {description}",
+    "restore.action": "恢复页面",
+    "restore.previous": "上次打开",
+    "shortcut.noSession": "请先打开一个会话"
+  }
+}

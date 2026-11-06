@@ -1,0 +1,11 @@
+{
+  "package": "deepseek-ai/deepseek-harness",
+  "version": "0.2.0-rc.2",
+  "ns": "cordis",
+  "en": {
+    "a11y.preparing": "Preparing a Cordis tool call"
+  },
+  "zh": {
+    "a11y.preparing": "准备调用 Cordis 工具"
+  }
+}

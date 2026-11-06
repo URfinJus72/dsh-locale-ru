@@ -1,0 +1,4007 @@
+{
+  "worklist": {
+    "common": {
+      "codeBlock.title": {
+        "kind": "single",
+        "en": "Code block"
+      },
+      "codeBlock.unwrap": {
+        "kind": "single",
+        "en": "Do not wrap lines"
+      },
+      "codeBlock.wrap": {
+        "kind": "single",
+        "en": "Wrap lines"
+      },
+      "workspace.defaultName": {
+        "kind": "single",
+        "en": "Default workspace"
+      }
+    },
+    "settings.locale": {},
+    "settings": {
+      "developerTools.description": {
+        "kind": "single",
+        "en": "Shows trajectory, code diffs, and all Agent presets"
+      },
+      "developerTools.error": {
+        "kind": "single",
+        "en": "Could not save. Please try again."
+      },
+      "developerTools.title": {
+        "kind": "single",
+        "en": "Show coding view"
+      },
+      "general.currentVersion": {
+        "kind": "single",
+        "en": "Current version: {version}"
+      },
+      "shortcut.open": {
+        "kind": "single",
+        "en": "Open settings"
+      }
+    },
+    "settings.theme": {},
+    "settings.models": {
+      "addCatalog": {
+        "kind": "single",
+        "en": "Third-party model provider"
+      },
+      "addCatalogExhausted": {
+        "kind": "single",
+        "en": "Every catalog provider is already configured."
+      },
+      "addCatalogHint": {
+        "kind": "single",
+        "en": "Pick OpenAI, Anthropic, Kimi, or another provider from the built-in catalog and enter its API key."
+      },
+      "addCustom": {
+        "kind": "single",
+        "en": "Custom model API"
+      },
+      "addCustomHint": {
+        "kind": "single",
+        "en": "Connect a relay, a self-hosted server, or any other OpenAI- or Anthropic-compatible endpoint by its base URL, protocol, and models."
+      },
+      "addCustomUnavailable": {
+        "kind": "single",
+        "en": "No API protocol is available to declare."
+      },
+      "addMode": {
+        "kind": "single",
+        "en": "How to add"
+      },
+      "customAnthropicBaseUrlPlaceholder": {
+        "kind": "single",
+        "en": "https://gateway.example"
+      },
+      "deepSeekAccount": {
+        "kind": "single",
+        "en": "DeepSeek Account"
+      },
+      "deepSeekBaseUrl": {
+        "kind": "single",
+        "en": "https://api.deepseek.com/anthropic"
+      },
+      "protocolAnthropicMessages": {
+        "kind": "single",
+        "en": "Anthropic Messages"
+      },
+      "protocolOpenAiCompletions": {
+        "kind": "single",
+        "en": "OpenAI Chat Completions"
+      },
+      "protocolOpenAiResponses": {
+        "kind": "single",
+        "en": "OpenAI Responses"
+      }
+    },
+    "settings.plugins": {},
+    "settings.pluginInventory": {
+      "metadataError": {
+        "kind": "single",
+        "en": "Package metadata error: {error}"
+      }
+    },
+    "settings.agentLoop": {
+      "description": {
+        "kind": "single",
+        "en": "Control how the Agent dispatches tool calls."
+      },
+      "invalidNumber": {
+        "kind": "single",
+        "en": "Enter a number, or leave blank to use the default."
+      },
+      "maxParallel": {
+        "kind": "single",
+        "en": "Parallel tool calls"
+      },
+      "maxParallelHint": {
+        "kind": "single",
+        "en": "Upper bound on parallel-safe calls running at once within one step."
+      },
+      "overridden": {
+        "kind": "single",
+        "en": "Overridden"
+      },
+      "readOnly": {
+        "kind": "single",
+        "en": "This deployment stores settings read-only."
+      },
+      "reset": {
+        "kind": "single",
+        "en": "Reset to default"
+      },
+      "save": {
+        "kind": "single",
+        "en": "Save"
+      },
+      "saveFailed": {
+        "kind": "single",
+        "en": "The deployment did not accept these values; they were left for you to correct."
+      },
+      "saving": {
+        "kind": "single",
+        "en": "Saving…"
+      },
+      "title": {
+        "kind": "single",
+        "en": "Agent loop"
+      },
+      "unavailable": {
+        "kind": "single",
+        "en": "This plugin is not loaded, so it cannot be configured right now."
+      }
+    },
+    "settings.shell": {
+      "description": {
+        "kind": "single",
+        "en": "Limit how long each command may run and how much it may output."
+      },
+      "invalidNumber": {
+        "kind": "single",
+        "en": "Enter a number, or leave blank to use the default."
+      },
+      "maxOutputBytes": {
+        "kind": "single",
+        "en": "Output cap per stream (bytes)"
+      },
+      "maxOutputBytesHint": {
+        "kind": "single",
+        "en": "Output beyond this spills to a temporary file rather than being lost."
+      },
+      "overridden": {
+        "kind": "single",
+        "en": "Overridden"
+      },
+      "readOnly": {
+        "kind": "single",
+        "en": "This deployment stores settings read-only."
+      },
+      "reset": {
+        "kind": "single",
+        "en": "Reset to default"
+      },
+      "save": {
+        "kind": "single",
+        "en": "Save"
+      },
+      "saveFailed": {
+        "kind": "single",
+        "en": "The deployment did not accept these values; they were left for you to correct."
+      },
+      "saving": {
+        "kind": "single",
+        "en": "Saving…"
+      },
+      "timeoutMs": {
+        "kind": "single",
+        "en": "Command timeout (ms)"
+      },
+      "timeoutMsHint": {
+        "kind": "single",
+        "en": "How long one command may run before it is terminated."
+      },
+      "title": {
+        "kind": "single",
+        "en": "Shell"
+      },
+      "unavailable": {
+        "kind": "single",
+        "en": "This plugin is not loaded, so it cannot be configured right now."
+      }
+    },
+    "settings.subagent": {
+      "overridden": {
+        "kind": "single",
+        "en": "Overridden"
+      },
+      "readOnly": {
+        "kind": "single",
+        "en": "This deployment stores settings read-only."
+      },
+      "reset": {
+        "kind": "single",
+        "en": "Reset to default"
+      },
+      "save": {
+        "kind": "single",
+        "en": "Save"
+      },
+      "saveFailed": {
+        "kind": "single",
+        "en": "The deployment did not accept these values; they were left for you to correct."
+      },
+      "saving": {
+        "kind": "single",
+        "en": "Saving…"
+      },
+      "subagentCapacityHelp": {
+        "kind": "single",
+        "en": "Total live Subagents under the same main Agent, across all recursion levels. The main Agent is excluded. New start requests are rejected when the limit is reached."
+      },
+      "subagentCapacityHelpLabel": {
+        "kind": "single",
+        "en": "About the Subagent parallelism limit"
+      },
+      "subagentCapacityInvalid": {
+        "kind": "single",
+        "en": "Enter a whole number of 1 or more."
+      },
+      "subagentDepthHelp": {
+        "kind": "single",
+        "en": "Limits how many levels of Subagents an Agent can create."
+      },
+      "subagentDepthHelpLabel": {
+        "kind": "single",
+        "en": "About maximum recursion depth"
+      },
+      "subagentDepthInvalid": {
+        "kind": "single",
+        "en": "Enter a whole number of 0 or more."
+      },
+      "subagentDepthOne": {
+        "kind": "single",
+        "en": "Only the main Agent can create Subagents"
+      },
+      "subagentDepthOverride": {
+        "kind": "single",
+        "en": "If a tool defines its own maximum recursion depth, that setting takes precedence."
+      },
+      "subagentDepthZero": {
+        "kind": "single",
+        "en": "Disable Subagents"
+      },
+      "subagentDescription": {
+        "kind": "single",
+        "en": "Set Subagent recursion depth, count, and models."
+      },
+      "subagentLimitsTitle": {
+        "kind": "single",
+        "en": "Limits"
+      },
+      "subagentMaxActive": {
+        "kind": "single",
+        "en": "Subagent parallelism limit"
+      },
+      "subagentMaxDepth": {
+        "kind": "single",
+        "en": "Maximum recursion depth"
+      },
+      "subagentModelSelectionAllowed": {
+        "kind": "single",
+        "en": "Models agents may choose"
+      },
+      "subagentModelSelectionChoose": {
+        "kind": "single",
+        "en": "When enabled, agents can choose a provider, model, and reasoning effort for each Subagent from the authorized models below. Applies only to new sessions."
+      },
+      "subagentModelSelectionConflict": {
+        "kind": "single",
+        "en": "Settings changed elsewhere. Discard your draft and try again."
+      },
+      "subagentModelSelectionEmpty": {
+        "kind": "single",
+        "en": "No model provider currently advertises a model."
+      },
+      "subagentModelSelectionLoadFailed": {
+        "kind": "single",
+        "en": "Models could not be loaded."
+      },
+      "subagentModelSelectionLoading": {
+        "kind": "single",
+        "en": "Loading models…"
+      },
+      "subagentModelSelectionOff": {
+        "kind": "single",
+        "en": "Subagents use configured defaults or inherit the parent agent's model. Saved model choices are retained."
+      },
+      "subagentModelSelectionPartial": {
+        "kind": "single",
+        "en": "Some model providers could not be loaded; saved choices remain removable."
+      },
+      "subagentModelSelectionRequired": {
+        "kind": "single",
+        "en": "Select at least one model before saving."
+      },
+      "subagentModelSelectionRetry": {
+        "kind": "single",
+        "en": "Retry"
+      },
+      "subagentModelSelectionTitle": {
+        "kind": "single",
+        "en": "Model selection"
+      },
+      "subagentModelSelectionToggle": {
+        "kind": "single",
+        "en": "Allow agents to choose models for Subagents"
+      },
+      "subagentModelSelectionUnavailable": {
+        "kind": "single",
+        "en": "Currently unavailable"
+      },
+      "subagentModelSelectionUnavailableGroup": {
+        "kind": "single",
+        "en": "Saved but currently unavailable"
+      },
+      "subagentTitle": {
+        "kind": "single",
+        "en": "Subagent"
+      },
+      "unavailable": {
+        "kind": "single",
+        "en": "This plugin is not loaded, so it cannot be configured right now."
+      }
+    },
+    "settings.webSearch": {
+      "apiKey": {
+        "kind": "single",
+        "en": "API key"
+      },
+      "apiKeyHint": {
+        "kind": "single",
+        "en": "Stored outside the settings file. Leave blank to keep the current key."
+      },
+      "apiKeySet": {
+        "kind": "single",
+        "en": "A key is configured."
+      },
+      "apiKeyUnset": {
+        "kind": "single",
+        "en": "No key is configured; only conversations using a DeepSeek Account model can search, through the default endpoint."
+      },
+      "baseUrl": {
+        "kind": "single",
+        "en": "Endpoint"
+      },
+      "baseUrlHint": {
+        "kind": "single",
+        "en": "Leave blank to use the provider default."
+      },
+      "description": {
+        "kind": "single",
+        "en": "Set up the DeepSeek search provider."
+      },
+      "invalidNumber": {
+        "kind": "single",
+        "en": "Enter a number, or leave blank to use the default."
+      },
+      "maxUses": {
+        "kind": "single",
+        "en": "Max searches per request"
+      },
+      "maxUsesHint": {
+        "kind": "single",
+        "en": "How many times one request may search before it must answer."
+      },
+      "overridden": {
+        "kind": "single",
+        "en": "Overridden"
+      },
+      "readOnly": {
+        "kind": "single",
+        "en": "This deployment stores settings read-only."
+      },
+      "reset": {
+        "kind": "single",
+        "en": "Reset to default"
+      },
+      "save": {
+        "kind": "single",
+        "en": "Save"
+      },
+      "saveFailed": {
+        "kind": "single",
+        "en": "The deployment did not accept these values; they were left for you to correct."
+      },
+      "saving": {
+        "kind": "single",
+        "en": "Saving…"
+      },
+      "title": {
+        "kind": "single",
+        "en": "Web search"
+      },
+      "unavailable": {
+        "kind": "single",
+        "en": "This plugin is not loaded, so it cannot be configured right now."
+      }
+    },
+    "settings.account": {
+      "accountInfo": {
+        "kind": "single",
+        "en": "More account information"
+      },
+      "addApiKey": {
+        "kind": "single",
+        "en": "Add API Key"
+      },
+      "backToHarness": {
+        "kind": "single",
+        "en": "Back to DeepSeek Harness"
+      },
+      "balance": {
+        "kind": "single",
+        "en": "Topped-up balance"
+      },
+      "balanceSignedOut": {
+        "kind": "single",
+        "en": "Sign in to view"
+      },
+      "balanceUnavailable": {
+        "kind": "single",
+        "en": "View on Platform"
+      },
+      "bonusBalance": {
+        "kind": "single",
+        "en": "Granted balance"
+      },
+      "bonusNoticeTitle": {
+        "kind": "single",
+        "en": "Bonus credited"
+      },
+      "browserDescription": {
+        "kind": "single",
+        "en": ", then open it in your browser to finish signing in."
+      },
+      "browserPrompt": {
+        "kind": "single",
+        "en": "Page did not open automatically? "
+      },
+      "browserTitle": {
+        "kind": "single",
+        "en": "Waiting for sign in"
+      },
+      "cancel": {
+        "kind": "single",
+        "en": "Cancel"
+      },
+      "close": {
+        "kind": "single",
+        "en": "Close"
+      },
+      "completing": {
+        "kind": "single",
+        "en": "Completing sign in…"
+      },
+      "contactUs": {
+        "kind": "single",
+        "en": "Feedback"
+      },
+      "copiedLink": {
+        "kind": "single",
+        "en": "Link copied"
+      },
+      "copyFailed": {
+        "kind": "single",
+        "en": "Copy failed"
+      },
+      "copyLink": {
+        "kind": "single",
+        "en": "Copy sign-in link"
+      },
+      "expired": {
+        "kind": "single",
+        "en": "Sign in expired. Try again."
+      },
+      "failed": {
+        "kind": "single",
+        "en": "Could not complete the operation. Try again."
+      },
+      "failureTitle": {
+        "kind": "single",
+        "en": "Could not sign in"
+      },
+      "initializing": {
+        "kind": "single",
+        "en": "Starting sign in…"
+      },
+      "loading": {
+        "kind": "single",
+        "en": "Loading…"
+      },
+      "loginDescription": {
+        "kind": "single",
+        "en": "Sign in to your DeepSeek account or add an API Key to get started. Your projects and files are stored locally."
+      },
+      "loginTitle": {
+        "kind": "single",
+        "en": "Get started"
+      },
+      "menu": {
+        "kind": "single",
+        "en": "Account menu"
+      },
+      "modelSignInRequired": {
+        "kind": "single",
+        "en": "Model unavailable. Please sign in and try again."
+      },
+      "more": {
+        "kind": "single",
+        "en": "More"
+      },
+      "nav": {
+        "kind": "single",
+        "en": "Account"
+      },
+      "onboardingArtworkLocale": {
+        "kind": "single",
+        "en": "en"
+      },
+      "onboardingBack": {
+        "kind": "single",
+        "en": "Back"
+      },
+      "onboardingBrand": {
+        "kind": "single",
+        "en": "DeepSeek Harness"
+      },
+      "onboardingCompact": {
+        "kind": "single",
+        "en": "Results only"
+      },
+      "onboardingCompactDescription": {
+        "kind": "single",
+        "en": "See just the results in a clean, simple interface"
+      },
+      "onboardingContinue": {
+        "kind": "single",
+        "en": "Continue"
+      },
+      "onboardingCredit": {
+        "kind": "single",
+        "en": "Add credits"
+      },
+      "onboardingCreditDescription": {
+        "kind": "single",
+        "en": "DeepSeek Harness charges credits based on the tokens used by models and tools. Add credits in advance to keep your tasks running without interruption. Your balance is only used while the agent is working on a task."
+      },
+      "onboardingDetailed": {
+        "kind": "single",
+        "en": "Full details"
+      },
+      "onboardingDetailedDescription": {
+        "kind": "single",
+        "en": "See the full process for easier debugging and troubleshooting"
+      },
+      "onboardingDevelopment": {
+        "kind": "single",
+        "en": "Coding & development"
+      },
+      "onboardingDevelopmentDescription": {
+        "kind": "single",
+        "en": "Edit code, debug issues, run commands, manage project files, and more"
+      },
+      "onboardingEnter": {
+        "kind": "single",
+        "en": "Open app"
+      },
+      "onboardingFundedTopUp": {
+        "kind": "single",
+        "en": "Add credits"
+      },
+      "onboardingGoTopUp": {
+        "kind": "single",
+        "en": "Add credits"
+      },
+      "onboardingIntroduction": {
+        "kind": "single",
+        "en": "DeepSeek Harness works in a local folder and uses tools to read and write files on your computer. It can help you research and organize information, create documents and spreadsheets, write code, troubleshoot issues, and more."
+      },
+      "onboardingKeepSetting": {
+        "kind": "single",
+        "en": "Continue setup"
+      },
+      "onboardingLater": {
+        "kind": "single",
+        "en": "Next"
+      },
+      "onboardingLoading": {
+        "kind": "single",
+        "en": "Loading settings…"
+      },
+      "onboardingNoCreditDescription": {
+        "kind": "single",
+        "en": "DeepSeek Harness can’t start new tasks without credits. You can add them later in Settings → Account."
+      },
+      "onboardingNoCreditTitle": {
+        "kind": "single",
+        "en": "Skip adding credits?"
+      },
+      "onboardingOffice": {
+        "kind": "single",
+        "en": "Office & creative work"
+      },
+      "onboardingOfficeDescription": {
+        "kind": "single",
+        "en": "Edit documents, organize data, create presentations, and more"
+      },
+      "onboardingProcess": {
+        "kind": "single",
+        "en": "How much detail would you like to see?"
+      },
+      "onboardingProcessDescription": {
+        "kind": "single",
+        "en": "This only changes how progress is shown, not what DeepSeek Harness can do."
+      },
+      "onboardingPurposeDescription": {
+        "kind": "single",
+        "en": "We’ll tailor the interface and tools to fit the way you work."
+      },
+      "onboardingPurposePrefix": {
+        "kind": "single",
+        "en": "What would you like"
+      },
+      "onboardingPurposeSuffix": {
+        "kind": "single",
+        "en": "to help with?"
+      },
+      "onboardingRetry": {
+        "kind": "single",
+        "en": "Retry"
+      },
+      "onboardingSaveFailed": {
+        "kind": "single",
+        "en": "Could not save settings. Try again."
+      },
+      "onboardingSkip": {
+        "kind": "single",
+        "en": "Skip"
+      },
+      "onboardingSkipDescription": {
+        "kind": "single",
+        "en": "You can change how progress, performance, and usage are displayed, or enable Coding Tools, anytime in Settings → General."
+      },
+      "onboardingSkipTitle": {
+        "kind": "single",
+        "en": "Skip setup?"
+      },
+      "onboardingStandard": {
+        "kind": "single",
+        "en": "Key details"
+      },
+      "onboardingStandardDescription": {
+        "kind": "single",
+        "en": "Focus on results, with only the most important steps and actions shown"
+      },
+      "onboardingStart": {
+        "kind": "single",
+        "en": "Get started"
+      },
+      "onboardingTopUp": {
+        "kind": "single",
+        "en": "Add credits"
+      },
+      "onboardingUnderstood": {
+        "kind": "single",
+        "en": "Got it"
+      },
+      "onboardingWelcome": {
+        "kind": "single",
+        "en": "Welcome to"
+      },
+      "open": {
+        "kind": "single",
+        "en": "Open browser"
+      },
+      "platformFailed": {
+        "kind": "single",
+        "en": "Could not complete the operation. Try again."
+      },
+      "platformRetry": {
+        "kind": "single",
+        "en": "Retry"
+      },
+      "profileUnavailable": {
+        "kind": "single",
+        "en": "Account details are not available yet."
+      },
+      "quotaDescription": {
+        "kind": "single",
+        "en": "DeepSeek Harness cannot start a new task with this account when no balance is available. Would you like to top up? You can also top up later in Settings → Account."
+      },
+      "quotaTitle": {
+        "kind": "single",
+        "en": "No balance available"
+      },
+      "quotaTopUp": {
+        "kind": "single",
+        "en": "Top up"
+      },
+      "retry": {
+        "kind": "single",
+        "en": "Sign in again"
+      },
+      "sessionExpired": {
+        "kind": "single",
+        "en": "You have signed out of your account, please log in again."
+      },
+      "settings": {
+        "kind": "single",
+        "en": "Settings"
+      },
+      "settingsSignedOutDescription": {
+        "kind": "single",
+        "en": "Sign in to DeepSeek Harness to get your dedicated API Key"
+      },
+      "settingsSignedOutTitle": {
+        "kind": "single",
+        "en": "You are not signed in to DeepSeek Harness"
+      },
+      "signIn": {
+        "kind": "single",
+        "en": "Sign in"
+      },
+      "signInDescription": {
+        "kind": "single",
+        "en": "Use your DeepSeek account to get started."
+      },
+      "signOut": {
+        "kind": "single",
+        "en": "Sign out"
+      },
+      "signOutDescription": {
+        "kind": "single",
+        "en": "Signing out will not delete any data. You can sign in to this account again."
+      },
+      "signOutRunningDescription": {
+        "kind": "single",
+        "en": "Tasks are currently running. Signing out will interrupt them. Sign out now?"
+      },
+      "signOutUnknownDescription": {
+        "kind": "single",
+        "en": "Could not check running tasks. Signing out may interrupt tasks using this account. Sign out now?"
+      },
+      "signedIn": {
+        "kind": "single",
+        "en": "Signed in to DeepSeek"
+      },
+      "signedOut": {
+        "kind": "single",
+        "en": "Not signed in"
+      },
+      "timeoutDescription": {
+        "kind": "single",
+        "en": "Sign in again to continue."
+      },
+      "timeoutTitle": {
+        "kind": "single",
+        "en": "Sign in timed out"
+      },
+      "topUp": {
+        "kind": "single",
+        "en": "Top up"
+      },
+      "usage": {
+        "kind": "single",
+        "en": "View usage"
+      },
+      "waiting": {
+        "kind": "single",
+        "en": "Continue in your browser"
+      }
+    },
+    "shortcuts": {
+      "application": {
+        "kind": "single",
+        "en": "Application"
+      },
+      "approval": {
+        "kind": "single",
+        "en": "Approval area"
+      },
+      "cancel": {
+        "kind": "single",
+        "en": "Cancel"
+      },
+      "clear": {
+        "kind": "single",
+        "en": "Remove"
+      },
+      "clear-search": {
+        "kind": "single",
+        "en": "Clear search"
+      },
+      "close": {
+        "kind": "single",
+        "en": "Close keyboard shortcuts"
+      },
+      "close-confirmation": {
+        "kind": "single",
+        "en": "Close confirmation"
+      },
+      "conflict": {
+        "kind": "single",
+        "en": "Already used by “{commands}”"
+      },
+      "description": {
+        "kind": "single",
+        "en": "View and edit available shortcuts and input actions"
+      },
+      "desktop-document": {
+        "kind": "single",
+        "en": "userData/keybindings.json"
+      },
+      "desktop-reload": {
+        "kind": "single",
+        "en": "restart Harness"
+      },
+      "dismiss": {
+        "kind": "single",
+        "en": "Close menu or top dialog"
+      },
+      "edit-label": {
+        "kind": "single",
+        "en": "Edit shortcut for {command}"
+      },
+      "empty": {
+        "kind": "single",
+        "en": "No matching shortcuts"
+      },
+      "future": {
+        "kind": "single",
+        "en": "Shortcut configuration in {location} was created by a newer version. Upgrade Harness and try again."
+      },
+      "global-hint": {
+        "kind": "single",
+        "en": "Open from anywhere"
+      },
+      "input": {
+        "kind": "single",
+        "en": "Message input"
+      },
+      "invalid": {
+        "kind": "single",
+        "en": "Shortcut configuration in {location} is damaged. Back up and repair this configuration, then {reload}."
+      },
+      "macos-web-help": {
+        "kind": "single",
+        "en": "Use Command+/, Command+,, Command+Backslash, Control+Backquote, Command+Option+key, or Command+Shift+key. Combinations with three or four distinct modifiers are also supported. Browser or system shortcuts may not reach the page."
+      },
+      "menus": {
+        "kind": "single",
+        "en": "Menus and dialogs"
+      },
+      "modified-count": {
+        "kind": "single",
+        "en": "{count} customized"
+      },
+      "modifier-required": {
+        "kind": "single",
+        "en": "Include Command, Ctrl, or Alt in the combination."
+      },
+      "move": {
+        "kind": "single",
+        "en": "Move menu selection"
+      },
+      "native-failed": {
+        "kind": "single",
+        "en": "Could not protect desktop key recording. Exit recording and try again."
+      },
+      "not-ready": {
+        "kind": "single",
+        "en": "Shortcuts are not ready. Please try again."
+      },
+      "open": {
+        "kind": "single",
+        "en": "Open keyboard shortcuts"
+      },
+      "read": {
+        "kind": "single",
+        "en": "Could not read {location}. Check access permissions, then {reload}."
+      },
+      "record": {
+        "kind": "single",
+        "en": "Press a shortcut"
+      },
+      "record-help": {
+        "kind": "single",
+        "en": "Release the keys to save. Tab moves between actions; Esc cancels."
+      },
+      "reserved": {
+        "kind": "single",
+        "en": "This combination is reserved for system or text editing actions."
+      },
+      "reset": {
+        "kind": "single",
+        "en": "Restore default"
+      },
+      "reset-all": {
+        "kind": "single",
+        "en": "Restore all defaults"
+      },
+      "reset-description": {
+        "kind": "single",
+        "en": "Restore the default shortcuts for this platform. All modified or removed shortcuts will be restored. Other platforms are unaffected."
+      },
+      "reset-failed": {
+        "kind": "single",
+        "en": "Could not restore defaults. Your shortcuts are unchanged. Please retry."
+      },
+      "reset-saved": {
+        "kind": "single",
+        "en": "Default shortcuts restored"
+      },
+      "reset-title": {
+        "kind": "single",
+        "en": "Restore all default shortcuts?"
+      },
+      "retry-save": {
+        "kind": "single",
+        "en": "Retry save"
+      },
+      "review": {
+        "kind": "single",
+        "en": "I have reviewed the latest configuration"
+      },
+      "saved": {
+        "kind": "single",
+        "en": "Modified"
+      },
+      "search": {
+        "kind": "single",
+        "en": "Search shortcuts"
+      },
+      "select": {
+        "kind": "single",
+        "en": "Select menu item"
+      },
+      "settings": {
+        "kind": "single",
+        "en": "Keyboard shortcuts"
+      },
+      "stale": {
+        "kind": "single",
+        "en": "Shortcut configuration or available commands changed. Review the latest bindings before saving."
+      },
+      "title": {
+        "kind": "single",
+        "en": "Keyboard shortcuts"
+      },
+      "too-many-keys": {
+        "kind": "single",
+        "en": "Hold at most two non-modifier keys. Release the keys to try again."
+      },
+      "unbound": {
+        "kind": "single",
+        "en": "No shortcut"
+      },
+      "unsupported-browser": {
+        "kind": "single",
+        "en": "This browser does not support this combination yet."
+      },
+      "unsupported-key": {
+        "kind": "single",
+        "en": "This key is not supported."
+      },
+      "using-accepted": {
+        "kind": "single",
+        "en": "The last successfully read bindings remain active."
+      },
+      "using-defaults": {
+        "kind": "single",
+        "en": "Default bindings are active."
+      },
+      "view": {
+        "kind": "single",
+        "en": "Edit shortcuts"
+      },
+      "web-document": {
+        "kind": "single",
+        "en": "this site’s localStorage entry dsh.keybindings.v1"
+      },
+      "web-help": {
+        "kind": "single",
+        "en": "Browser combinations: Mod+/, Mod+Shift+,, Mod+Shift+.. Mod is Command on Mac and Ctrl elsewhere."
+      },
+      "web-reload": {
+        "kind": "single",
+        "en": "reload the page"
+      },
+      "windows-web-help": {
+        "kind": "single",
+        "en": "Use Ctrl+/, Ctrl+,, Ctrl+Alt+key, or Ctrl+Shift+key. Combinations with three or four distinct modifiers are also supported. Browser or system shortcuts may not reach the page."
+      },
+      "write-failed": {
+        "kind": "single",
+        "en": "Could not save. Your previous shortcuts and current draft are preserved. Please retry."
+      }
+    },
+    "settings.agentPreset": {
+      "guideCopied": {
+        "kind": "single",
+        "en": "Copied"
+      },
+      "guideCopy": {
+        "kind": "single",
+        "en": "Copy"
+      },
+      "guideCordisExplanation": {
+        "kind": "single",
+        "en": "### What you can create\n\nCreator mode includes the standard task tools plus runtime inspection, persistent plugin management, and guidance for authoring Cordis plugins and agent presets. It can create a plugin that adds a capability or UI, or a preset that combines tools and prompts for a particular job.\n\n### Plugins and modes\n\nA plugin adds capabilities to DSH, such as a tool, a service connection, or a UI entry. A mode is an agent preset that selects tools and defines how the agent works in a task. A plugin can be included in a custom preset.\n\n### How the result takes effect\n\nAsk the agent to install and verify the result, not just generate source code. A plugin may load immediately or require a restart, depending on what it changes. A newly created preset is selected when starting a new task."
+      },
+      "guideCordisIntro": {
+        "kind": "single",
+        "en": "Choose Creator mode for a new task. Describe the capability you want, where it should appear, and how you will verify it."
+      },
+      "guideCordisUsage": {
+        "kind": "single",
+        "en": "### Add a UI\n\n> Create a DSH plugin that adds a project notes entry to the sidebar. Let me browse the Markdown files in this workspace and preview a selected note. Install it and verify that the page opens.\n\nExpected output: an installed plugin with a working entry and preview page, plus any remaining activation steps.\n\n### Add a tool\n\n> Create a plugin with a tool that reads this project’s test report and summarizes the failed tests. Register it and verify it with a sample report.\n\nExpected output: a plugin with a callable tool and a verified sample call.\n\n### Create my own mode\n\n> Create a “Code review” mode based on Standard mode. Have it prioritize potential bugs and test gaps, cite file paths and lines, and ask before modifying files. Save it as a selectable preset.\n\nExpected output: a custom preset for new tasks. These review instructions guide the agent; permission settings determine which actions it can execute."
+      },
+      "guideExampleTask": {
+        "kind": "single",
+        "en": "Example task"
+      },
+      "guideFootnotes": {
+        "kind": "single",
+        "en": "Footnotes"
+      },
+      "guideMinimalExplanation": {
+        "kind": "single",
+        "en": "### What is included\n\nOne persistent shell tool and a fixed system prompt. The built-in preset does not load Skills, planning, context compaction, or the standard runtime context.\n\n### When to choose it\n\nUse it as a baseline for experiments and comparisons. It can still read files and execute scripts through shell commands, but offers fewer built-in ways to manage a long task. Fewer tools does not necessarily make it easier for a beginner."
+      },
+      "guideMinimalIntro": {
+        "kind": "single",
+        "en": "Choose Minimal mode for a new task. For a comparison, hold the model, permissions, input, and starting workspace state constant across runs."
+      },
+      "guideMinimalUsage": {
+        "kind": "single",
+        "en": "### Compare performance on a small bug fix\n\n> Run the tests for this project, find the cause of the failure, and make the smallest fix. Run the relevant tests again and report the result.\n\nRun the same task separately in Standard and Minimal modes from the same starting state. Compare task completion, tool calls, and the resulting changes. Minimal mode performs the work through terminal commands."
+      },
+      "guidePtcExplanation": {
+        "kind": "single",
+        "en": "### How tools are called\n\nPTC means Programmatic Tool Calling. In this built-in preset, the agent uses run_code to write a TypeScript program that calls tools through a generated SDK. The program can use loops, conditions, error handling, and concurrent calls where appropriate.\n\n### What reaches the model\n\nTool results first reach the program, which can filter and combine them. The model receives what the program prints or returns; image results are attached separately. Nested tool calls are still recorded and remain subject to tool permissions.\n\n### Compared with Standard mode\n\nBoth modes can handle coding and batch tasks. Standard mode exposes individual tools directly; PTC organizes tool calls in code. The current PTC preset leaves the workflow tool disabled. Speed and token use depend on the task and how the program handles its results."
+      },
+      "guidePtcIntro": {
+        "kind": "single",
+        "en": "Choose PTC mode when starting a new task. Specify the input files, processing rules, and output format. The agent writes the code."
+      },
+      "guidePtcUsage": {
+        "kind": "single",
+        "en": "### Check a set of configuration files\n\n> Check all JSON files in configs/. List missing required fields and invalid values against schema.json. Save a CSV with one row per issue. Include unreadable files in the report and keep checking the rest. Leave the original files unchanged.\n\nExpected output: an issue summary and a CSV report. The program can repeat the same checks, handle individual failures, and collect the results.\n\n### Summarize error logs\n\n> Analyze the log files in logs/. Group errors by service and error type. Show the ten most frequent groups and one example from each. Save the full counts to a CSV.\n\nExpected output: the top error groups and a complete count table. Intermediate data can be aggregated in the program before the summary reaches the model."
+      },
+      "guideSections": {
+        "kind": "single",
+        "en": "Guide sections"
+      },
+      "guideStandardExplanation": {
+        "kind": "single",
+        "en": "### How it works\n\nThe agent calls tools directly to read and edit files, search, and run terminal commands. It includes Skills, planning, goals, subagents, workflows, and context compaction.\n\n### When to choose it\n\nStart here for everyday coding, file work, and research. Standard mode can also write scripts and process files in batches. PTC changes how tool calls are organized; it is not required for batch tasks."
+      },
+      "guideStandardIntro": {
+        "kind": "single",
+        "en": "Choose Standard mode when starting a new task. Describe what you want to accomplish, point to the relevant files, and explain how to check the result."
+      },
+      "guideStandardUsage": {
+        "kind": "single",
+        "en": "### Fix a bug\n\n> Find out why submitting the search form twice makes the results disappear. Fix it and run the relevant tests. Explain the cause and what changed.\n\nExpected output: a code change, the relevant test results, and an explanation of the cause.\n\n### Organize project notes\n\n> Read the Markdown notes in this project. Summarize the agreed decisions and open questions, with links to the source files.\n\nExpected output: a summary with references that you can check against the original notes."
+      },
+      "howToUse": {
+        "kind": "single",
+        "en": "How to use"
+      },
+      "modeExplanation": {
+        "kind": "single",
+        "en": "Mode details"
+      }
+    },
+    "agent-team": {
+      "current": {
+        "kind": "single",
+        "en": "Current chat"
+      },
+      "failure": {
+        "kind": "single",
+        "en": "Invalid persisted Team record: {message}"
+      },
+      "task.collapse": {
+        "kind": "single",
+        "en": "Show less"
+      },
+      "task.expand": {
+        "kind": "single",
+        "en": "Show more"
+      },
+      "unavailable": {
+        "kind": "single",
+        "en": "Team is unavailable"
+      }
+    },
+    "voice-input": {
+      "auto": {
+        "kind": "single",
+        "en": "Detect automatically"
+      },
+      "cancel": {
+        "kind": "single",
+        "en": "Cancel"
+      },
+      "cancelPrepare": {
+        "kind": "single",
+        "en": "Cancel preparation"
+      },
+      "cancelled": {
+        "kind": "single",
+        "en": "Voice input cancelled."
+      },
+      "cloud": {
+        "kind": "single",
+        "en": "Audio will be sent to the selected cloud service."
+      },
+      "cloudReady": {
+        "kind": "single",
+        "en": "Cloud speech recognition is ready."
+      },
+      "conflict": {
+        "kind": "single",
+        "en": "Your draft changed. The transcript is preserved and can be inserted at the current cursor."
+      },
+      "dictate": {
+        "kind": "single",
+        "en": "Dictate"
+      },
+      "discard": {
+        "kind": "single",
+        "en": "Discard transcript"
+      },
+      "download.certificate": {
+        "kind": "single",
+        "en": "Cannot download {resource}: certificate verification failed."
+      },
+      "download.dns": {
+        "kind": "single",
+        "en": "Cannot download {resource}: the download address could not be resolved."
+      },
+      "download.http": {
+        "kind": "single",
+        "en": "Cannot download {resource}: the download service returned HTTP {status}."
+      },
+      "download.integrity": {
+        "kind": "single",
+        "en": "The download of {resource} is incomplete or failed verification."
+      },
+      "download.network": {
+        "kind": "single",
+        "en": "Cannot download {resource}: connection to the download service failed."
+      },
+      "download.storage": {
+        "kind": "single",
+        "en": "Cannot save {resource}: insufficient disk space or write permission."
+      },
+      "download.timeout": {
+        "kind": "single",
+        "en": "The download of {resource} timed out."
+      },
+      "download.unknown": {
+        "kind": "single",
+        "en": "Could not prepare {resource}."
+      },
+      "downloadAdvice.certificate": {
+        "kind": "single",
+        "en": "Check the system clock, trusted certificates and proxy settings on the machine running DSH, then retry."
+      },
+      "downloadAdvice.dns": {
+        "kind": "single",
+        "en": "Check DNS and proxy settings on the machine running DSH. Confirm that it can resolve the download source domain, then retry."
+      },
+      "downloadAdvice.http": {
+        "kind": "single",
+        "en": "Confirm that the download address is available and the proxy can reach the download service, or retry later."
+      },
+      "downloadAdvice.integrity": {
+        "kind": "single",
+        "en": "Retry the download. Other completed and verified files are retained."
+      },
+      "downloadAdvice.network": {
+        "kind": "single",
+        "en": "Check that the machine running DSH can reach the download source and its model download services. Configure a proxy on that machine if needed, then retry."
+      },
+      "downloadAdvice.storage": {
+        "kind": "single",
+        "en": "Check available disk space and write permission for the model directory on the machine running DSH, then retry."
+      },
+      "downloadAdvice.timeout": {
+        "kind": "single",
+        "en": "Check the network or proxy connection on the machine running DSH, then retry later. Verified downloaded files are retained."
+      },
+      "downloadAdvice.unknown": {
+        "kind": "single",
+        "en": "Check the network, disk space and model directory permissions on the machine running DSH, then retry."
+      },
+      "downloadBytes": {
+        "kind": "single",
+        "en": "Download: {completed} / {total} MB, {percent}%"
+      },
+      "downloadCode": {
+        "kind": "single",
+        "en": "Error code: {code}"
+      },
+      "downloadProgress": {
+        "kind": "single",
+        "en": "Download progress"
+      },
+      "downloadSource": {
+        "kind": "single",
+        "en": "Download source: {source}"
+      },
+      "downloadUnknown": {
+        "kind": "single",
+        "en": "Downloaded {completed} MB"
+      },
+      "elapsed": {
+        "kind": "single",
+        "en": "Waiting {seconds} seconds"
+      },
+      "empty": {
+        "kind": "single",
+        "en": "No speech recognized"
+      },
+      "en": {
+        "kind": "single",
+        "en": "English"
+      },
+      "failed": {
+        "kind": "single",
+        "en": "Speech recognition failed: {message}"
+      },
+      "insert": {
+        "kind": "single",
+        "en": "Insert text"
+      },
+      "interrupted": {
+        "kind": "single",
+        "en": "Recording was interrupted. Please try again."
+      },
+      "ja": {
+        "kind": "single",
+        "en": "Japanese"
+      },
+      "ko": {
+        "kind": "single",
+        "en": "Korean"
+      },
+      "language": {
+        "kind": "single",
+        "en": "Recognition language"
+      },
+      "loading": {
+        "kind": "single",
+        "en": "Loading recognition services…"
+      },
+      "local": {
+        "kind": "single",
+        "en": "Audio is recognized on the machine running DSH. If models need downloading, that machine must be able to reach the selected source and its file services. Configure a proxy on that machine if needed."
+      },
+      "permission": {
+        "kind": "single",
+        "en": "Microphone access is disabled. Allow it in browser and system settings."
+      },
+      "preparation.cancelled": {
+        "kind": "single",
+        "en": "Preparation cancelled. Completed downloads are retained."
+      },
+      "preparation.cancelling": {
+        "kind": "single",
+        "en": "Cancelling preparation…"
+      },
+      "preparation.checking": {
+        "kind": "single",
+        "en": "Checking local resources…"
+      },
+      "preparation.loading": {
+        "kind": "single",
+        "en": "Loading {name}…"
+      },
+      "preparation.ready": {
+        "kind": "single",
+        "en": "Local speech recognition is ready."
+      },
+      "preparation.standby": {
+        "kind": "single",
+        "en": "Local resources are prepared. Recording wakes the recognizer."
+      },
+      "preparation.unprepared": {
+        "kind": "single",
+        "en": "First use downloads the local recognition models."
+      },
+      "preparation.waking": {
+        "kind": "single",
+        "en": "Waking local speech recognition…"
+      },
+      "preparationFailed": {
+        "kind": "single",
+        "en": "Preparation failed: {message}"
+      },
+      "preparationSteps": {
+        "kind": "single",
+        "en": "Preparation steps"
+      },
+      "prepare": {
+        "kind": "single",
+        "en": "Download and prepare"
+      },
+      "provider": {
+        "kind": "single",
+        "en": "Recognition service"
+      },
+      "reconnecting": {
+        "kind": "single",
+        "en": "Connecting to speech recognition…"
+      },
+      "recording": {
+        "kind": "single",
+        "en": "Recording…"
+      },
+      "requesting": {
+        "kind": "single",
+        "en": "Allow microphone access to continue…"
+      },
+      "retryPrepare": {
+        "kind": "single",
+        "en": "Retry preparation"
+      },
+      "retryRecording": {
+        "kind": "single",
+        "en": "Record again"
+      },
+      "setup.disk": {
+        "kind": "single",
+        "en": "Disk space"
+      },
+      "setup.diskValue": {
+        "kind": "single",
+        "en": "Allow about {gb} GB for models, runtime, and download caches"
+      },
+      "setup.estimateNote": {
+        "kind": "single",
+        "en": "These are estimates; slow networks may take longer. Downloads are reused; idle models release memory by default."
+      },
+      "setup.local": {
+        "kind": "single",
+        "en": "Local models will be downloaded to the machine running DSH. No Python or compiler is required."
+      },
+      "setup.memory": {
+        "kind": "single",
+        "en": "Memory"
+      },
+      "setup.memoryValue": {
+        "kind": "single",
+        "en": "About {gb} GB with the model loaded; recognition may use more"
+      },
+      "setup.time": {
+        "kind": "single",
+        "en": "First setup"
+      },
+      "setup.timeValue": {
+        "kind": "single",
+        "en": "Allow roughly {min}–{max} minutes, depending on the network and machine"
+      },
+      "setupPrompt.body": {
+        "kind": "single",
+        "en": "Voice input is enabled. First use requires downloading and preparing local recognition models. Open the plugin details to review disk space, memory and time estimates before starting setup."
+      },
+      "setupPrompt.details": {
+        "kind": "single",
+        "en": "Open voice plugin settings"
+      },
+      "setupPrompt.later": {
+        "kind": "single",
+        "en": "Later"
+      },
+      "setupPrompt.open": {
+        "kind": "single",
+        "en": "Go to setup"
+      },
+      "setupPrompt.title": {
+        "kind": "single",
+        "en": "Set up voice input before recording"
+      },
+      "setupPrompt.trigger": {
+        "kind": "single",
+        "en": "Open voice input setup"
+      },
+      "setupPrompt.unavailableBody": {
+        "kind": "single",
+        "en": "Open the voice plugin details to check recognition status, preparation progress, or errors."
+      },
+      "setupPrompt.unavailableTitle": {
+        "kind": "single",
+        "en": "Speech recognition is not ready"
+      },
+      "short.downloading": {
+        "kind": "single",
+        "en": "Downloading"
+      },
+      "short.failed": {
+        "kind": "single",
+        "en": "Setup failed"
+      },
+      "sourceAuto": {
+        "kind": "single",
+        "en": "Automatic (recommended)"
+      },
+      "sourceAutoHelp": {
+        "kind": "single",
+        "en": "Prefer the first responding source and try another if a download fails."
+      },
+      "sourceChoice": {
+        "kind": "single",
+        "en": "Model download source"
+      },
+      "sourceHuggingFace": {
+        "kind": "single",
+        "en": "Hugging Face"
+      },
+      "sourceManualHelp": {
+        "kind": "single",
+        "en": "Download only from the selected source. Verified downloaded files are reused."
+      },
+      "sourceMirror": {
+        "kind": "single",
+        "en": "HF-Mirror (China mirror)"
+      },
+      "start": {
+        "kind": "single",
+        "en": "Start recording"
+      },
+      "step.check": {
+        "kind": "single",
+        "en": "Check local resources"
+      },
+      "step.load": {
+        "kind": "single",
+        "en": "Load {name}"
+      },
+      "step.model": {
+        "kind": "single",
+        "en": "Prepare recognition model"
+      },
+      "step.vad": {
+        "kind": "single",
+        "en": "Prepare voice detection model"
+      },
+      "step.verify": {
+        "kind": "single",
+        "en": "Verify model files"
+      },
+      "stepStatus.cancelled": {
+        "kind": "single",
+        "en": "Cancelled"
+      },
+      "stepStatus.complete": {
+        "kind": "single",
+        "en": "Completed"
+      },
+      "stepStatus.failed": {
+        "kind": "single",
+        "en": "Failed"
+      },
+      "stepStatus.pending": {
+        "kind": "single",
+        "en": "Not started"
+      },
+      "stepStatus.running": {
+        "kind": "single",
+        "en": "In progress"
+      },
+      "stop": {
+        "kind": "single",
+        "en": "Stop and transcribe"
+      },
+      "tooLarge": {
+        "kind": "single",
+        "en": "The recording exceeds the service limit. Try a shorter recording."
+      },
+      "transcribingShort": {
+        "kind": "single",
+        "en": "Transcribing…"
+      },
+      "unavailable": {
+        "kind": "single",
+        "en": "This browser cannot record audio. Use a browser with microphone support."
+      },
+      "wakingShort": {
+        "kind": "single",
+        "en": "Waking…"
+      },
+      "yue": {
+        "kind": "single",
+        "en": "Cantonese"
+      },
+      "zh": {
+        "kind": "single",
+        "en": "Chinese"
+      }
+    },
+    "settings.permission": {},
+    "permission.access": {},
+    "approval": {},
+    "chat": {
+      "chat.deepDivingFor": {
+        "kind": "single",
+        "en": "Deep diving for {duration} ···"
+      },
+      "duration.hourUnit": {
+        "kind": "single",
+        "en": "h "
+      },
+      "duration.minuteUnit": {
+        "kind": "single",
+        "en": "m "
+      },
+      "duration.secondUnit": {
+        "kind": "single",
+        "en": "s"
+      },
+      "image.close": {
+        "kind": "single",
+        "en": "Close image preview"
+      },
+      "image.dialog": {
+        "kind": "single",
+        "en": "Image preview"
+      },
+      "image.failed": {
+        "kind": "single",
+        "en": "Image preview unavailable"
+      },
+      "image.loading": {
+        "kind": "single",
+        "en": "Loading image…"
+      },
+      "image.open": {
+        "kind": "single",
+        "en": "View full image"
+      },
+      "message.accountStopped": {
+        "kind": "single",
+        "en": "Task stopped"
+      },
+      "message.failure.accountSignInRequired": {
+        "kind": "single",
+        "en": "Sign in to DeepSeek and ensure the request destination supports account authentication."
+      },
+      "message.failure.accountSignedOut": {
+        "kind": "single",
+        "en": "Stopped because you signed out of DeepSeek."
+      },
+      "message.failure.quota": {
+        "kind": "single",
+        "en": "Request quota exhausted."
+      },
+      "message.stepProcess.code": {
+        "kind": "single",
+        "en": "Running code"
+      },
+      "message.stepProcess.comma": {
+        "kind": "single",
+        "en": ", "
+      },
+      "message.stepProcess.commands": {
+        "kind": "single",
+        "en": "Running commands"
+      },
+      "message.stepProcess.done.code": {
+        "kind": "single",
+        "en": "Ran code"
+      },
+      "message.stepProcess.done.commands": {
+        "kind": "single",
+        "en": "Ran commands"
+      },
+      "message.stepProcess.done.edit": {
+        "kind": "single",
+        "en": "Edited files"
+      },
+      "message.stepProcess.done.plan": {
+        "kind": "single",
+        "en": "Updated the plan"
+      },
+      "message.stepProcess.done.questions": {
+        "kind": "single",
+        "en": "Asked questions"
+      },
+      "message.stepProcess.done.read": {
+        "kind": "single",
+        "en": "Read files"
+      },
+      "message.stepProcess.done.readImage": {
+        "kind": "single",
+        "en": "Read images"
+      },
+      "message.stepProcess.done.search": {
+        "kind": "single",
+        "en": "Searched code"
+      },
+      "message.stepProcess.done.subagents": {
+        "kind": "single",
+        "en": "Coordinated subagents"
+      },
+      "message.stepProcess.done.thinking": {
+        "kind": "single",
+        "en": "Analysis completed"
+      },
+      "message.stepProcess.done.tools": {
+        "kind": "single",
+        "en": "Called tools"
+      },
+      "message.stepProcess.done.webFetch": {
+        "kind": "single",
+        "en": "Visited web pages"
+      },
+      "message.stepProcess.done.webSearch": {
+        "kind": "single",
+        "en": "Searched the web"
+      },
+      "message.stepProcess.done.write": {
+        "kind": "single",
+        "en": "Wrote files"
+      },
+      "message.stepProcess.edit": {
+        "kind": "single",
+        "en": "Editing files"
+      },
+      "message.stepProcess.joinTwo": {
+        "kind": "single",
+        "en": "{first} and {second}"
+      },
+      "message.stepProcess.more": {
+        "kind": "single",
+        "en": "{title}, etc."
+      },
+      "message.stepProcess.plan": {
+        "kind": "single",
+        "en": "Updating the plan"
+      },
+      "message.stepProcess.prepare.code": {
+        "kind": "single",
+        "en": "Preparing to run code"
+      },
+      "message.stepProcess.prepare.commands": {
+        "kind": "single",
+        "en": "Preparing to run commands"
+      },
+      "message.stepProcess.prepare.edit": {
+        "kind": "single",
+        "en": "Preparing to edit files"
+      },
+      "message.stepProcess.prepare.plan": {
+        "kind": "single",
+        "en": "Preparing to update the plan"
+      },
+      "message.stepProcess.prepare.questions": {
+        "kind": "single",
+        "en": "Preparing questions"
+      },
+      "message.stepProcess.prepare.read": {
+        "kind": "single",
+        "en": "Preparing to read files"
+      },
+      "message.stepProcess.prepare.readImage": {
+        "kind": "single",
+        "en": "Preparing to read images"
+      },
+      "message.stepProcess.prepare.search": {
+        "kind": "single",
+        "en": "Preparing to search code"
+      },
+      "message.stepProcess.prepare.subagents": {
+        "kind": "single",
+        "en": "Preparing to coordinate subagents"
+      },
+      "message.stepProcess.prepare.tools": {
+        "kind": "single",
+        "en": "Preparing tool calls"
+      },
+      "message.stepProcess.prepare.webFetch": {
+        "kind": "single",
+        "en": "Preparing to visit web pages"
+      },
+      "message.stepProcess.prepare.webSearch": {
+        "kind": "single",
+        "en": "Preparing to search the web"
+      },
+      "message.stepProcess.prepare.write": {
+        "kind": "single",
+        "en": "Preparing to write files"
+      },
+      "message.stepProcess.questions": {
+        "kind": "single",
+        "en": "Waiting for your action"
+      },
+      "message.stepProcess.read": {
+        "kind": "single",
+        "en": "Reading files"
+      },
+      "message.stepProcess.readImage": {
+        "kind": "single",
+        "en": "Reading images"
+      },
+      "message.stepProcess.search": {
+        "kind": "single",
+        "en": "Searching code"
+      },
+      "message.stepProcess.sharedPrefix": {
+        "kind": "verbatim",
+        "en": ""
+      },
+      "message.stepProcess.subagents": {
+        "kind": "single",
+        "en": "Coordinating subagents"
+      },
+      "message.stepProcess.thinking": {
+        "kind": "single",
+        "en": "Analyzing the request"
+      },
+      "message.stepProcess.tools": {
+        "kind": "single",
+        "en": "Calling tools"
+      },
+      "message.stepProcess.webFetch": {
+        "kind": "single",
+        "en": "Visiting web pages"
+      },
+      "message.stepProcess.webSearch": {
+        "kind": "single",
+        "en": "Searching the web"
+      },
+      "message.stepProcess.write": {
+        "kind": "single",
+        "en": "Writing files"
+      },
+      "message.toolAdded": {
+        "kind": "single",
+        "en": "Tool added: {name}"
+      },
+      "message.toolRemoved": {
+        "kind": "single",
+        "en": "Tool removed: {name}"
+      },
+      "message.toolsAdded": {
+        "kind": "single",
+        "en": "Added: {names}"
+      },
+      "message.toolsAddedCount": {
+        "kind": "single",
+        "en": "{count} added"
+      },
+      "message.toolsChanged": {
+        "kind": "single",
+        "en": "{added} added, {removed} removed"
+      },
+      "message.toolsRemoved": {
+        "kind": "single",
+        "en": "Removed: {names}"
+      },
+      "message.toolsRemovedCount": {
+        "kind": "single",
+        "en": "{count} removed"
+      },
+      "message.toolsUpdated": {
+        "kind": "single",
+        "en": "Tools updated"
+      },
+      "message.trigger.agent": {
+        "kind": "single",
+        "en": "Task message received"
+      },
+      "message.trigger.explanation": {
+        "kind": "single",
+        "en": "This notification triggered this response."
+      },
+      "message.trigger.github": {
+        "kind": "single",
+        "en": "GitHub event received"
+      },
+      "message.trigger.goal": {
+        "kind": "single",
+        "en": "Continuing goal"
+      },
+      "message.trigger.job": {
+        "kind": "single",
+        "en": "Background task updated"
+      },
+      "message.trigger.plugin": {
+        "kind": "single",
+        "en": "Plugin status updated"
+      },
+      "message.trigger.request": {
+        "kind": "single",
+        "en": "Execution requested"
+      },
+      "message.trigger.schedule": {
+        "kind": "single",
+        "en": "Automation task"
+      },
+      "message.trigger.subagent": {
+        "kind": "single",
+        "en": "Subtask status updated"
+      },
+      "message.trigger.team": {
+        "kind": "single",
+        "en": "Team message received"
+      },
+      "message.trigger.webhook": {
+        "kind": "single",
+        "en": "External event received"
+      },
+      "message.turnProcess.failed": {
+        "kind": "single",
+        "en": "Failed"
+      },
+      "message.turnProcess.took": {
+        "kind": "single",
+        "en": "Completed in "
+      },
+      "message.turnProcess.worked": {
+        "kind": "single",
+        "en": "Completed"
+      },
+      "settings.links.description": {
+        "kind": "single",
+        "en": "Choose where to open web links"
+      },
+      "settings.links.newTab": {
+        "kind": "single",
+        "en": "Default Browser"
+      },
+      "settings.links.sidebar": {
+        "kind": "single",
+        "en": "In-App Sidebar"
+      },
+      "settings.links.title": {
+        "kind": "single",
+        "en": "Open chat links in"
+      },
+      "settings.performance.compact": {
+        "kind": "single",
+        "en": "Compact"
+      },
+      "settings.performance.description": {
+        "kind": "single",
+        "en": "Choose how much performance and usage information to show"
+      },
+      "settings.performance.detailed": {
+        "kind": "single",
+        "en": "Detailed"
+      },
+      "settings.performance.title": {
+        "kind": "single",
+        "en": "Performance & usage"
+      },
+      "settings.transcript.detailed": {
+        "kind": "single",
+        "en": "Detailed"
+      },
+      "settings.transcript.standard": {
+        "kind": "single",
+        "en": "Standard"
+      },
+      "settings.transcript.verbose": {
+        "kind": "single",
+        "en": "Verbose"
+      }
+    },
+    "conversation": {
+      "ask.closed": {
+        "kind": "single",
+        "en": "closed"
+      },
+      "ask.closedDetail": {
+        "kind": "single",
+        "en": "This question is closed; its outcome is in the conversation below."
+      },
+      "ask.pending": {
+        "kind": "single",
+        "en": "continued; answer still available"
+      },
+      "ask.pendingDetail": {
+        "kind": "single",
+        "en": "These pending questions remain answerable from the composer."
+      },
+      "ask.reopen": {
+        "kind": "single",
+        "en": "Answer"
+      },
+      "ask.review": {
+        "kind": "single",
+        "en": "View answers"
+      },
+      "attachment.directoryDesktopOnly": {
+        "kind": "single",
+        "en": "Folders can only be added in the desktop app; add individual files in the browser"
+      },
+      "attachment.pathUnavailable": {
+        "kind": "single",
+        "en": "Could not obtain the folder path; drag it in again"
+      },
+      "attachment.pathUnsupported": {
+        "kind": "single",
+        "en": "The path contains characters a reference cannot carry; rename it and try again"
+      },
+      "detail.agent.reply": {
+        "kind": "single",
+        "en": "Agent response"
+      },
+      "detail.agents.count": {
+        "kind": "single",
+        "en": "{count} agents"
+      },
+      "detail.days": {
+        "kind": "single",
+        "en": "{count} d"
+      },
+      "detail.empty": {
+        "kind": "single",
+        "en": "No results"
+      },
+      "detail.event.neighbors": {
+        "kind": "single",
+        "en": "Surrounding events"
+      },
+      "detail.field.agent": {
+        "kind": "single",
+        "en": "Agent ID"
+      },
+      "detail.field.agents": {
+        "kind": "single",
+        "en": "Agents started"
+      },
+      "detail.field.availability": {
+        "kind": "single",
+        "en": "Availability"
+      },
+      "detail.field.bestMatch": {
+        "kind": "single",
+        "en": "Best match"
+      },
+      "detail.field.callId": {
+        "kind": "single",
+        "en": "Call ID"
+      },
+      "detail.field.content": {
+        "kind": "single",
+        "en": "Content"
+      },
+      "detail.field.context": {
+        "kind": "single",
+        "en": "Context"
+      },
+      "detail.field.currentPackage": {
+        "kind": "single",
+        "en": "Current package"
+      },
+      "detail.field.data": {
+        "kind": "single",
+        "en": "Data"
+      },
+      "detail.field.dependencies": {
+        "kind": "single",
+        "en": "Dependencies"
+      },
+      "detail.field.depth": {
+        "kind": "single",
+        "en": "Depth"
+      },
+      "detail.field.diagnostics": {
+        "kind": "single",
+        "en": "Diagnostics"
+      },
+      "detail.field.exitCode": {
+        "kind": "single",
+        "en": "Exit code"
+      },
+      "detail.field.id": {
+        "kind": "single",
+        "en": "ID"
+      },
+      "detail.field.inputSchema": {
+        "kind": "single",
+        "en": "Input schema"
+      },
+      "detail.field.job": {
+        "kind": "single",
+        "en": "Job ID"
+      },
+      "detail.field.latestRun": {
+        "kind": "single",
+        "en": "Latest run"
+      },
+      "detail.field.message": {
+        "kind": "single",
+        "en": "Message"
+      },
+      "detail.field.messageId": {
+        "kind": "single",
+        "en": "Message ID"
+      },
+      "detail.field.methods": {
+        "kind": "single",
+        "en": "Methods"
+      },
+      "detail.field.model": {
+        "kind": "single",
+        "en": "Model"
+      },
+      "detail.field.nextPackage": {
+        "kind": "single",
+        "en": "Next package"
+      },
+      "detail.field.outputSchema": {
+        "kind": "single",
+        "en": "Output schema"
+      },
+      "detail.field.owner": {
+        "kind": "single",
+        "en": "Owner"
+      },
+      "detail.field.packages": {
+        "kind": "single",
+        "en": "Packages"
+      },
+      "detail.field.parent": {
+        "kind": "single",
+        "en": "Parent"
+      },
+      "detail.field.pid": {
+        "kind": "single",
+        "en": "Process ID"
+      },
+      "detail.field.platform": {
+        "kind": "single",
+        "en": "Platform"
+      },
+      "detail.field.previousStatus": {
+        "kind": "single",
+        "en": "Previous status"
+      },
+      "detail.field.processGroup": {
+        "kind": "single",
+        "en": "Process group"
+      },
+      "detail.field.props": {
+        "kind": "single",
+        "en": "Props"
+      },
+      "detail.field.provider": {
+        "kind": "single",
+        "en": "Provider"
+      },
+      "detail.field.ready": {
+        "kind": "single",
+        "en": "Ready"
+      },
+      "detail.field.registrations": {
+        "kind": "single",
+        "en": "Registrations"
+      },
+      "detail.field.result": {
+        "kind": "single",
+        "en": "Result"
+      },
+      "detail.field.revision": {
+        "kind": "single",
+        "en": "Revision"
+      },
+      "detail.field.role": {
+        "kind": "single",
+        "en": "Role"
+      },
+      "detail.field.root": {
+        "kind": "single",
+        "en": "Root"
+      },
+      "detail.field.seq": {
+        "kind": "single",
+        "en": "Event sequence"
+      },
+      "detail.field.signal": {
+        "kind": "single",
+        "en": "Signal"
+      },
+      "detail.field.source": {
+        "kind": "single",
+        "en": "Source"
+      },
+      "detail.field.step": {
+        "kind": "single",
+        "en": "Step"
+      },
+      "detail.field.surface": {
+        "kind": "single",
+        "en": "Record status"
+      },
+      "detail.field.target": {
+        "kind": "single",
+        "en": "Target event"
+      },
+      "detail.field.task": {
+        "kind": "single",
+        "en": "Task"
+      },
+      "detail.field.time": {
+        "kind": "single",
+        "en": "Time"
+      },
+      "detail.field.turn": {
+        "kind": "single",
+        "en": "Turn"
+      },
+      "detail.field.type": {
+        "kind": "single",
+        "en": "Type"
+      },
+      "detail.field.warnings": {
+        "kind": "single",
+        "en": "Warnings"
+      },
+      "detail.field.writeScopes": {
+        "kind": "single",
+        "en": "Write scopes"
+      },
+      "detail.goal.active": {
+        "kind": "single",
+        "en": "Active"
+      },
+      "detail.goal.blocked": {
+        "kind": "single",
+        "en": "Blocked"
+      },
+      "detail.goal.complete": {
+        "kind": "single",
+        "en": "Completed"
+      },
+      "detail.goal.disarmed": {
+        "kind": "single",
+        "en": "Awaiting continuation"
+      },
+      "detail.goal.empty": {
+        "kind": "single",
+        "en": "No goal"
+      },
+      "detail.goal.paused": {
+        "kind": "single",
+        "en": "Paused"
+      },
+      "detail.goal.reason": {
+        "kind": "single",
+        "en": "Blocker"
+      },
+      "detail.goal.rounds": {
+        "kind": "single",
+        "en": "Rounds"
+      },
+      "detail.hours": {
+        "kind": "single",
+        "en": "{count} h"
+      },
+      "detail.jobs.count": {
+        "kind": "single",
+        "en": "{count} background jobs"
+      },
+      "detail.location": {
+        "kind": "single",
+        "en": "Line {line}, column {column}"
+      },
+      "detail.locations.count": {
+        "kind": "single",
+        "en": "{count} locations"
+      },
+      "detail.matches.capped": {
+        "kind": "single",
+        "en": "Result limit reached; narrow the search for more"
+      },
+      "detail.matches.count": {
+        "kind": "single",
+        "en": "{count} matches"
+      },
+      "detail.minutes": {
+        "kind": "single",
+        "en": "{count} min"
+      },
+      "detail.models.title": {
+        "kind": "single",
+        "en": "Available models"
+      },
+      "detail.moreInInspect": {
+        "kind": "single",
+        "en": "{count} more items available in Inspect"
+      },
+      "detail.no": {
+        "kind": "single",
+        "en": "No"
+      },
+      "detail.none": {
+        "kind": "single",
+        "en": "None"
+      },
+      "detail.output.lines": {
+        "kind": "single",
+        "en": "Lines {begin}–{end} of {total}"
+      },
+      "detail.output.truncated": {
+        "kind": "single",
+        "en": "Output truncated"
+      },
+      "detail.plugins.count": {
+        "kind": "single",
+        "en": "{count} dynamic plugins"
+      },
+      "detail.providers.count": {
+        "kind": "single",
+        "en": "{count} inspect providers"
+      },
+      "detail.ralph.limit": {
+        "kind": "single",
+        "en": "Round limit reached"
+      },
+      "detail.ralph.reportedBlocker": {
+        "kind": "single",
+        "en": "Worker reported a blocker"
+      },
+      "detail.ralph.reportedComplete": {
+        "kind": "single",
+        "en": "Worker reported completion"
+      },
+      "detail.receipt.alreadyFinished": {
+        "kind": "single",
+        "en": "Already finished"
+      },
+      "detail.receipt.cancel": {
+        "kind": "single",
+        "en": "Cancellation requested"
+      },
+      "detail.receipt.closed": {
+        "kind": "single",
+        "en": "Closed"
+      },
+      "detail.receipt.closing": {
+        "kind": "single",
+        "en": "Closing"
+      },
+      "detail.receipt.delivered": {
+        "kind": "single",
+        "en": "Message delivered"
+      },
+      "detail.receipt.interrupt": {
+        "kind": "single",
+        "en": "Interrupt requested"
+      },
+      "detail.receipt.signal": {
+        "kind": "single",
+        "en": "Signal delivered"
+      },
+      "detail.receipt.started": {
+        "kind": "single",
+        "en": "Started"
+      },
+      "detail.recordedResult": {
+        "kind": "single",
+        "en": "Recorded result"
+      },
+      "detail.report.nextSteps": {
+        "kind": "single",
+        "en": "Remaining work"
+      },
+      "detail.schedule.count": {
+        "kind": "single",
+        "en": "{count} reminders"
+      },
+      "detail.schedule.cron": {
+        "kind": "single",
+        "en": "Cron {expression} ({zone})"
+      },
+      "detail.schedule.daily": {
+        "kind": "single",
+        "en": "Every day at {time} ({zone})"
+      },
+      "detail.schedule.deleted": {
+        "kind": "single",
+        "en": "Deleted"
+      },
+      "detail.schedule.empty": {
+        "kind": "single",
+        "en": "No reminders"
+      },
+      "detail.schedule.every": {
+        "kind": "single",
+        "en": "Every {interval}"
+      },
+      "detail.schedule.frequency": {
+        "kind": "single",
+        "en": "Repeat"
+      },
+      "detail.schedule.once": {
+        "kind": "single",
+        "en": "Once"
+      },
+      "detail.schedule.overdue": {
+        "kind": "single",
+        "en": "Overdue, awaiting session resume"
+      },
+      "detail.schedule.scheduled": {
+        "kind": "single",
+        "en": "Scheduled"
+      },
+      "detail.schedule.weekly": {
+        "kind": "single",
+        "en": "Weekly on {days} at {time} ({zone})"
+      },
+      "detail.schedule.when": {
+        "kind": "single",
+        "en": "Scheduled for"
+      },
+      "detail.seconds": {
+        "kind": "single",
+        "en": "{count} s"
+      },
+      "detail.state": {
+        "kind": "single",
+        "en": "Status"
+      },
+      "detail.status.accepted": {
+        "kind": "single",
+        "en": "Accepted"
+      },
+      "detail.status.completed": {
+        "kind": "single",
+        "en": "Completed"
+      },
+      "detail.status.deleted": {
+        "kind": "single",
+        "en": "Deleted"
+      },
+      "detail.status.exited": {
+        "kind": "single",
+        "en": "Exited"
+      },
+      "detail.status.failed": {
+        "kind": "single",
+        "en": "Failed"
+      },
+      "detail.status.idle": {
+        "kind": "single",
+        "en": "Idle"
+      },
+      "detail.status.inactive": {
+        "kind": "single",
+        "en": "Inactive"
+      },
+      "detail.status.killed": {
+        "kind": "single",
+        "en": "Cancelled"
+      },
+      "detail.status.provisioning": {
+        "kind": "single",
+        "en": "Provisioning"
+      },
+      "detail.status.queued": {
+        "kind": "single",
+        "en": "Queued"
+      },
+      "detail.status.ready": {
+        "kind": "single",
+        "en": "Ready"
+      },
+      "detail.status.running": {
+        "kind": "single",
+        "en": "Running"
+      },
+      "detail.tasks.count": {
+        "kind": "single",
+        "en": "{count} team tasks"
+      },
+      "detail.tasks.nextPage": {
+        "kind": "single",
+        "en": "More tasks available; next cursor is {cursor}"
+      },
+      "detail.terminals.count": {
+        "kind": "single",
+        "en": "{count} terminals"
+      },
+      "detail.todo.completed": {
+        "kind": "single",
+        "en": "Completed"
+      },
+      "detail.todo.empty": {
+        "kind": "single",
+        "en": "The to-do list is empty"
+      },
+      "detail.todo.in_progress": {
+        "kind": "single",
+        "en": "In progress"
+      },
+      "detail.todo.pending": {
+        "kind": "single",
+        "en": "Pending"
+      },
+      "detail.trace.ancestors": {
+        "kind": "single",
+        "en": "Ancestor sessions"
+      },
+      "detail.trace.derived": {
+        "kind": "single",
+        "en": "Derived events"
+      },
+      "detail.trace.descendants": {
+        "kind": "single",
+        "en": "Descendant sessions"
+      },
+      "detail.trace.replacedBy": {
+        "kind": "single",
+        "en": "Replaced by"
+      },
+      "detail.trace.replacementChain": {
+        "kind": "single",
+        "en": "Replacement chain"
+      },
+      "detail.trace.replaces": {
+        "kind": "single",
+        "en": "Replaced events"
+      },
+      "detail.trace.sources": {
+        "kind": "single",
+        "en": "Source events"
+      },
+      "detail.wait.changed": {
+        "kind": "single",
+        "en": "Change detected"
+      },
+      "detail.wait.noProgress": {
+        "kind": "single",
+        "en": "No active subagents"
+      },
+      "detail.wait.timeout": {
+        "kind": "single",
+        "en": "Wait timed out"
+      },
+      "detail.wait.title": {
+        "kind": "single",
+        "en": "Subagent activity"
+      },
+      "detail.weekday.1": {
+        "kind": "single",
+        "en": "Mon"
+      },
+      "detail.weekday.2": {
+        "kind": "single",
+        "en": "Tue"
+      },
+      "detail.weekday.3": {
+        "kind": "single",
+        "en": "Wed"
+      },
+      "detail.weekday.4": {
+        "kind": "single",
+        "en": "Thu"
+      },
+      "detail.weekday.5": {
+        "kind": "single",
+        "en": "Fri"
+      },
+      "detail.weekday.6": {
+        "kind": "single",
+        "en": "Sat"
+      },
+      "detail.weekday.7": {
+        "kind": "single",
+        "en": "Sun"
+      },
+      "detail.weekday.join": {
+        "kind": "single",
+        "en": ", "
+      },
+      "detail.workflow.script": {
+        "kind": "single",
+        "en": "Workflow script"
+      },
+      "detail.yes": {
+        "kind": "single",
+        "en": "Yes"
+      },
+      "row.preparing": {
+        "kind": "single",
+        "en": "Preparing tool call"
+      },
+      "shortcut.complementary": {
+        "kind": "single",
+        "en": "Use the complementary Queue / Steer action"
+      },
+      "shortcut.mention": {
+        "kind": "single",
+        "en": "Open reference menu"
+      },
+      "shortcut.newline": {
+        "kind": "single",
+        "en": "New line"
+      },
+      "shortcut.slash": {
+        "kind": "single",
+        "en": "Open command menu"
+      },
+      "todo.diff.added": {
+        "kind": "single",
+        "en": "{count} added"
+      },
+      "todo.diff.addedItem": {
+        "kind": "single",
+        "en": "Added"
+      },
+      "todo.diff.compare": {
+        "kind": "single",
+        "en": "Changes since the previous list"
+      },
+      "todo.diff.initial": {
+        "kind": "single",
+        "en": "Initial list"
+      },
+      "todo.diff.movedItem": {
+        "kind": "single",
+        "en": "Reordered"
+      },
+      "todo.diff.noChanges": {
+        "kind": "single",
+        "en": "No changes to the list"
+      },
+      "todo.diff.removed": {
+        "kind": "single",
+        "en": "{count} removed"
+      },
+      "todo.diff.removedItem": {
+        "kind": "single",
+        "en": "Removed"
+      },
+      "todo.diff.unavailable": {
+        "kind": "single",
+        "en": "Previous list unavailable"
+      },
+      "todo.diff.unchanged": {
+        "kind": "single",
+        "en": "{count} unchanged"
+      },
+      "todo.diff.updated": {
+        "kind": "single",
+        "en": "{count} updated"
+      },
+      "todo.diff.updatedItem": {
+        "kind": "single",
+        "en": "Status changed"
+      },
+      "todo.status.completed": {
+        "kind": "single",
+        "en": "Completed"
+      },
+      "todo.status.inProgress": {
+        "kind": "single",
+        "en": "In progress"
+      },
+      "todo.status.pending": {
+        "kind": "single",
+        "en": "Pending"
+      },
+      "tool.preparing.content": {
+        "kind": "single",
+        "en": "Preparing content {kilobytes}KB"
+      },
+      "tool.title.closeTerminal": {
+        "kind": "single",
+        "en": "Close terminal"
+      },
+      "tool.title.createGoal": {
+        "kind": "single",
+        "en": "Create goal"
+      },
+      "tool.title.createSchedule": {
+        "kind": "single",
+        "en": "Create reminder"
+      },
+      "tool.title.createTeamTask": {
+        "kind": "single",
+        "en": "Create team task"
+      },
+      "tool.title.deleteSchedule": {
+        "kind": "single",
+        "en": "Delete reminder"
+      },
+      "tool.title.findDefinition": {
+        "kind": "single",
+        "en": "Find definition"
+      },
+      "tool.title.findImplementation": {
+        "kind": "single",
+        "en": "Find implementation"
+      },
+      "tool.title.findReferences": {
+        "kind": "single",
+        "en": "Find references"
+      },
+      "tool.title.getGoal": {
+        "kind": "single",
+        "en": "View goal"
+      },
+      "tool.title.getTeamTask": {
+        "kind": "single",
+        "en": "Read team task"
+      },
+      "tool.title.hoverSymbol": {
+        "kind": "single",
+        "en": "Inspect symbol"
+      },
+      "tool.title.inspectPlugins": {
+        "kind": "single",
+        "en": "Inspect plugins"
+      },
+      "tool.title.inspectProviders": {
+        "kind": "single",
+        "en": "Inspect providers"
+      },
+      "tool.title.interruptAgent": {
+        "kind": "single",
+        "en": "Interrupt agent"
+      },
+      "tool.title.killJob": {
+        "kind": "single",
+        "en": "Cancel background job"
+      },
+      "tool.title.listAgents": {
+        "kind": "single",
+        "en": "List subagents"
+      },
+      "tool.title.listJobs": {
+        "kind": "single",
+        "en": "List background jobs"
+      },
+      "tool.title.listModels": {
+        "kind": "single",
+        "en": "List models"
+      },
+      "tool.title.listSchedules": {
+        "kind": "single",
+        "en": "List reminders"
+      },
+      "tool.title.listTeamTasks": {
+        "kind": "single",
+        "en": "List team tasks"
+      },
+      "tool.title.listTerminals": {
+        "kind": "single",
+        "en": "List terminals"
+      },
+      "tool.title.lsp": {
+        "kind": "single",
+        "en": "Query code symbols"
+      },
+      "tool.title.openTerminal": {
+        "kind": "single",
+        "en": "Open terminal"
+      },
+      "tool.title.queryRuntime": {
+        "kind": "single",
+        "en": "Query runtime"
+      },
+      "tool.title.ralph": {
+        "kind": "single",
+        "en": "Run ralph loop"
+      },
+      "tool.title.readEvent": {
+        "kind": "single",
+        "en": "Read event"
+      },
+      "tool.title.readJob": {
+        "kind": "single",
+        "en": "Read job output"
+      },
+      "tool.title.readTerminal": {
+        "kind": "single",
+        "en": "Read terminal"
+      },
+      "tool.title.searchEvents": {
+        "kind": "single",
+        "en": "Search events"
+      },
+      "tool.title.searchSessions": {
+        "kind": "single",
+        "en": "Search sessions"
+      },
+      "tool.title.sendMessage": {
+        "kind": "single",
+        "en": "Send message"
+      },
+      "tool.title.signalTerminal": {
+        "kind": "single",
+        "en": "Signal terminal"
+      },
+      "tool.title.spawnTeammate": {
+        "kind": "single",
+        "en": "Create teammate"
+      },
+      "tool.title.subagent": {
+        "kind": "single",
+        "en": "Create subagent"
+      },
+      "tool.title.traceEvent": {
+        "kind": "single",
+        "en": "Trace event"
+      },
+      "tool.title.traceSession": {
+        "kind": "single",
+        "en": "Trace session"
+      },
+      "tool.title.updateGoal": {
+        "kind": "single",
+        "en": "Update goal"
+      },
+      "tool.title.updateSchedule": {
+        "kind": "single",
+        "en": "Update reminder"
+      },
+      "tool.title.updateTeamTask": {
+        "kind": "single",
+        "en": "Update team task"
+      },
+      "tool.title.waitAgent": {
+        "kind": "single",
+        "en": "Wait for subagent"
+      },
+      "tool.title.workflow": {
+        "kind": "single",
+        "en": "Run workflow"
+      }
+    },
+    "cordis": {
+      "a11y.preparing": {
+        "kind": "single",
+        "en": "Preparing a Cordis tool call"
+      }
+    },
+    "command": {},
+    "slash.menu": {},
+    "deliverables": {
+      "changes.singleTitle": {
+        "kind": "single",
+        "en": "Edited {name}"
+      },
+      "row.preparing": {
+        "kind": "single",
+        "en": "Preparing deliverables"
+      }
+    },
+    "directory-browser": {},
+    "goal": {},
+    "job": {
+      "kill.confirm": {
+        "kind": "single",
+        "en": "Click again to confirm"
+      },
+      "kill.confirmAction": {
+        "kind": "single",
+        "en": "Confirm stop"
+      },
+      "kill.failed": {
+        "kind": "single",
+        "en": "Stop failed"
+      },
+      "kill.stop": {
+        "kind": "single",
+        "en": "Stop task {label}"
+      },
+      "output.error": {
+        "kind": "single",
+        "en": "live output stream interrupted: {error}"
+      },
+      "output.gap": {
+        "kind": "single",
+        "en": "… earlier output dropped …"
+      },
+      "row.collapseAria": {
+        "kind": "single",
+        "en": "Hide live output of {label}"
+      },
+      "row.expandAria": {
+        "kind": "single",
+        "en": "Show live output of {label}"
+      },
+      "section.clear": {
+        "kind": "single",
+        "en": "Clear"
+      },
+      "section.live": {
+        "kind": "single",
+        "en": "Running"
+      },
+      "section.settledCount": {
+        "kind": "single",
+        "en": "Finished {count}"
+      },
+      "terminal.collapse": {
+        "kind": "single",
+        "en": "Collapse"
+      },
+      "terminal.collapseAria": {
+        "kind": "single",
+        "en": "Collapse output"
+      },
+      "terminal.copied": {
+        "kind": "single",
+        "en": "Copied"
+      },
+      "terminal.copy": {
+        "kind": "single",
+        "en": "Copy"
+      },
+      "terminal.done": {
+        "kind": "single",
+        "en": "done"
+      },
+      "terminal.exitCode": {
+        "kind": "single",
+        "en": "exit {code}"
+      },
+      "terminal.expand": {
+        "kind": "single",
+        "en": "Show {n} more lines"
+      },
+      "terminal.expandAria": {
+        "kind": "single",
+        "en": "Expand {n} collapsed output lines"
+      },
+      "terminal.failed": {
+        "kind": "single",
+        "en": "failed"
+      },
+      "terminal.noExitCode": {
+        "kind": "single",
+        "en": "no exit code"
+      },
+      "terminal.noOutput": {
+        "kind": "single",
+        "en": "(no output)"
+      },
+      "terminal.running": {
+        "kind": "single",
+        "en": "running"
+      },
+      "terminal.signal": {
+        "kind": "single",
+        "en": "signal {signal}"
+      }
+    },
+    "feedback": {},
+    "model": {
+      "provider.account": {
+        "kind": "single",
+        "en": "DeepSeek Account"
+      },
+      "search.clear": {
+        "kind": "single",
+        "en": "Clear search"
+      },
+      "search.empty": {
+        "kind": "single",
+        "en": "No matching models."
+      },
+      "search.placeholder": {
+        "kind": "single",
+        "en": "Search models…"
+      }
+    },
+    "open-in-app": {
+      "path.appDefault": {
+        "kind": "single",
+        "en": "{app} (default)"
+      },
+      "path.appsError": {
+        "kind": "single",
+        "en": "Could not load applications"
+      },
+      "path.more": {
+        "kind": "single",
+        "en": "More ways to open"
+      },
+      "path.open": {
+        "kind": "single",
+        "en": "Open"
+      },
+      "path.openError": {
+        "kind": "single",
+        "en": "Could not open. Try again."
+      },
+      "path.reveal": {
+        "kind": "single",
+        "en": "Show file location"
+      },
+      "path.revealError": {
+        "kind": "single",
+        "en": "Could not show the file location. Try again."
+      },
+      "shortcut.busy": {
+        "kind": "single",
+        "en": "Opening workspace"
+      },
+      "shortcut.unavailable": {
+        "kind": "single",
+        "en": "Current workspace or local application unavailable"
+      }
+    },
+    "plan": {},
+    "pluginManager": {
+      "infoDescription": {
+        "kind": "single",
+        "en": "Configure official plugins and install or manage other plugins here. View the built-in plugin list and runtime status in Settings → Built-in plugins."
+      },
+      "infoLabel": {
+        "kind": "single",
+        "en": "About plugins"
+      },
+      "installApplyingCancellationError": {
+        "kind": "single",
+        "en": "Cancellation was not confirmed. Installation is being applied; wait for its result. {reason}"
+      },
+      "installAttempt": {
+        "kind": "single",
+        "en": "{previous} could not serve the package; retrying through {registry} (registry {index} of {total})"
+      },
+      "installAttemptBadge": {
+        "kind": "single",
+        "en": "Attempt {index} · {registry}"
+      },
+      "installAwaitingAcceptance": {
+        "kind": "single",
+        "en": "Waiting for the Host to accept installation. Cancellation will retry automatically after confirmation."
+      },
+      "installBackgroundApplying": {
+        "kind": "single",
+        "en": "Installation is being applied and cannot be cancelled. View installation progress."
+      },
+      "installBackgroundDone": {
+        "kind": "single",
+        "en": "Installation finished. View installation details."
+      },
+      "installBackgroundFailed": {
+        "kind": "single",
+        "en": "Installation failed. View installation details."
+      },
+      "installBackgroundUnconfirmed": {
+        "kind": "single",
+        "en": "Installation status is unconfirmed. View the installation for details."
+      },
+      "installBackgroundUnknown": {
+        "kind": "single",
+        "en": "Installation result unavailable. Check the plugin list."
+      },
+      "installCancelAndEdit": {
+        "kind": "single",
+        "en": "Cancel installation and return to editing"
+      },
+      "installChangeRegistry": {
+        "kind": "single",
+        "en": "Change registry"
+      },
+      "installFailureNetworkAll": {
+        "kind": "single",
+        "en": "No registry could be reached (tried: {registries}). Check the network or proxy settings, or change the registry and retry."
+      },
+      "installFailureNetworkHost": {
+        "kind": "single",
+        "en": "{host} could not be reached. A GitHub address or a .tgz link is not fetched through the registry: this machine must reach it directly or through a proxy. If the plugin is also published to npm, enter its package name instead."
+      },
+      "installGitTemplateHint": {
+        "kind": "single",
+        "en": "Replace this with the actual Git repository address."
+      },
+      "installGithubFailedDescription": {
+        "kind": "single",
+        "en": "Try another installation source."
+      },
+      "installGithubFailedTitle": {
+        "kind": "single",
+        "en": "Cannot access GitHub"
+      },
+      "installGithubTimeoutTitle": {
+        "kind": "single",
+        "en": "GitHub connection timed out"
+      },
+      "installPackageLabel": {
+        "kind": "single",
+        "en": "Plugin package name"
+      },
+      "installPathTemplateHint": {
+        "kind": "single",
+        "en": "Replace this with the actual path to your local plugin directory."
+      },
+      "installProblemNetworkAll": {
+        "kind": "single",
+        "en": "No registry could be reached (tried: {registries}); check the network or proxy settings, or change the registry"
+      },
+      "installProblemShipped": {
+        "kind": "single",
+        "en": "This plugin ships with DSH; upgrading DSH updates it"
+      },
+      "installReconcile": {
+        "kind": "single",
+        "en": "Check installation status"
+      },
+      "installResultUnconfirmed": {
+        "kind": "single",
+        "en": "The installation result was not received. Check installation status. {reason}"
+      },
+      "installTryAnotherWay": {
+        "kind": "single",
+        "en": "Try another way"
+      },
+      "installUnconfirmedTitle": {
+        "kind": "single",
+        "en": "Installation status unconfirmed"
+      },
+      "installUnknownDescription": {
+        "kind": "single",
+        "en": "The Host has no active installation with this request id. Check the plugin list before trying again."
+      },
+      "installUnknownTitle": {
+        "kind": "single",
+        "en": "Installation result unavailable"
+      },
+      "installUpgradeNotice": {
+        "kind": "single",
+        "en": "Installed plugins do not update automatically yet. To upgrade a plugin, uninstall it and install the new version. Later releases will keep improving the upgrade experience."
+      },
+      "installUseGithubMirror": {
+        "kind": "single",
+        "en": "Use mainland China mirror"
+      },
+      "installViewTask": {
+        "kind": "single",
+        "en": "View installation"
+      },
+      "metadataError": {
+        "kind": "single",
+        "en": "Package metadata error: {error}"
+      },
+      "reasonIncompatibleInstall": {
+        "kind": "single",
+        "en": "Install a plugin version compatible with this DSH."
+      },
+      "reasonIncompatibleInstalled": {
+        "kind": "single",
+        "en": "Uninstall it and install a version compatible with this DSH."
+      },
+      "reasonIncompatibleVersion": {
+        "kind": "single",
+        "en": "{plugin} is incompatible with DSH {runtime} (requires {peers}); running it may cause crashes or data loss."
+      },
+      "reasonIncompatibleVersionUnnamed": {
+        "kind": "single",
+        "en": "This plugin is incompatible with the running DSH version; running it may cause crashes or data loss."
+      },
+      "refreshError": {
+        "kind": "single",
+        "en": "Refresh failed. Please try again."
+      },
+      "registryCustom": {
+        "kind": "single",
+        "en": "Custom address"
+      },
+      "registryCustomHint": {
+        "kind": "single",
+        "en": "Enter an internal or private npm registry address starting with http:// or https://. If it requires a login, store the credentials in ~/.npmrc on this machine."
+      },
+      "registryCustomInvalid": {
+        "kind": "single",
+        "en": "Enter an address starting with http:// or https://"
+      },
+      "registryCustomPlaceholder": {
+        "kind": "single",
+        "en": "https://npm.example.com/"
+      },
+      "registryDefault": {
+        "kind": "single",
+        "en": "Default registry"
+      },
+      "registryLegend": {
+        "kind": "single",
+        "en": "The npm registry the plugin is downloaded from"
+      },
+      "registryListSeparator": {
+        "kind": "single",
+        "en": ", "
+      },
+      "registryNpmmirror": {
+        "kind": "single",
+        "en": "Mainland China mirror"
+      },
+      "registryOfficial": {
+        "kind": "single",
+        "en": "Official npm registry"
+      },
+      "registryToggle": {
+        "kind": "single",
+        "en": "Registry"
+      },
+      "sentenceSeparator": {
+        "kind": "verbatim",
+        "en": " "
+      }
+    },
+    "reference": {},
+    "schedule.catalog": {
+      "cron.day.both": {
+        "kind": "single",
+        "en": "Day {days} of every month or {weekdays}{months}"
+      },
+      "cron.day.bothStarred": {
+        "kind": "single",
+        "en": "Day {days} of every month and {weekdays}{months}"
+      },
+      "cron.day.every": {
+        "kind": "single",
+        "en": "Every day{months}"
+      },
+      "cron.day.monthDays": {
+        "kind": "single",
+        "en": "Day {days} of every month{months}"
+      },
+      "cron.day.weekdays": {
+        "kind": "single",
+        "en": "{weekdays}{months}"
+      },
+      "cron.hours.list": {
+        "kind": "single",
+        "en": "{hours}"
+      },
+      "cron.hours.range": {
+        "kind": "single",
+        "en": "{from}–{to}"
+      },
+      "cron.list.join": {
+        "kind": "single",
+        "en": ", "
+      },
+      "cron.months": {
+        "kind": "single",
+        "en": " in {months}"
+      },
+      "cron.part.join": {
+        "kind": "verbatim",
+        "en": " "
+      },
+      "cron.time.at": {
+        "kind": "single",
+        "en": "at {times}"
+      },
+      "cron.time.everyHour": {
+        "kind": "single",
+        "en": "Every hour"
+      },
+      "cron.time.everyMinute": {
+        "kind": "single",
+        "en": "Every minute"
+      },
+      "cron.time.everyMinutes": {
+        "kind": "single",
+        "en": "Every {step} minutes"
+      },
+      "cron.time.everyNHours": {
+        "kind": "single",
+        "en": "Every {count} hours"
+      },
+      "cron.time.hourlyAt": {
+        "kind": "single",
+        "en": "Every hour at minute {minutes}"
+      },
+      "cron.time.hoursAt": {
+        "kind": "single",
+        "en": "at minute {minutes} of hours {hours}"
+      },
+      "cron.time.hoursEveryMinute": {
+        "kind": "single",
+        "en": "every minute during hours {hours}"
+      },
+      "cron.time.hoursEveryMinutes": {
+        "kind": "single",
+        "en": "every {step} minutes during hours {hours}"
+      },
+      "cron.time.joinedEveryHour": {
+        "kind": "single",
+        "en": "every hour"
+      },
+      "cron.time.joinedEveryMinute": {
+        "kind": "single",
+        "en": "every minute"
+      },
+      "cron.time.joinedEveryMinutes": {
+        "kind": "single",
+        "en": "every {step} minutes"
+      },
+      "cron.time.joinedEveryNHours": {
+        "kind": "single",
+        "en": "every {count} hours"
+      },
+      "cron.time.joinedHourlyAt": {
+        "kind": "single",
+        "en": "every hour at minute {minutes}"
+      },
+      "cron.weekday.name": {
+        "kind": "single",
+        "en": "{weekday}"
+      },
+      "cron.weekday.range": {
+        "kind": "single",
+        "en": "{from}–{to}"
+      },
+      "delete.action": {
+        "kind": "single",
+        "en": "Delete"
+      },
+      "delete.label": {
+        "kind": "single",
+        "en": "Delete reminder: {title}"
+      },
+      "delete.pending": {
+        "kind": "single",
+        "en": "Deleting…"
+      },
+      "frequency.cron": {
+        "kind": "single",
+        "en": "Cron {expression} ({timeZone})"
+      },
+      "frequency.cronLocal": {
+        "kind": "single",
+        "en": "Cron {expression}"
+      },
+      "frequency.cronRule": {
+        "kind": "single",
+        "en": "{rule} ({timeZone})"
+      },
+      "frequency.daily": {
+        "kind": "single",
+        "en": "Daily at {time} ({timeZone})"
+      },
+      "frequency.dailyLocal": {
+        "kind": "single",
+        "en": "Daily at {time}"
+      },
+      "frequency.weekday.1": {
+        "kind": "single",
+        "en": "Mon"
+      },
+      "frequency.weekday.2": {
+        "kind": "single",
+        "en": "Tue"
+      },
+      "frequency.weekday.3": {
+        "kind": "single",
+        "en": "Wed"
+      },
+      "frequency.weekday.4": {
+        "kind": "single",
+        "en": "Thu"
+      },
+      "frequency.weekday.5": {
+        "kind": "single",
+        "en": "Fri"
+      },
+      "frequency.weekday.6": {
+        "kind": "single",
+        "en": "Sat"
+      },
+      "frequency.weekday.7": {
+        "kind": "single",
+        "en": "Sun"
+      },
+      "frequency.weekday.join": {
+        "kind": "single",
+        "en": ", "
+      },
+      "frequency.weekly": {
+        "kind": "single",
+        "en": "Weekly on {weekdays} at {time} ({timeZone})"
+      },
+      "frequency.weeklyLocal": {
+        "kind": "single",
+        "en": "Weekly on {weekdays} at {time}"
+      },
+      "hover.more": {
+        "kind": "single",
+        "en": "{count} more"
+      },
+      "list.error": {
+        "kind": "single",
+        "en": "Could not load reminders."
+      },
+      "list.loading": {
+        "kind": "single",
+        "en": "Loading reminders…"
+      },
+      "list.nextRun": {
+        "kind": "single",
+        "en": "Next run"
+      },
+      "list.open": {
+        "kind": "single",
+        "en": "Open reminder details: {title}"
+      },
+      "list.retry": {
+        "kind": "single",
+        "en": "Retry"
+      },
+      "mark.aria": {
+        "kind": "single",
+        "en": "{count} scheduled tasks"
+      },
+      "time.locale": {
+        "kind": "single",
+        "en": "en"
+      },
+      "time.utcPrefix": {
+        "kind": "single",
+        "en": "UTC"
+      },
+      "trigger.label": {
+        "kind": "single",
+        "en": "Reminders"
+      }
+    },
+    "session-log-download": {
+      "menu.feedback": {
+        "kind": "single",
+        "en": "Feedback"
+      }
+    },
+    "sidebar": {},
+    "sidebarRight": {
+      "command.budget": {
+        "kind": "single",
+        "en": "Two panes is the limit"
+      },
+      "command.close": {
+        "kind": "single",
+        "en": "Close current page or window"
+      },
+      "command.collapsed": {
+        "kind": "single",
+        "en": "Expand the right sidebar first"
+      },
+      "command.empty": {
+        "kind": "single",
+        "en": "Open a page first"
+      },
+      "command.float": {
+        "kind": "single",
+        "en": "This action is unavailable in a floating panel"
+      },
+      "command.fullscreen": {
+        "kind": "single",
+        "en": "Toggle panel fullscreen"
+      },
+      "command.noFocus": {
+        "kind": "single",
+        "en": "Focus a right sidebar pane first"
+      },
+      "command.noRefresh": {
+        "kind": "single",
+        "en": "This page cannot be refreshed"
+      },
+      "command.noSession": {
+        "kind": "single",
+        "en": "Select a session first"
+      },
+      "command.refresh": {
+        "kind": "single",
+        "en": "Refresh current page"
+      },
+      "command.stale": {
+        "kind": "single",
+        "en": "The page changed; focus it again"
+      },
+      "command.toggle": {
+        "kind": "single",
+        "en": "Toggle right sidebar"
+      },
+      "command.width": {
+        "kind": "single",
+        "en": "Not enough width to split, widen the sidebar"
+      }
+    },
+    "sidebarFiles": {
+      "autoRefresh": {
+        "kind": "single",
+        "en": "Auto refresh"
+      },
+      "autoRefresh.disable": {
+        "kind": "single",
+        "en": "Disable auto refresh"
+      },
+      "autoRefresh.enable": {
+        "kind": "single",
+        "en": "Enable auto refresh"
+      },
+      "shortcut.noSession": {
+        "kind": "single",
+        "en": "Select a session first"
+      }
+    },
+    "sidebarBrowser": {
+      "address.unknown": {
+        "kind": "single",
+        "en": "The page navigated; this carrier cannot read its new URL."
+      },
+      "load.failed": {
+        "kind": "single",
+        "en": "The page could not load; reload or open it in the system browser."
+      },
+      "load.failed.detail": {
+        "kind": "single",
+        "en": "Page load failed ({code}): {description}"
+      },
+      "restore.action": {
+        "kind": "single",
+        "en": "Restore page"
+      },
+      "restore.previous": {
+        "kind": "single",
+        "en": "Previously opened"
+      },
+      "shortcut.noSession": {
+        "kind": "single",
+        "en": "Open a session first"
+      }
+    },
+    "sidebarTerminal": {
+      "shortcut.noSession": {
+        "kind": "single",
+        "en": "Select a session first"
+      }
+    },
+    "sidebarDocumentPreview": {
+      "autoRefresh": {
+        "kind": "single",
+        "en": "Auto refresh"
+      },
+      "autoRefresh.disable": {
+        "kind": "single",
+        "en": "Disable auto refresh"
+      },
+      "autoRefresh.enable": {
+        "kind": "single",
+        "en": "Enable auto refresh"
+      }
+    },
+    "sidebarCodePreview": {},
+    "documentHtml": {},
+    "sidebarImage": {
+      "zoomControls": {
+        "kind": "single",
+        "en": "Zoom controls"
+      },
+      "zoomFitWidth": {
+        "kind": "single",
+        "en": "Fit width"
+      },
+      "zoomIn": {
+        "kind": "single",
+        "en": "Zoom in"
+      },
+      "zoomMenu": {
+        "kind": "single",
+        "en": "Choose zoom"
+      },
+      "zoomOut": {
+        "kind": "single",
+        "en": "Zoom out"
+      },
+      "zoomValue": {
+        "kind": "single",
+        "en": "{percent}%"
+      }
+    },
+    "documentMarkdown": {},
+    "sidebarOffice": {
+      "viewMissingFonts": {
+        "kind": "single",
+        "en": "Missing fonts: {count}. Click to view."
+      }
+    },
+    "sidebarExcel": {
+      "charts": {
+        "kind": "single",
+        "en": "charts"
+      },
+      "conditionalFormatting": {
+        "kind": "single",
+        "en": "conditional formatting"
+      },
+      "encoding": {
+        "kind": "single",
+        "en": "This text encoding could not be read. Save the file as UTF-8 or UTF-16 with a BOM and retry."
+      },
+      "featureSeparator": {
+        "kind": "single",
+        "en": ", "
+      },
+      "formulaWarning": {
+        "kind": "single",
+        "en": "This workbook contains formulas. Displayed results may be missing or inaccurate."
+      },
+      "images": {
+        "kind": "single",
+        "en": "images"
+      },
+      "invalid": {
+        "kind": "single",
+        "en": "This spreadsheet could not be opened. Check its format, contents, or password protection."
+      },
+      "language": {
+        "kind": "single",
+        "en": "en"
+      },
+      "loading": {
+        "kind": "single",
+        "en": "Rendering document..."
+      },
+      "retry": {
+        "kind": "single",
+        "en": "Retry"
+      },
+      "shapes": {
+        "kind": "single",
+        "en": "shapes"
+      },
+      "timeout": {
+        "kind": "single",
+        "en": "Opening this workbook timed out. Try a smaller file."
+      },
+      "title": {
+        "kind": "single",
+        "en": "Spreadsheet"
+      },
+      "tooLarge": {
+        "kind": "single",
+        "en": "This workbook exceeds the preview size limit."
+      },
+      "unsupportedNotice": {
+        "kind": "single",
+        "en": "This preview does not support {features} in this workbook. Open it in a system application for the full experience."
+      }
+    },
+    "sidebarPdf": {
+      "zoomControls": {
+        "kind": "single",
+        "en": "Zoom controls"
+      },
+      "zoomFitWidth": {
+        "kind": "single",
+        "en": "Fit width"
+      },
+      "zoomIn": {
+        "kind": "single",
+        "en": "Zoom in"
+      },
+      "zoomMenu": {
+        "kind": "single",
+        "en": "Choose zoom"
+      },
+      "zoomOut": {
+        "kind": "single",
+        "en": "Zoom out"
+      },
+      "zoomValue": {
+        "kind": "single",
+        "en": "{percent}%"
+      }
+    },
+    "skill": {
+      "row.preparing": {
+        "kind": "single",
+        "en": "Preparing to load a skill"
+      }
+    },
+    "subagent": {
+      "activity.completed": {
+        "kind": "single",
+        "en": "completed"
+      },
+      "mode.unknown": {
+        "kind": "single",
+        "en": "unknown mode"
+      },
+      "open.sidebar.aria": {
+        "kind": "single",
+        "en": "Open {label} in sidebar"
+      },
+      "readonly.unknown.body": {
+        "kind": "single",
+        "en": "Read the child session to determine whether it can be continued."
+      }
+    },
+    "trajectory": {
+      "layout.toolAdded": {
+        "kind": "single",
+        "en": "Tool added: {name}"
+      },
+      "layout.toolRemoved": {
+        "kind": "single",
+        "en": "Tool removed: {name}"
+      },
+      "layout.toolUpdateNotice": {
+        "kind": "single",
+        "en": "Tools updated"
+      },
+      "layout.toolsAdded": {
+        "kind": "single",
+        "en": "Added: {names}"
+      },
+      "layout.toolsAddedCount": {
+        "kind": "single",
+        "en": "{count} added"
+      },
+      "layout.toolsChanged": {
+        "kind": "single",
+        "en": "{added} added, {removed} removed"
+      },
+      "layout.toolsRemoved": {
+        "kind": "single",
+        "en": "Removed: {names}"
+      },
+      "layout.toolsRemovedCount": {
+        "kind": "single",
+        "en": "{count} removed"
+      }
+    },
+    "question": {
+      "error.resubmit": {
+        "kind": "single",
+        "en": "The answer did not arrive before work continued; submit it again."
+      },
+      "error.unavailable": {
+        "kind": "single",
+        "en": "Cannot submit right now; try again in a moment."
+      },
+      "nav.close": {
+        "kind": "single",
+        "en": "Close the panel — reopen it from the tool call"
+      },
+      "reply.answerLabel": {
+        "kind": "single",
+        "en": "Answer: "
+      },
+      "reply.close": {
+        "kind": "single",
+        "en": "Close question details"
+      },
+      "reply.label": {
+        "kind": "single",
+        "en": "Reply to earlier pending questions"
+      },
+      "reply.open": {
+        "kind": "single",
+        "en": "Open question details"
+      },
+      "reply.skipped": {
+        "kind": "single",
+        "en": "Skipped"
+      },
+      "review.skipped": {
+        "kind": "single",
+        "en": "This question was skipped."
+      },
+      "review.status": {
+        "kind": "single",
+        "en": "Answered"
+      },
+      "status.sent": {
+        "kind": "single",
+        "en": "Reply sent; the panel could not close."
+      },
+      "wait.continued": {
+        "kind": "single",
+        "en": "Work continued — you can still answer"
+      },
+      "wait.countdown": {
+        "kind": "single",
+        "en": "Continuing in {seconds}s"
+      },
+      "wait.held": {
+        "kind": "single",
+        "en": "Waiting until you answer"
+      },
+      "wait.paused": {
+        "kind": "single",
+        "en": "Paused · {seconds}s remaining"
+      },
+      "wait.takeTime": {
+        "kind": "single",
+        "en": "Take time"
+      }
+    },
+    "workflowRun": {},
+    "workspace": {
+      "actions.archive": {
+        "kind": "single",
+        "en": "Archive"
+      },
+      "actions.newSession": {
+        "kind": "single",
+        "en": "New session"
+      },
+      "actions.pin": {
+        "kind": "single",
+        "en": "Pin"
+      },
+      "actions.unarchive": {
+        "kind": "single",
+        "en": "Unarchive"
+      },
+      "actions.unpin": {
+        "kind": "single",
+        "en": "Unpin"
+      },
+      "archive.confirm.action": {
+        "kind": "single",
+        "en": "Stop and archive"
+      },
+      "archive.confirm.activity": {
+        "kind": "single",
+        "en": "Work that will be stopped"
+      },
+      "archive.confirm.desc": {
+        "kind": "single",
+        "en": "“{title}” still has work in progress. Archiving stops it first; you can restore the session later from the “All conversations (show archived)” filter in the sidebar, and the stopped work will not resume on its own."
+      },
+      "archive.confirm.jobs.one": {
+        "kind": "plural",
+        "base": "archive.confirm.jobs",
+        "form": "one",
+        "en": "{n} background job: {names}"
+      },
+      "archive.confirm.jobs.few": {
+        "kind": "plural",
+        "base": "archive.confirm.jobs",
+        "form": "few",
+        "en": "{n} background jobs: {names}"
+      },
+      "archive.confirm.jobs.many": {
+        "kind": "plural",
+        "base": "archive.confirm.jobs",
+        "form": "many",
+        "en": "{n} background jobs: {names}"
+      },
+      "archive.confirm.jobs.other": {
+        "kind": "plural",
+        "base": "archive.confirm.jobs",
+        "form": "other",
+        "en": "{n} background jobs: {names}"
+      },
+      "archive.confirm.listSeparator": {
+        "kind": "single",
+        "en": ", "
+      },
+      "archive.confirm.other.one": {
+        "kind": "plural",
+        "base": "archive.confirm.other",
+        "form": "one",
+        "en": "{n} other item of work ({kind})"
+      },
+      "archive.confirm.other.few": {
+        "kind": "plural",
+        "base": "archive.confirm.other",
+        "form": "few",
+        "en": "{n} other items of work ({kind})"
+      },
+      "archive.confirm.other.many": {
+        "kind": "plural",
+        "base": "archive.confirm.other",
+        "form": "many",
+        "en": "{n} other items of work ({kind})"
+      },
+      "archive.confirm.other.other": {
+        "kind": "plural",
+        "base": "archive.confirm.other",
+        "form": "other",
+        "en": "{n} other items of work ({kind})"
+      },
+      "archive.confirm.pending": {
+        "kind": "single",
+        "en": "Stopping and archiving…"
+      },
+      "archive.confirm.schedules.one": {
+        "kind": "plural",
+        "base": "archive.confirm.schedules",
+        "form": "one",
+        "en": "{n} scheduled reminder: {names}"
+      },
+      "archive.confirm.schedules.few": {
+        "kind": "plural",
+        "base": "archive.confirm.schedules",
+        "form": "few",
+        "en": "{n} scheduled reminders: {names}"
+      },
+      "archive.confirm.schedules.many": {
+        "kind": "plural",
+        "base": "archive.confirm.schedules",
+        "form": "many",
+        "en": "{n} scheduled reminders: {names}"
+      },
+      "archive.confirm.schedules.other": {
+        "kind": "plural",
+        "base": "archive.confirm.schedules",
+        "form": "other",
+        "en": "{n} scheduled reminders: {names}"
+      },
+      "archive.confirm.subagents.one": {
+        "kind": "plural",
+        "base": "archive.confirm.subagents",
+        "form": "one",
+        "en": "{n} running subagent: {names}"
+      },
+      "archive.confirm.subagents.few": {
+        "kind": "plural",
+        "base": "archive.confirm.subagents",
+        "form": "few",
+        "en": "{n} running subagents: {names}"
+      },
+      "archive.confirm.subagents.many": {
+        "kind": "plural",
+        "base": "archive.confirm.subagents",
+        "form": "many",
+        "en": "{n} running subagents: {names}"
+      },
+      "archive.confirm.subagents.other": {
+        "kind": "plural",
+        "base": "archive.confirm.subagents",
+        "form": "other",
+        "en": "{n} running subagents: {names}"
+      },
+      "archive.confirm.title": {
+        "kind": "single",
+        "en": "Stop and archive this session?"
+      },
+      "archive.confirm.turn": {
+        "kind": "single",
+        "en": "The turn in progress"
+      },
+      "defaultWorkspace.failed": {
+        "kind": "single",
+        "en": "Unable to create default workspace. Use Choose workspace to select a folder."
+      },
+      "empty.noneArchived": {
+        "kind": "single",
+        "en": "No archived sessions yet"
+      },
+      "empty.viewOthers": {
+        "kind": "single",
+        "en": "View other sessions"
+      },
+      "filterBy.label": {
+        "kind": "single",
+        "en": "Filter sessions"
+      },
+      "menu.pinSession": {
+        "kind": "single",
+        "en": "Pin session"
+      },
+      "menu.unarchiveSession": {
+        "kind": "single",
+        "en": "Unarchive session"
+      },
+      "menu.unpinSession": {
+        "kind": "single",
+        "en": "Unpin session"
+      },
+      "row.archived": {
+        "kind": "single",
+        "en": "Archived"
+      },
+      "row.pinned": {
+        "kind": "single",
+        "en": "Pinned"
+      },
+      "session.untitled": {
+        "kind": "single",
+        "en": "Untitled"
+      },
+      "shortcut.directoryBusy": {
+        "kind": "single",
+        "en": "Selecting or adding a workspace"
+      },
+      "shortcut.forkFailed": {
+        "kind": "single",
+        "en": "Could not fork the session. Try again."
+      },
+      "shortcut.noCompletedTurn": {
+        "kind": "single",
+        "en": "This session has no completed turn"
+      },
+      "shortcut.noPicker": {
+        "kind": "single",
+        "en": "Directory picker unavailable"
+      },
+      "shortcut.noSession": {
+        "kind": "single",
+        "en": "Select a session first"
+      },
+      "status.compact.answer": {
+        "kind": "single",
+        "en": "Answer"
+      },
+      "status.compact.approval": {
+        "kind": "single",
+        "en": "Approval"
+      },
+      "status.compact.planReview": {
+        "kind": "single",
+        "en": "Plan review"
+      },
+      "toast.archived": {
+        "kind": "single",
+        "en": "Session archived. You can "
+      },
+      "toast.archivedFilter": {
+        "kind": "single",
+        "en": "filter archived sessions"
+      },
+      "toast.archivedNotOpenable": {
+        "kind": "single",
+        "en": "Archived sessions cannot be opened. Unarchive it to view."
+      },
+      "toast.archivedOr": {
+        "kind": "single",
+        "en": " or "
+      },
+      "toast.archivedUndo": {
+        "kind": "single",
+        "en": "undo"
+      },
+      "toast.createFailed": {
+        "kind": "single",
+        "en": "New session failed: {message}"
+      },
+      "toast.pinFailed": {
+        "kind": "single",
+        "en": "Pin failed. Try again later."
+      },
+      "toast.stoppedAndArchived": {
+        "kind": "single",
+        "en": "Session stopped and archived. You can "
+      },
+      "toast.unpinFailed": {
+        "kind": "single",
+        "en": "Unpin failed. Try again later."
+      },
+      "viewOptions.hideArchived": {
+        "kind": "single",
+        "en": "Hide archived"
+      },
+      "viewOptions.onlyArchived": {
+        "kind": "single",
+        "en": "Archived only"
+      },
+      "viewOptions.showArchived": {
+        "kind": "single",
+        "en": "All conversations (show archived)"
+      }
+    }
+  },
+  "pluralBases": 4,
+  "modelKeys": 891,
+  "verbatimKeys": 3
+}

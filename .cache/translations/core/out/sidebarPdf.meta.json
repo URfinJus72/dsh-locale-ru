@@ -1,0 +1,13 @@
+{
+  "package": "deepseek-ai/deepseek-harness",
+  "version": "0.2.0-rc.2",
+  "model": "ornith-9b",
+  "hashes": {
+    "zoomControls": "43b7a4d04d8a362d",
+    "zoomFitWidth": "0071b9d89d6214c2",
+    "zoomIn": "4fc05f2763ba31e2",
+    "zoomMenu": "96a2911a19adedba",
+    "zoomOut": "a4ae4b24a1f5369c",
+    "zoomValue": "e5544c338932944b"
+  }
+}

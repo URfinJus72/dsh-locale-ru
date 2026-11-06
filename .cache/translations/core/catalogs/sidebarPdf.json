@@ -1,0 +1,21 @@
+{
+  "package": "deepseek-ai/deepseek-harness",
+  "version": "0.2.0-rc.2",
+  "ns": "sidebarPdf",
+  "en": {
+    "zoomControls": "Zoom controls",
+    "zoomFitWidth": "Fit width",
+    "zoomIn": "Zoom in",
+    "zoomMenu": "Choose zoom",
+    "zoomOut": "Zoom out",
+    "zoomValue": "{percent}%"
+  },
+  "zh": {
+    "zoomControls": "缩放控件",
+    "zoomFitWidth": "适应宽度",
+    "zoomIn": "放大",
+    "zoomMenu": "选择缩放比例",
+    "zoomOut": "缩小",
+    "zoomValue": "{percent}%"
+  }
+}

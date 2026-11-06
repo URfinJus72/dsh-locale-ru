@@ -1,0 +1,41 @@
+{
+  "package": "deepseek-ai/deepseek-harness",
+  "version": "0.2.0-rc.2",
+  "ns": "question",
+  "en": {
+    "error.resubmit": "The answer did not arrive before work continued; submit it again.",
+    "error.unavailable": "Cannot submit right now; try again in a moment.",
+    "nav.close": "Close the panel — reopen it from the tool call",
+    "reply.answerLabel": "Answer: ",
+    "reply.close": "Close question details",
+    "reply.label": "Reply to earlier pending questions",
+    "reply.open": "Open question details",
+    "reply.skipped": "Skipped",
+    "review.skipped": "This question was skipped.",
+    "review.status": "Answered",
+    "status.sent": "Reply sent; the panel could not close.",
+    "wait.continued": "Work continued — you can still answer",
+    "wait.countdown": "Continuing in {seconds}s",
+    "wait.held": "Waiting until you answer",
+    "wait.paused": "Paused · {seconds}s remaining",
+    "wait.takeTime": "Take time"
+  },
+  "zh": {
+    "error.resubmit": "回答未送达，工作已继续，请再提交一次。",
+    "error.unavailable": "当前无法提交，请稍候再试。",
+    "nav.close": "收起问题面板，可从工具调用重新打开",
+    "reply.answerLabel": "回答：",
+    "reply.close": "收起问题详情",
+    "reply.label": "回答先前等待中的问题",
+    "reply.open": "展开问题详情",
+    "reply.skipped": "已跳过",
+    "review.skipped": "这道问题当时被跳过。",
+    "review.status": "已回答",
+    "status.sent": "回答已发送；面板未能关闭。",
+    "wait.continued": "已继续工作，仍可回答",
+    "wait.countdown": "{seconds} 秒后继续工作",
+    "wait.held": "会一直等你回答",
+    "wait.paused": "已暂停 · 剩余 {seconds} 秒",
+    "wait.takeTime": "慢慢回答"
+  }
+}

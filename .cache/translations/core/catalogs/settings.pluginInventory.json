@@ -1,0 +1,11 @@
+{
+  "package": "deepseek-ai/deepseek-harness",
+  "version": "0.2.0-rc.2",
+  "ns": "settings.pluginInventory",
+  "en": {
+    "metadataError": "Package metadata error: {error}"
+  },
+  "zh": {
+    "metadataError": "包元信息错误：{error}"
+  }
+}

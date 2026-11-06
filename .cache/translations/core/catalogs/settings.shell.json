@@ -1,0 +1,11 @@
+{
+  "package": "deepseek-ai/deepseek-harness",
+  "version": "0.2.0-rc.2",
+  "ns": "settings.shell",
+  "en": {
+    "description": "Limit how long each command may run and how much it may output."
+  },
+  "zh": {
+    "description": "限制每条命令最多能跑多久、最多输出多少内容。"
+  }
+}

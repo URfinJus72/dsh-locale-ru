@@ -1,0 +1,11 @@
+{
+  "package": "deepseek-ai/deepseek-harness",
+  "version": "0.2.0-rc.2",
+  "model": "ornith-9b",
+  "hashes": {
+    "activity.completed": "231e564db4cdb44a",
+    "mode.unknown": "69099db30cff219a",
+    "open.sidebar.aria": "6b246ef985034915",
+    "readonly.unknown.body": "95e4ed67b7972d32"
+  }
+}

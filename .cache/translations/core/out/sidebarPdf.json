@@ -1,0 +1,8 @@
+{
+  "zoomControls": "Управление масштабированием",
+  "zoomFitWidth": "Подогнать по ширине",
+  "zoomIn": "Приблизить",
+  "zoomMenu": "Выбрать масштаб",
+  "zoomOut": "Отдалить",
+  "zoomValue": "{percent}%"
+}

@@ -1,0 +1,13 @@
+{
+  "package": "deepseek-ai/deepseek-harness",
+  "version": "0.2.0-rc.2",
+  "ns": "deliverables",
+  "en": {
+    "changes.singleTitle": "Edited {name}",
+    "row.preparing": "Preparing deliverables"
+  },
+  "zh": {
+    "changes.singleTitle": "已编辑 {name}",
+    "row.preparing": "准备交付"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "package": "deepseek-ai/deepseek-harness",
+  "version": "0.2.0-rc.2",
+  "ns": "sidebarFiles",
+  "en": {
+    "autoRefresh": "Auto refresh",
+    "autoRefresh.disable": "Disable auto refresh",
+    "autoRefresh.enable": "Enable auto refresh",
+    "shortcut.noSession": "Select a session first"
+  },
+  "zh": {
+    "autoRefresh": "自动刷新",
+    "autoRefresh.disable": "关闭自动刷新",
+    "autoRefresh.enable": "开启自动刷新",
+    "shortcut.noSession": "请先选择会话"
+  }
+}

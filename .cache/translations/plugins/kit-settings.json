@@ -1,6 +1,0 @@
-{
-  "error.render": "Не удалось отрендерить запись конфигурации: ",
-  "list.empty": "Доступных записей конфигурации нет — сначала установите хотя бы один kit-плагин.",
-  "section.intro": "Записи конфигурации для семейства dsh-plugin-kit: env, log query, MCP, Prompt, Profile, RSS, Codegraph, Docker и панель терминала.",
-  "section.title": "Конфигурация плагинов"
-}

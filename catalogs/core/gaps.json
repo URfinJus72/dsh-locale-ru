@@ -650,6 +650,765 @@
       "ruKeys": 0,
       "coreKeys": 18
     },
+    "settings.account": {
+      "missing": [
+        {
+          "key": "accountInfo",
+          "en": "More account information",
+          "zh": "更多账号信息"
+        },
+        {
+          "key": "addApiKey",
+          "en": "Add API Key",
+          "zh": "添加 API Key"
+        },
+        {
+          "key": "backToHarness",
+          "en": "Back to DeepSeek Harness",
+          "zh": "返回 DeepSeek Harness"
+        },
+        {
+          "key": "balance",
+          "en": "Topped-up balance",
+          "zh": "充值余额"
+        },
+        {
+          "key": "balanceSignedOut",
+          "en": "Sign in to view",
+          "zh": "登录后查看"
+        },
+        {
+          "key": "balanceUnavailable",
+          "en": "View on Platform",
+          "zh": "前往开放平台查看"
+        },
+        {
+          "key": "bonusBalance",
+          "en": "Granted balance",
+          "zh": "赠金余额"
+        },
+        {
+          "key": "bonusNoticeTitle",
+          "en": "Bonus credited",
+          "zh": "赠金已到账"
+        },
+        {
+          "key": "browserDescription",
+          "en": ", then open it in your browser to finish signing in.",
+          "zh": "，手动打开登录页完成登录。"
+        },
+        {
+          "key": "browserPrompt",
+          "en": "Page did not open automatically? ",
+          "zh": "没有自动打开新页面？"
+        },
+        {
+          "key": "browserTitle",
+          "en": "Waiting for sign in",
+          "zh": "等待登录"
+        },
+        {
+          "key": "cancel",
+          "en": "Cancel",
+          "zh": "取消"
+        },
+        {
+          "key": "close",
+          "en": "Close",
+          "zh": "关闭"
+        },
+        {
+          "key": "completing",
+          "en": "Completing sign in…",
+          "zh": "正在完成登录…"
+        },
+        {
+          "key": "contactUs",
+          "en": "Feedback",
+          "zh": "意见反馈"
+        },
+        {
+          "key": "copiedLink",
+          "en": "Link copied",
+          "zh": "链接已复制"
+        },
+        {
+          "key": "copyFailed",
+          "en": "Copy failed",
+          "zh": "复制失败"
+        },
+        {
+          "key": "copyLink",
+          "en": "Copy sign-in link",
+          "zh": "复制登录链接"
+        },
+        {
+          "key": "expired",
+          "en": "Sign in expired. Try again.",
+          "zh": "登录已过期，请重试。"
+        },
+        {
+          "key": "failed",
+          "en": "Could not complete the operation. Try again.",
+          "zh": "操作未完成，请重试。"
+        },
+        {
+          "key": "failureTitle",
+          "en": "Could not sign in",
+          "zh": "登录失败"
+        },
+        {
+          "key": "initializing",
+          "en": "Starting sign in…",
+          "zh": "正在发起登录…"
+        },
+        {
+          "key": "loading",
+          "en": "Loading…",
+          "zh": "加载中…"
+        },
+        {
+          "key": "loginDescription",
+          "en": "Sign in to your DeepSeek account or add an API Key to get started. Your projects and files are stored locally.",
+          "zh": "登录 DeepSeek 账号，或添加 API Key，即可开始使用。你的项目和文件保存在本地。"
+        },
+        {
+          "key": "loginTitle",
+          "en": "Get started",
+          "zh": "开始使用"
+        },
+        {
+          "key": "menu",
+          "en": "Account menu",
+          "zh": "账号菜单"
+        },
+        {
+          "key": "modelSignInRequired",
+          "en": "Model unavailable. Please sign in and try again.",
+          "zh": "当前模型暂不可用，请登录后再试"
+        },
+        {
+          "key": "more",
+          "en": "More",
+          "zh": "更多"
+        },
+        {
+          "key": "nav",
+          "en": "Account",
+          "zh": "账号与余额"
+        },
+        {
+          "key": "onboardingArtworkLocale",
+          "en": "en",
+          "zh": "zh"
+        },
+        {
+          "key": "onboardingBack",
+          "en": "Back",
+          "zh": "上一步"
+        },
+        {
+          "key": "onboardingBrand",
+          "en": "DeepSeek Harness",
+          "zh": "DeepSeek Harness"
+        },
+        {
+          "key": "onboardingCompact",
+          "en": "Results only",
+          "zh": "聚焦结果"
+        },
+        {
+          "key": "onboardingCompactDescription",
+          "en": "See just the results in a clean, simple interface",
+          "zh": "只看结果，保持界面简洁明了"
+        },
+        {
+          "key": "onboardingContinue",
+          "en": "Continue",
+          "zh": "继续"
+        },
+        {
+          "key": "onboardingCredit",
+          "en": "Add credits",
+          "zh": "准备可用额度"
+        },
+        {
+          "key": "onboardingCreditDescription",
+          "en": "DeepSeek Harness charges credits based on the tokens used by models and tools. Add credits in advance to keep your tasks running without interruption. Your balance is only used while the agent is working on a task.",
+          "zh": "DeepSeek Harness 执行任务时，会根据模型与工具使用的 token 量扣除额度。请提前添加额度，避免任务在执行过程中被迫中断。你的余额只会在 Agent 实际执行任务时消耗。"
+        },
+        {
+          "key": "onboardingDetailed",
+          "en": "Full details",
+          "zh": "完整过程"
+        },
+        {
+          "key": "onboardingDetailedDescription",
+          "en": "See the full process for easier debugging and troubleshooting",
+          "zh": "查看完整工作过程，方便调试和排查问题"
+        },
+        {
+          "key": "onboardingDevelopment",
+          "en": "Coding & development",
+          "zh": "代码与开发"
+        },
+        {
+          "key": "onboardingDevelopmentDescription",
+          "en": "Edit code, debug issues, run commands, manage project files, and more",
+          "zh": "修改代码、调试问题、运行命令和管理项目文件等"
+        },
+        {
+          "key": "onboardingEnter",
+          "en": "Open app",
+          "zh": "进入应用"
+        },
+        {
+          "key": "onboardingFundedTopUp",
+          "en": "Add credits",
+          "zh": "去充值"
+        },
+        {
+          "key": "onboardingGoTopUp",
+          "en": "Add credits",
+          "zh": "前往充值"
+        },
+        {
+          "key": "onboardingIntroduction",
+          "en": "DeepSeek Harness works in a local folder and uses tools to read and write files on your computer. It can help you research and organize information, create documents and spreadsheets, write code, troubleshoot issues, and more.",
+          "zh": "DeepSeek Harness 会以本地文件夹作为工作区，通过调用各种工具，读写本机文件，完成搜索整理资料、制作文档表格、编写代码、排查问题等各种任务。"
+        },
+        {
+          "key": "onboardingKeepSetting",
+          "en": "Continue setup",
+          "zh": "继续设置"
+        },
+        {
+          "key": "onboardingLater",
+          "en": "Next",
+          "zh": "下一步"
+        },
+        {
+          "key": "onboardingLoading",
+          "en": "Loading settings…",
+          "zh": "正在加载设置…"
+        },
+        {
+          "key": "onboardingNoCreditDescription",
+          "en": "DeepSeek Harness can’t start new tasks without credits. You can add them later in Settings → Account.",
+          "zh": "没有可用额度时，DeepSeek Harness 将无法开始新的任务。你可以稍后前往 设置 → 账号与余额 进行充值。"
+        },
+        {
+          "key": "onboardingNoCreditTitle",
+          "en": "Skip adding credits?",
+          "zh": "暂时跳过充值？"
+        },
+        {
+          "key": "onboardingOffice",
+          "en": "Office & creative work",
+          "zh": "办公与创作"
+        },
+        {
+          "key": "onboardingOfficeDescription",
+          "en": "Edit documents, organize data, create presentations, and more",
+          "zh": "编辑文档、整理数据和制作演示文稿等"
+        },
+        {
+          "key": "onboardingProcess",
+          "en": "How much detail would you like to see?",
+          "zh": "你希望看到多少工作过程？"
+        },
+        {
+          "key": "onboardingProcessDescription",
+          "en": "This only changes how progress is shown, not what DeepSeek Harness can do.",
+          "zh": "这只会影响工作过程的展示方式，不会影响 DeepSeek Harness 的工作能力。"
+        },
+        {
+          "key": "onboardingPurposeDescription",
+          "en": "We’ll tailor the interface and tools to fit the way you work.",
+          "zh": "我们会根据你的选择调整界面和工具，以更适合你的工作方式。"
+        },
+        {
+          "key": "onboardingPurposePrefix",
+          "en": "What would you like",
+          "zh": "你希望"
+        },
+        {
+          "key": "onboardingPurposeSuffix",
+          "en": "to help with?",
+          "zh": "帮你做什么？"
+        },
+        {
+          "key": "onboardingRetry",
+          "en": "Retry",
+          "zh": "重试"
+        },
+        {
+          "key": "onboardingSaveFailed",
+          "en": "Could not save settings. Try again.",
+          "zh": "未能保存设置，请重试。"
+        },
+        {
+          "key": "onboardingSkip",
+          "en": "Skip",
+          "zh": "跳过"
+        },
+        {
+          "key": "onboardingSkipDescription",
+          "en": "You can change how progress, performance, and usage are displayed, or enable Coding Tools, anytime in Settings → General.",
+          "zh": "你可以随时前往 设置 → 通用设置 中调整工作过程、性能与用量展示方式或开启代码工作工具。"
+        },
+        {
+          "key": "onboardingSkipTitle",
+          "en": "Skip setup?",
+          "zh": "跳过设置？"
+        },
+        {
+          "key": "onboardingStandard",
+          "en": "Key details",
+          "zh": "关键细节"
+        },
+        {
+          "key": "onboardingStandardDescription",
+          "en": "Focus on results, with only the most important steps and actions shown",
+          "zh": "结果优先，仅展示重要步骤和关键操作"
+        },
+        {
+          "key": "onboardingStart",
+          "en": "Get started",
+          "zh": "开始设置"
+        },
+        {
+          "key": "onboardingTopUp",
+          "en": "Add credits",
+          "zh": "去充值"
+        },
+        {
+          "key": "onboardingUnderstood",
+          "en": "Got it",
+          "zh": "我知道了"
+        },
+        {
+          "key": "onboardingWelcome",
+          "en": "Welcome to",
+          "zh": "欢迎使用"
+        },
+        {
+          "key": "open",
+          "en": "Open browser",
+          "zh": "打开浏览器"
+        },
+        {
+          "key": "platformFailed",
+          "en": "Could not complete the operation. Try again.",
+          "zh": "操作未完成，请重试"
+        },
+        {
+          "key": "platformRetry",
+          "en": "Retry",
+          "zh": "重试"
+        },
+        {
+          "key": "profileUnavailable",
+          "en": "Account details are not available yet.",
+          "zh": "账号资料暂不可用"
+        },
+        {
+          "key": "quotaDescription",
+          "en": "DeepSeek Harness cannot start a new task with this account when no balance is available. Would you like to top up? You can also top up later in Settings → Account.",
+          "zh": "没有可用额度时，DeepSeek Harness 无法开始新的任务，是否前往充值？或者可以稍后前往 设置 → 账号与余额 进行充值。"
+        },
+        {
+          "key": "quotaTitle",
+          "en": "No balance available",
+          "zh": "当前无可用余额"
+        },
+        {
+          "key": "quotaTopUp",
+          "en": "Top up",
+          "zh": "去充值"
+        },
+        {
+          "key": "retry",
+          "en": "Sign in again",
+          "zh": "重新登录"
+        },
+        {
+          "key": "sessionExpired",
+          "en": "You have signed out of your account, please log in again.",
+          "zh": "登录信息已失效，请重新登录"
+        },
+        {
+          "key": "settings",
+          "en": "Settings",
+          "zh": "设置"
+        },
+        {
+          "key": "settingsSignedOutDescription",
+          "en": "Sign in to DeepSeek Harness to get your dedicated API Key",
+          "zh": "登录 DeepSeek Harness 账号获取专属 API Key"
+        },
+        {
+          "key": "settingsSignedOutTitle",
+          "en": "You are not signed in to DeepSeek Harness",
+          "zh": "当前未登录 DeepSeek Harness 账号"
+        },
+        {
+          "key": "signIn",
+          "en": "Sign in",
+          "zh": "登录"
+        },
+        {
+          "key": "signInDescription",
+          "en": "Use your DeepSeek account to get started.",
+          "zh": "登录 DeepSeek 账号以开始使用"
+        },
+        {
+          "key": "signOut",
+          "en": "Sign out",
+          "zh": "退出登录"
+        },
+        {
+          "key": "signOutDescription",
+          "en": "Signing out will not delete any data. You can sign in to this account again.",
+          "zh": "退出登录不会丢失任何数据，你仍可以登录此账号。"
+        },
+        {
+          "key": "signOutRunningDescription",
+          "en": "Tasks are currently running. Signing out will interrupt them. Sign out now?",
+          "zh": "当前有进程正在执行中，点击“退出登录”，将会打断进程，是否即刻退出登录？"
+        },
+        {
+          "key": "signOutUnknownDescription",
+          "en": "Could not check running tasks. Signing out may interrupt tasks using this account. Sign out now?",
+          "zh": "暂时无法确认任务状态。退出登录可能会中断使用此账号的任务，是否继续？"
+        },
+        {
+          "key": "signedIn",
+          "en": "Signed in to DeepSeek",
+          "zh": "已登录 DeepSeek"
+        },
+        {
+          "key": "signedOut",
+          "en": "Not signed in",
+          "zh": "尚未登录"
+        },
+        {
+          "key": "timeoutDescription",
+          "en": "Sign in again to continue.",
+          "zh": "请重新登录后继续操作。"
+        },
+        {
+          "key": "timeoutTitle",
+          "en": "Sign in timed out",
+          "zh": "登录已超时"
+        },
+        {
+          "key": "topUp",
+          "en": "Top up",
+          "zh": "充值"
+        },
+        {
+          "key": "usage",
+          "en": "View usage",
+          "zh": "查询用量"
+        },
+        {
+          "key": "waiting",
+          "en": "Continue in your browser",
+          "zh": "请在浏览器中继续"
+        }
+      ],
+      "obsolete": [],
+      "ruKeys": 0,
+      "coreKeys": 93
+    },
+    "shortcuts": {
+      "missing": [
+        {
+          "key": "application",
+          "en": "Application",
+          "zh": "应用操作"
+        },
+        {
+          "key": "approval",
+          "en": "Approval area",
+          "zh": "审批区域"
+        },
+        {
+          "key": "cancel",
+          "en": "Cancel",
+          "zh": "取消"
+        },
+        {
+          "key": "clear",
+          "en": "Remove",
+          "zh": "移除"
+        },
+        {
+          "key": "clear-search",
+          "en": "Clear search",
+          "zh": "清空搜索"
+        },
+        {
+          "key": "close",
+          "en": "Close keyboard shortcuts",
+          "zh": "关闭快捷键"
+        },
+        {
+          "key": "close-confirmation",
+          "en": "Close confirmation",
+          "zh": "关闭确认"
+        },
+        {
+          "key": "conflict",
+          "en": "Already used by “{commands}”",
+          "zh": "已被「{commands}」占用"
+        },
+        {
+          "key": "description",
+          "en": "View and edit available shortcuts and input actions",
+          "zh": "查看和编辑当前可用的快捷键和输入操作"
+        },
+        {
+          "key": "desktop-document",
+          "en": "userData/keybindings.json",
+          "zh": "userData/keybindings.json"
+        },
+        {
+          "key": "desktop-reload",
+          "en": "restart Harness",
+          "zh": "重新启动 Harness"
+        },
+        {
+          "key": "dismiss",
+          "en": "Close menu or top dialog",
+          "zh": "关闭菜单或顶层弹窗"
+        },
+        {
+          "key": "edit-label",
+          "en": "Edit shortcut for {command}",
+          "zh": "修改{command}快捷键"
+        },
+        {
+          "key": "empty",
+          "en": "No matching shortcuts",
+          "zh": "没有匹配的快捷键"
+        },
+        {
+          "key": "future",
+          "en": "Shortcut configuration in {location} was created by a newer version. Upgrade Harness and try again.",
+          "zh": "{location} 的快捷键配置由更新版本创建。请升级 Harness 后重试。"
+        },
+        {
+          "key": "global-hint",
+          "en": "Open from anywhere",
+          "zh": "全局唤起查看"
+        },
+        {
+          "key": "input",
+          "en": "Message input",
+          "zh": "消息输入"
+        },
+        {
+          "key": "invalid",
+          "en": "Shortcut configuration in {location} is damaged. Back up and repair this configuration, then {reload}.",
+          "zh": "{location} 的快捷键配置内容损坏。请先备份并修复该配置，然后{reload}。"
+        },
+        {
+          "key": "macos-web-help",
+          "en": "Use Command+/, Command+,, Command+Backslash, Control+Backquote, Command+Option+key, or Command+Shift+key. Combinations with three or four distinct modifiers are also supported. Browser or system shortcuts may not reach the page.",
+          "zh": "可设置 Command+/、Command+,、Command+反斜杠、Control+反引号、Command+Option+按键或 Command+Shift+按键。也支持三个或四个不同修饰键的组合。浏览器或系统占用的组合可能无法送达页面。"
+        },
+        {
+          "key": "menus",
+          "en": "Menus and dialogs",
+          "zh": "菜单与弹层"
+        },
+        {
+          "key": "modified-count",
+          "en": "{count} customized",
+          "zh": "{count} 项已自定义"
+        },
+        {
+          "key": "modifier-required",
+          "en": "Include Command, Ctrl, or Alt in the combination.",
+          "zh": "请同时按下 Command、Ctrl 或 Alt 修饰键。"
+        },
+        {
+          "key": "move",
+          "en": "Move menu selection",
+          "zh": "移动菜单选择"
+        },
+        {
+          "key": "native-failed",
+          "en": "Could not protect desktop key recording. Exit recording and try again.",
+          "zh": "无法启用桌面录键保护，请关闭后重试。"
+        },
+        {
+          "key": "not-ready",
+          "en": "Shortcuts are not ready. Please try again.",
+          "zh": "快捷键尚未准备好，请稍后重试。"
+        },
+        {
+          "key": "open",
+          "en": "Open keyboard shortcuts",
+          "zh": "快捷键速查"
+        },
+        {
+          "key": "read",
+          "en": "Could not read {location}. Check access permissions, then {reload}.",
+          "zh": "无法读取 {location}。请检查访问权限后{reload}。"
+        },
+        {
+          "key": "record",
+          "en": "Press a shortcut",
+          "zh": "按下快捷键"
+        },
+        {
+          "key": "record-help",
+          "en": "Release the keys to save. Tab moves between actions; Esc cancels.",
+          "zh": "松开组合键即保存。Tab 切换操作，Esc 退出录键。"
+        },
+        {
+          "key": "reserved",
+          "en": "This combination is reserved for system or text editing actions.",
+          "zh": "此组合由系统或文本编辑操作保留。"
+        },
+        {
+          "key": "reset",
+          "en": "Restore default",
+          "zh": "恢复默认"
+        },
+        {
+          "key": "reset-all",
+          "en": "Restore all defaults",
+          "zh": "恢复全部默认"
+        },
+        {
+          "key": "reset-description",
+          "en": "Restore the default shortcuts for this platform. All modified or removed shortcuts will be restored. Other platforms are unaffected.",
+          "zh": "将恢复当前平台的默认快捷键。你修改或移除的快捷键都会恢复，其他平台不受影响。"
+        },
+        {
+          "key": "reset-failed",
+          "en": "Could not restore defaults. Your shortcuts are unchanged. Please retry.",
+          "zh": "恢复默认失败。原快捷键已保留，请重试。"
+        },
+        {
+          "key": "reset-saved",
+          "en": "Default shortcuts restored",
+          "zh": "已恢复默认快捷键"
+        },
+        {
+          "key": "reset-title",
+          "en": "Restore all default shortcuts?",
+          "zh": "恢复全部默认快捷键？"
+        },
+        {
+          "key": "retry-save",
+          "en": "Retry save",
+          "zh": "重试保存"
+        },
+        {
+          "key": "review",
+          "en": "I have reviewed the latest configuration",
+          "zh": "已核对最新配置"
+        },
+        {
+          "key": "saved",
+          "en": "Modified",
+          "zh": "已修改"
+        },
+        {
+          "key": "search",
+          "en": "Search shortcuts",
+          "zh": "搜索快捷键"
+        },
+        {
+          "key": "select",
+          "en": "Select menu item",
+          "zh": "选择菜单项"
+        },
+        {
+          "key": "settings",
+          "en": "Keyboard shortcuts",
+          "zh": "快捷键"
+        },
+        {
+          "key": "stale",
+          "en": "Shortcut configuration or available commands changed. Review the latest bindings before saving.",
+          "zh": "快捷键配置或可用命令已更新。请核对最新键位后再保存。"
+        },
+        {
+          "key": "title",
+          "en": "Keyboard shortcuts",
+          "zh": "快捷键"
+        },
+        {
+          "key": "too-many-keys",
+          "en": "Hold at most two non-modifier keys. Release the keys to try again.",
+          "zh": "最多同时按下两个非修饰键。请松开后重试。"
+        },
+        {
+          "key": "unbound",
+          "en": "No shortcut",
+          "zh": "暂无快捷键"
+        },
+        {
+          "key": "unsupported-browser",
+          "en": "This browser does not support this combination yet.",
+          "zh": "此浏览器暂不支持该组合。"
+        },
+        {
+          "key": "unsupported-key",
+          "en": "This key is not supported.",
+          "zh": "暂不支持这个按键。"
+        },
+        {
+          "key": "using-accepted",
+          "en": "The last successfully read bindings remain active.",
+          "zh": "当前继续使用上次读取成功的键位。"
+        },
+        {
+          "key": "using-defaults",
+          "en": "Default bindings are active.",
+          "zh": "当前使用默认键位。"
+        },
+        {
+          "key": "view",
+          "en": "Edit shortcuts",
+          "zh": "编辑快捷键"
+        },
+        {
+          "key": "web-document",
+          "en": "this site’s localStorage entry dsh.keybindings.v1",
+          "zh": "当前网站本地存储中的 dsh.keybindings.v1"
+        },
+        {
+          "key": "web-help",
+          "en": "Browser combinations: Mod+/, Mod+Shift+,, Mod+Shift+.. Mod is Command on Mac and Ctrl elsewhere.",
+          "zh": "浏览器可用组合：Mod+/、Mod+Shift+,、Mod+Shift+.。Mod 在 Mac 上为 Command，其他系统为 Ctrl。"
+        },
+        {
+          "key": "web-reload",
+          "en": "reload the page",
+          "zh": "刷新页面"
+        },
+        {
+          "key": "windows-web-help",
+          "en": "Use Ctrl+/, Ctrl+,, Ctrl+Alt+key, or Ctrl+Shift+key. Combinations with three or four distinct modifiers are also supported. Browser or system shortcuts may not reach the page.",
+          "zh": "可设置 Ctrl+/、Ctrl+,、Ctrl+Alt+按键或 Ctrl+Shift+按键。也支持三个或四个不同修饰键的组合。浏览器或系统占用的组合可能无法送达页面。"
+        },
+        {
+          "key": "write-failed",
+          "en": "Could not save. Your previous shortcuts and current draft are preserved. Please retry.",
+          "zh": "保存失败。原快捷键和当前草稿已保留，请重试。"
+        }
+      ],
+      "obsolete": [],
+      "ruKeys": 0,
+      "coreKeys": 56
+    },
     "settings.agentPreset": {
       "missing": [
         {
@@ -835,6 +1594,518 @@
       ],
       "ruKeys": 35,
       "coreKeys": 25
+    },
+    "voice-input": {
+      "missing": [
+        {
+          "key": "auto",
+          "en": "Detect automatically",
+          "zh": "自动识别"
+        },
+        {
+          "key": "cancel",
+          "en": "Cancel",
+          "zh": "取消"
+        },
+        {
+          "key": "cancelPrepare",
+          "en": "Cancel preparation",
+          "zh": "取消准备"
+        },
+        {
+          "key": "cancelled",
+          "en": "Voice input cancelled.",
+          "zh": "已取消语音输入。"
+        },
+        {
+          "key": "cloud",
+          "en": "Audio will be sent to the selected cloud service.",
+          "zh": "音频将发送至所选云端服务。"
+        },
+        {
+          "key": "cloudReady",
+          "en": "Cloud speech recognition is ready.",
+          "zh": "云端语音识别已就绪。"
+        },
+        {
+          "key": "conflict",
+          "en": "Your draft changed. The transcript is preserved and can be inserted at the current cursor.",
+          "zh": "草稿已被修改。识别文字已保留，可在当前光标位置插入。"
+        },
+        {
+          "key": "dictate",
+          "en": "Dictate",
+          "zh": "听写"
+        },
+        {
+          "key": "discard",
+          "en": "Discard transcript",
+          "zh": "丢弃识别文字"
+        },
+        {
+          "key": "download.certificate",
+          "en": "Cannot download {resource}: certificate verification failed.",
+          "zh": "无法下载 {resource}：安全连接的证书校验失败。"
+        },
+        {
+          "key": "download.dns",
+          "en": "Cannot download {resource}: the download address could not be resolved.",
+          "zh": "无法下载 {resource}：无法解析下载地址。"
+        },
+        {
+          "key": "download.http",
+          "en": "Cannot download {resource}: the download service returned HTTP {status}.",
+          "zh": "无法下载 {resource}：下载服务返回 HTTP {status}。"
+        },
+        {
+          "key": "download.integrity",
+          "en": "The download of {resource} is incomplete or failed verification.",
+          "zh": "{resource} 下载不完整或文件校验失败。"
+        },
+        {
+          "key": "download.network",
+          "en": "Cannot download {resource}: connection to the download service failed.",
+          "zh": "无法下载 {resource}：连接下载服务失败。"
+        },
+        {
+          "key": "download.storage",
+          "en": "Cannot save {resource}: insufficient disk space or write permission.",
+          "zh": "无法保存 {resource}：磁盘空间不足或没有写入权限。"
+        },
+        {
+          "key": "download.timeout",
+          "en": "The download of {resource} timed out.",
+          "zh": "下载 {resource} 超时。"
+        },
+        {
+          "key": "download.unknown",
+          "en": "Could not prepare {resource}.",
+          "zh": "准备 {resource} 失败。"
+        },
+        {
+          "key": "downloadAdvice.certificate",
+          "en": "Check the system clock, trusted certificates and proxy settings on the machine running DSH, then retry.",
+          "zh": "请检查运行 DSH 的机器的系统时间、受信任证书和代理设置后重试。"
+        },
+        {
+          "key": "downloadAdvice.dns",
+          "en": "Check DNS and proxy settings on the machine running DSH. Confirm that it can resolve the download source domain, then retry.",
+          "zh": "请检查运行 DSH 的机器的 DNS 和代理设置，确认可以解析下载来源的域名后重试。"
+        },
+        {
+          "key": "downloadAdvice.http",
+          "en": "Confirm that the download address is available and the proxy can reach the download service, or retry later.",
+          "zh": "请确认下载地址可用、代理可正常连接下载服务，或稍后重试。"
+        },
+        {
+          "key": "downloadAdvice.integrity",
+          "en": "Retry the download. Other completed and verified files are retained.",
+          "zh": "请重试下载。已完成并通过校验的其他文件会保留。"
+        },
+        {
+          "key": "downloadAdvice.network",
+          "en": "Check that the machine running DSH can reach the download source and its model download services. Configure a proxy on that machine if needed, then retry.",
+          "zh": "请检查运行 DSH 的机器能否访问下载来源及其模型下载服务；如需代理，请在该机器上配置后重试。"
+        },
+        {
+          "key": "downloadAdvice.storage",
+          "en": "Check available disk space and write permission for the model directory on the machine running DSH, then retry.",
+          "zh": "请检查运行 DSH 的机器的剩余磁盘空间，以及模型目录的写入权限后重试。"
+        },
+        {
+          "key": "downloadAdvice.timeout",
+          "en": "Check the network or proxy connection on the machine running DSH, then retry later. Verified downloaded files are retained.",
+          "zh": "请检查运行 DSH 的机器的网络或代理连接，稍后重试。已下载并通过校验的文件会保留。"
+        },
+        {
+          "key": "downloadAdvice.unknown",
+          "en": "Check the network, disk space and model directory permissions on the machine running DSH, then retry.",
+          "zh": "请检查运行 DSH 的机器的网络、磁盘空间和模型目录权限后重试。"
+        },
+        {
+          "key": "downloadBytes",
+          "en": "Download: {completed} / {total} MB, {percent}%",
+          "zh": "下载：{completed} / {total} MB，{percent}%"
+        },
+        {
+          "key": "downloadCode",
+          "en": "Error code: {code}",
+          "zh": "错误码：{code}"
+        },
+        {
+          "key": "downloadProgress",
+          "en": "Download progress",
+          "zh": "下载进度"
+        },
+        {
+          "key": "downloadSource",
+          "en": "Download source: {source}",
+          "zh": "下载来源：{source}"
+        },
+        {
+          "key": "downloadUnknown",
+          "en": "Downloaded {completed} MB",
+          "zh": "已下载 {completed} MB"
+        },
+        {
+          "key": "elapsed",
+          "en": "Waiting {seconds} seconds",
+          "zh": "已等待 {seconds} 秒"
+        },
+        {
+          "key": "empty",
+          "en": "No speech recognized",
+          "zh": "未识别到语音"
+        },
+        {
+          "key": "en",
+          "en": "English",
+          "zh": "英语"
+        },
+        {
+          "key": "failed",
+          "en": "Speech recognition failed: {message}",
+          "zh": "语音识别失败：{message}"
+        },
+        {
+          "key": "insert",
+          "en": "Insert text",
+          "zh": "插入文字"
+        },
+        {
+          "key": "interrupted",
+          "en": "Recording was interrupted. Please try again.",
+          "zh": "录音中断，请重试。"
+        },
+        {
+          "key": "ja",
+          "en": "Japanese",
+          "zh": "日语"
+        },
+        {
+          "key": "ko",
+          "en": "Korean",
+          "zh": "韩语"
+        },
+        {
+          "key": "language",
+          "en": "Recognition language",
+          "zh": "识别语言"
+        },
+        {
+          "key": "loading",
+          "en": "Loading recognition services…",
+          "zh": "正在读取识别服务…"
+        },
+        {
+          "key": "local",
+          "en": "Audio is recognized on the machine running DSH. If models need downloading, that machine must be able to reach the selected source and its file services. Configure a proxy on that machine if needed.",
+          "zh": "音频在运行 DSH 的机器上识别。需要下载模型时，请确保该机器能访问所选下载源及其文件服务。如需代理，请在该机器上配置。"
+        },
+        {
+          "key": "permission",
+          "en": "Microphone access is disabled. Allow it in browser and system settings.",
+          "zh": "麦克风权限未开启，请在浏览器和系统设置中允许访问。"
+        },
+        {
+          "key": "preparation.cancelled",
+          "en": "Preparation cancelled. Completed downloads are retained.",
+          "zh": "准备已取消，已完成的下载会保留。"
+        },
+        {
+          "key": "preparation.cancelling",
+          "en": "Cancelling preparation…",
+          "zh": "正在取消准备…"
+        },
+        {
+          "key": "preparation.checking",
+          "en": "Checking local resources…",
+          "zh": "正在检查本地资源…"
+        },
+        {
+          "key": "preparation.loading",
+          "en": "Loading {name}…",
+          "zh": "正在加载 {name}…"
+        },
+        {
+          "key": "preparation.ready",
+          "en": "Local speech recognition is ready.",
+          "zh": "本地语音已就绪。"
+        },
+        {
+          "key": "preparation.standby",
+          "en": "Local resources are prepared. Recording wakes the recognizer.",
+          "zh": "本地资源已准备，录音时自动唤醒。"
+        },
+        {
+          "key": "preparation.unprepared",
+          "en": "First use downloads the local recognition models.",
+          "zh": "首次使用需要下载本地识别模型。"
+        },
+        {
+          "key": "preparation.waking",
+          "en": "Waking local speech recognition…",
+          "zh": "正在唤醒本地语音…"
+        },
+        {
+          "key": "preparationFailed",
+          "en": "Preparation failed: {message}",
+          "zh": "准备失败：{message}"
+        },
+        {
+          "key": "preparationSteps",
+          "en": "Preparation steps",
+          "zh": "准备步骤"
+        },
+        {
+          "key": "prepare",
+          "en": "Download and prepare",
+          "zh": "下载并准备"
+        },
+        {
+          "key": "provider",
+          "en": "Recognition service",
+          "zh": "识别服务"
+        },
+        {
+          "key": "reconnecting",
+          "en": "Connecting to speech recognition…",
+          "zh": "正在连接语音服务…"
+        },
+        {
+          "key": "recording",
+          "en": "Recording…",
+          "zh": "正在录音…"
+        },
+        {
+          "key": "requesting",
+          "en": "Allow microphone access to continue…",
+          "zh": "请允许使用麦克风…"
+        },
+        {
+          "key": "retryPrepare",
+          "en": "Retry preparation",
+          "zh": "重试准备"
+        },
+        {
+          "key": "retryRecording",
+          "en": "Record again",
+          "zh": "重新录音"
+        },
+        {
+          "key": "setup.disk",
+          "en": "Disk space",
+          "zh": "硬盘空间"
+        },
+        {
+          "key": "setup.diskValue",
+          "en": "Allow about {gb} GB for models, runtime, and download caches",
+          "zh": "建议预留约 {gb} GB，包含模型、运行时和下载缓存"
+        },
+        {
+          "key": "setup.estimateNote",
+          "en": "These are estimates; slow networks may take longer. Downloads are reused; idle models release memory by default.",
+          "zh": "以上为估算；网络较慢时可能更久。已下载的资源会复用，默认在闲置后释放模型内存。"
+        },
+        {
+          "key": "setup.local",
+          "en": "Local models will be downloaded to the machine running DSH. No Python or compiler is required.",
+          "zh": "将在运行 DSH 的机器上下载本地模型，无需安装 Python 或编译工具。"
+        },
+        {
+          "key": "setup.memory",
+          "en": "Memory",
+          "zh": "运行内存"
+        },
+        {
+          "key": "setup.memoryValue",
+          "en": "About {gb} GB with the model loaded; recognition may use more",
+          "zh": "模型加载后约 {gb} GB，识别时可能更高"
+        },
+        {
+          "key": "setup.time",
+          "en": "First setup",
+          "zh": "首次准备"
+        },
+        {
+          "key": "setup.timeValue",
+          "en": "Allow roughly {min}–{max} minutes, depending on the network and machine",
+          "zh": "参考 {min}–{max} 分钟，取决于网络和机器性能"
+        },
+        {
+          "key": "setupPrompt.body",
+          "en": "Voice input is enabled. First use requires downloading and preparing local recognition models. Open the plugin details to review disk space, memory and time estimates before starting setup.",
+          "zh": "语音输入插件已开启。首次使用需要在本机下载并准备识别模型，请前往插件详情页查看空间、内存和时间说明，再开始安装。"
+        },
+        {
+          "key": "setupPrompt.details",
+          "en": "Open voice plugin settings",
+          "zh": "前往语音插件设置"
+        },
+        {
+          "key": "setupPrompt.later",
+          "en": "Later",
+          "zh": "稍后"
+        },
+        {
+          "key": "setupPrompt.open",
+          "en": "Go to setup",
+          "zh": "前往安装"
+        },
+        {
+          "key": "setupPrompt.title",
+          "en": "Set up voice input before recording",
+          "zh": "使用语音输入前需要安装"
+        },
+        {
+          "key": "setupPrompt.trigger",
+          "en": "Open voice input setup",
+          "zh": "打开语音输入引导"
+        },
+        {
+          "key": "setupPrompt.unavailableBody",
+          "en": "Open the voice plugin details to check recognition status, preparation progress, or errors.",
+          "zh": "请前往语音插件详情页查看识别服务状态、准备进度或错误信息"
+        },
+        {
+          "key": "setupPrompt.unavailableTitle",
+          "en": "Speech recognition is not ready",
+          "zh": "语音识别尚未就绪"
+        },
+        {
+          "key": "short.downloading",
+          "en": "Downloading",
+          "zh": "下载中"
+        },
+        {
+          "key": "short.failed",
+          "en": "Setup failed",
+          "zh": "准备失败"
+        },
+        {
+          "key": "sourceAuto",
+          "en": "Automatic (recommended)",
+          "zh": "自动选择（推荐）"
+        },
+        {
+          "key": "sourceAutoHelp",
+          "en": "Prefer the first responding source and try another if a download fails.",
+          "zh": "优先使用响应较快的源，下载失败时自动尝试其他源。"
+        },
+        {
+          "key": "sourceChoice",
+          "en": "Model download source",
+          "zh": "模型下载源"
+        },
+        {
+          "key": "sourceHuggingFace",
+          "en": "Hugging Face",
+          "zh": "Hugging Face"
+        },
+        {
+          "key": "sourceManualHelp",
+          "en": "Download only from the selected source. Verified downloaded files are reused.",
+          "zh": "仅从所选源下载；已下载并通过校验的文件会复用。"
+        },
+        {
+          "key": "sourceMirror",
+          "en": "HF-Mirror (China mirror)",
+          "zh": "HF-Mirror（国内镜像）"
+        },
+        {
+          "key": "start",
+          "en": "Start recording",
+          "zh": "开始录音"
+        },
+        {
+          "key": "step.check",
+          "en": "Check local resources",
+          "zh": "检查本地资源"
+        },
+        {
+          "key": "step.load",
+          "en": "Load {name}",
+          "zh": "加载 {name}"
+        },
+        {
+          "key": "step.model",
+          "en": "Prepare recognition model",
+          "zh": "准备语音识别模型"
+        },
+        {
+          "key": "step.vad",
+          "en": "Prepare voice detection model",
+          "zh": "准备语音检测模型"
+        },
+        {
+          "key": "step.verify",
+          "en": "Verify model files",
+          "zh": "校验模型文件"
+        },
+        {
+          "key": "stepStatus.cancelled",
+          "en": "Cancelled",
+          "zh": "已取消"
+        },
+        {
+          "key": "stepStatus.complete",
+          "en": "Completed",
+          "zh": "已完成"
+        },
+        {
+          "key": "stepStatus.failed",
+          "en": "Failed",
+          "zh": "失败"
+        },
+        {
+          "key": "stepStatus.pending",
+          "en": "Not started",
+          "zh": "未开始"
+        },
+        {
+          "key": "stepStatus.running",
+          "en": "In progress",
+          "zh": "进行中"
+        },
+        {
+          "key": "stop",
+          "en": "Stop and transcribe",
+          "zh": "停止并识别"
+        },
+        {
+          "key": "tooLarge",
+          "en": "The recording exceeds the service limit. Try a shorter recording.",
+          "zh": "录音超过服务限制，请缩短录音后重试。"
+        },
+        {
+          "key": "transcribingShort",
+          "en": "Transcribing…",
+          "zh": "识别中…"
+        },
+        {
+          "key": "unavailable",
+          "en": "This browser cannot record audio. Use a browser with microphone support.",
+          "zh": "当前浏览器不支持录音，请使用支持麦克风的浏览器。"
+        },
+        {
+          "key": "wakingShort",
+          "en": "Waking…",
+          "zh": "唤醒中…"
+        },
+        {
+          "key": "yue",
+          "en": "Cantonese",
+          "zh": "粤语"
+        },
+        {
+          "key": "zh",
+          "en": "Chinese",
+          "zh": "中文"
+        }
+      ],
+      "obsolete": [],
+      "ruKeys": 0,
+      "coreKeys": 101
     },
     "settings.permission": {
       "missing": [],
@@ -1114,7 +2385,8 @@
         {
           "key": "message.stepProcess.sharedPrefix",
           "en": "",
-          "zh": "已"
+          "zh": "已",
+          "verbatim": true
         },
         {
           "key": "message.stepProcess.subagents",
@@ -2952,7 +4224,8 @@
         {
           "key": "sentenceSeparator",
           "en": " ",
-          "zh": ""
+          "zh": "",
+          "verbatim": true
         }
       ],
       "obsolete": [
@@ -3031,7 +4304,8 @@
         {
           "key": "cron.part.join",
           "en": " ",
-          "zh": " "
+          "zh": " ",
+          "verbatim": true
         },
         {
           "key": "cron.time.at",
@@ -3521,6 +4795,88 @@
         "showMore"
       ],
       "ruKeys": 17,
+      "coreKeys": 15
+    },
+    "sidebarExcel": {
+      "missing": [
+        {
+          "key": "charts",
+          "en": "charts",
+          "zh": "图表"
+        },
+        {
+          "key": "conditionalFormatting",
+          "en": "conditional formatting",
+          "zh": "条件格式"
+        },
+        {
+          "key": "encoding",
+          "en": "This text encoding could not be read. Save the file as UTF-8 or UTF-16 with a BOM and retry.",
+          "zh": "无法识别此文本文件的编码。请另存为 UTF-8 或带 BOM 的 UTF-16 后重试。"
+        },
+        {
+          "key": "featureSeparator",
+          "en": ", ",
+          "zh": "、"
+        },
+        {
+          "key": "formulaWarning",
+          "en": "This workbook contains formulas. Displayed results may be missing or inaccurate.",
+          "zh": "此工作簿包含公式，显示结果可能缺失或不准确。"
+        },
+        {
+          "key": "images",
+          "en": "images",
+          "zh": "图片"
+        },
+        {
+          "key": "invalid",
+          "en": "This spreadsheet could not be opened. Check its format, contents, or password protection.",
+          "zh": "无法打开此表格。请检查文件格式、内容或密码保护。"
+        },
+        {
+          "key": "language",
+          "en": "en",
+          "zh": "zh"
+        },
+        {
+          "key": "loading",
+          "en": "Rendering document...",
+          "zh": "文档渲染中..."
+        },
+        {
+          "key": "retry",
+          "en": "Retry",
+          "zh": "重试"
+        },
+        {
+          "key": "shapes",
+          "en": "shapes",
+          "zh": "形状"
+        },
+        {
+          "key": "timeout",
+          "en": "Opening this workbook timed out. Try a smaller file.",
+          "zh": "打开表格超时。请缩小文件后重试。"
+        },
+        {
+          "key": "title",
+          "en": "Spreadsheet",
+          "zh": "表格"
+        },
+        {
+          "key": "tooLarge",
+          "en": "This workbook exceeds the preview size limit.",
+          "zh": "此表格超过预览大小限制。"
+        },
+        {
+          "key": "unsupportedNotice",
+          "en": "This preview does not support {features} in this workbook. Open it in a system application for the full experience.",
+          "zh": "当前预览不支持此工作簿中的{features}。请使用系统应用打开，以获得完整体验。"
+        }
+      ],
+      "obsolete": [],
+      "ruKeys": 0,
       "coreKeys": 15
     },
     "sidebarPdf": {

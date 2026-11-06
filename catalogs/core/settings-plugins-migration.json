@@ -1,0 +1,563 @@
+{
+  "generatedFor": {
+    "source": "dsh-v0.1.6-alpha.2",
+    "target": "0.2.0-rc.2",
+    "harness": "639ed015397290b3745d163aafe02ffee4aa3f84"
+  },
+  "from": "settings.plugins",
+  "to": [
+    "settings.agentLoop",
+    "settings.shell",
+    "settings.subagent",
+    "settings.webSearch"
+  ],
+  "counts": {
+    "obsolete": 56,
+    "moves": 44,
+    "shared": 8,
+    "unmatched": 4
+  },
+  "moves": [
+    {
+      "oldKey": "agentLoopMaxParallel",
+      "ru": "Параллельные вызовы инструментов",
+      "ns": "settings.agentLoop",
+      "key": "maxParallel",
+      "en": "Parallel tool calls"
+    },
+    {
+      "oldKey": "agentLoopMaxParallelHint",
+      "ru": "Верхняя граница одновременно выполняемых безопасных для параллелизма вызовов в одном шаге.",
+      "ns": "settings.agentLoop",
+      "key": "maxParallelHint",
+      "en": "Upper bound on parallel-safe calls running at once within one step."
+    },
+    {
+      "oldKey": "agentLoopTitle",
+      "ru": "Цикл агента",
+      "ns": "settings.agentLoop",
+      "key": "title",
+      "en": "Agent loop"
+    },
+    {
+      "oldKey": "bashMaxOutputBytes",
+      "ru": "Лимит вывода на поток (байт)",
+      "ns": "settings.shell",
+      "key": "maxOutputBytes",
+      "en": "Output cap per stream (bytes)"
+    },
+    {
+      "oldKey": "bashMaxOutputBytesHint",
+      "ru": "Вывод сверх этого лимита сохраняется во временный файл, а не теряется.",
+      "ns": "settings.shell",
+      "key": "maxOutputBytesHint",
+      "en": "Output beyond this spills to a temporary file rather than being lost."
+    },
+    {
+      "oldKey": "bashTimeoutMs",
+      "ru": "Тайм-аут команды (мс)",
+      "ns": "settings.shell",
+      "key": "timeoutMs",
+      "en": "Command timeout (ms)"
+    },
+    {
+      "oldKey": "bashTimeoutMsHint",
+      "ru": "Сколько одна команда может выполняться до завершения.",
+      "ns": "settings.shell",
+      "key": "timeoutMsHint",
+      "en": "How long one command may run before it is terminated."
+    },
+    {
+      "oldKey": "bashTitle",
+      "ru": "Оболочка",
+      "ns": "settings.shell",
+      "key": "title",
+      "en": "Shell"
+    },
+    {
+      "oldKey": "subagentCapacityHelp",
+      "ru": "Общее число одновременно живых Subagent под одним главным агентом на всех уровнях рекурсии. Главный агент не учитывается. При достижении предела новые запросы на запуск отклоняются.",
+      "ns": "settings.subagent",
+      "key": "subagentCapacityHelp",
+      "en": "Total live Subagents under the same main Agent, across all recursion levels. The main Agent is excluded. New start requests are rejected when the limit is reached."
+    },
+    {
+      "oldKey": "subagentCapacityHelpLabel",
+      "ru": "О пределе параллелизма Subagent",
+      "ns": "settings.subagent",
+      "key": "subagentCapacityHelpLabel",
+      "en": "About the Subagent parallelism limit"
+    },
+    {
+      "oldKey": "subagentCapacityInvalid",
+      "ru": "Введите целое число не меньше 1.",
+      "ns": "settings.subagent",
+      "key": "subagentCapacityInvalid",
+      "en": "Enter a whole number of 1 or more."
+    },
+    {
+      "oldKey": "subagentDepthHelp",
+      "ru": "Ограничивает, сколько уровней Subagent может создать агент.",
+      "ns": "settings.subagent",
+      "key": "subagentDepthHelp",
+      "en": "Limits how many levels of Subagents an Agent can create."
+    },
+    {
+      "oldKey": "subagentDepthHelpLabel",
+      "ru": "О максимальной глубине рекурсии",
+      "ns": "settings.subagent",
+      "key": "subagentDepthHelpLabel",
+      "en": "About maximum recursion depth"
+    },
+    {
+      "oldKey": "subagentDepthInvalid",
+      "ru": "Введите целое число не меньше 0.",
+      "ns": "settings.subagent",
+      "key": "subagentDepthInvalid",
+      "en": "Enter a whole number of 0 or more."
+    },
+    {
+      "oldKey": "subagentDepthOne",
+      "ru": "Только главный агент может создавать Subagent",
+      "ns": "settings.subagent",
+      "key": "subagentDepthOne",
+      "en": "Only the main Agent can create Subagents"
+    },
+    {
+      "oldKey": "subagentDepthOverride",
+      "ru": "Если инструмент задаёт собственную максимальную глубину рекурсии, его настройка имеет приоритет.",
+      "ns": "settings.subagent",
+      "key": "subagentDepthOverride",
+      "en": "If a tool defines its own maximum recursion depth, that setting takes precedence."
+    },
+    {
+      "oldKey": "subagentDepthZero",
+      "ru": "Выключить Subagent",
+      "ns": "settings.subagent",
+      "key": "subagentDepthZero",
+      "en": "Disable Subagents"
+    },
+    {
+      "oldKey": "subagentDescription",
+      "ru": "Настройка глубины рекурсии, количества и моделей Subagent.",
+      "ns": "settings.subagent",
+      "key": "subagentDescription",
+      "en": "Set Subagent recursion depth, count, and models."
+    },
+    {
+      "oldKey": "subagentLimitsTitle",
+      "ru": "Ограничения",
+      "ns": "settings.subagent",
+      "key": "subagentLimitsTitle",
+      "en": "Limits"
+    },
+    {
+      "oldKey": "subagentMaxActive",
+      "ru": "Предел параллелизма Subagent",
+      "ns": "settings.subagent",
+      "key": "subagentMaxActive",
+      "en": "Subagent parallelism limit"
+    },
+    {
+      "oldKey": "subagentMaxDepth",
+      "ru": "Максимальная глубина рекурсии",
+      "ns": "settings.subagent",
+      "key": "subagentMaxDepth",
+      "en": "Maximum recursion depth"
+    },
+    {
+      "oldKey": "subagentModelSelectionAllowed",
+      "ru": "Модели, доступные агентам",
+      "ns": "settings.subagent",
+      "key": "subagentModelSelectionAllowed",
+      "en": "Models agents may choose"
+    },
+    {
+      "oldKey": "subagentModelSelectionChoose",
+      "ru": "Когда включено, агенты могут выбирать провайдера, модель и интенсивность рассуждений для каждого Subagent из авторизованных моделей ниже. Действует только для новых сессий.",
+      "ns": "settings.subagent",
+      "key": "subagentModelSelectionChoose",
+      "en": "When enabled, agents can choose a provider, model, and reasoning effort for each Subagent from the authorized models below. Applies only to new sessions."
+    },
+    {
+      "oldKey": "subagentModelSelectionConflict",
+      "ru": "Настройки изменены в другом месте. Отмените черновик и повторите попытку.",
+      "ns": "settings.subagent",
+      "key": "subagentModelSelectionConflict",
+      "en": "Settings changed elsewhere. Discard your draft and try again."
+    },
+    {
+      "oldKey": "subagentModelSelectionEmpty",
+      "ru": "Сейчас ни один провайдер моделей не объявляет модели.",
+      "ns": "settings.subagent",
+      "key": "subagentModelSelectionEmpty",
+      "en": "No model provider currently advertises a model."
+    },
+    {
+      "oldKey": "subagentModelSelectionLoadFailed",
+      "ru": "Не удалось загрузить модели.",
+      "ns": "settings.subagent",
+      "key": "subagentModelSelectionLoadFailed",
+      "en": "Models could not be loaded."
+    },
+    {
+      "oldKey": "subagentModelSelectionLoading",
+      "ru": "Загрузка моделей…",
+      "ns": "settings.subagent",
+      "key": "subagentModelSelectionLoading",
+      "en": "Loading models…"
+    },
+    {
+      "oldKey": "subagentModelSelectionOff",
+      "ru": "Subagent использует заданные по умолчанию модели или наследует модель родительского агента. Сохранённые варианты моделей сохраняются.",
+      "ns": "settings.subagent",
+      "key": "subagentModelSelectionOff",
+      "en": "Subagents use configured defaults or inherit the parent agent's model. Saved model choices are retained."
+    },
+    {
+      "oldKey": "subagentModelSelectionPartial",
+      "ru": "Некоторые провайдеры моделей не загрузились; сохранённые варианты всё ещё можно удалить.",
+      "ns": "settings.subagent",
+      "key": "subagentModelSelectionPartial",
+      "en": "Some model providers could not be loaded; saved choices remain removable."
+    },
+    {
+      "oldKey": "subagentModelSelectionRequired",
+      "ru": "Перед сохранением выберите хотя бы одну модель.",
+      "ns": "settings.subagent",
+      "key": "subagentModelSelectionRequired",
+      "en": "Select at least one model before saving."
+    },
+    {
+      "oldKey": "subagentModelSelectionRetry",
+      "ru": "Повторить",
+      "ns": "settings.subagent",
+      "key": "subagentModelSelectionRetry",
+      "en": "Retry"
+    },
+    {
+      "oldKey": "subagentModelSelectionTitle",
+      "ru": "Выбор модели",
+      "ns": "settings.subagent",
+      "key": "subagentModelSelectionTitle",
+      "en": "Model selection"
+    },
+    {
+      "oldKey": "subagentModelSelectionToggle",
+      "ru": "Разрешить агентам выбирать модели для Subagent",
+      "ns": "settings.subagent",
+      "key": "subagentModelSelectionToggle",
+      "en": "Allow agents to choose models for Subagents"
+    },
+    {
+      "oldKey": "subagentModelSelectionUnavailable",
+      "ru": "Сейчас недоступно",
+      "ns": "settings.subagent",
+      "key": "subagentModelSelectionUnavailable",
+      "en": "Currently unavailable"
+    },
+    {
+      "oldKey": "subagentModelSelectionUnavailableGroup",
+      "ru": "Сохранено, но сейчас недоступно",
+      "ns": "settings.subagent",
+      "key": "subagentModelSelectionUnavailableGroup",
+      "en": "Saved but currently unavailable"
+    },
+    {
+      "oldKey": "subagentTitle",
+      "ru": "Суб-агент",
+      "ns": "settings.subagent",
+      "key": "subagentTitle",
+      "en": "Subagent"
+    },
+    {
+      "oldKey": "webSearchApiKey",
+      "ru": "API-ключ",
+      "ns": "settings.webSearch",
+      "key": "apiKey",
+      "en": "API key"
+    },
+    {
+      "oldKey": "webSearchApiKeyHint",
+      "ru": "Хранится вне файла настроек. Оставьте пустым, чтобы сохранить текущий ключ.",
+      "ns": "settings.webSearch",
+      "key": "apiKeyHint",
+      "en": "Stored outside the settings file. Leave blank to keep the current key."
+    },
+    {
+      "oldKey": "webSearchApiKeySet",
+      "ru": "Ключ настроен.",
+      "ns": "settings.webSearch",
+      "key": "apiKeySet",
+      "en": "A key is configured."
+    },
+    {
+      "oldKey": "webSearchBaseUrl",
+      "ru": "Конечная точка",
+      "ns": "settings.webSearch",
+      "key": "baseUrl",
+      "en": "Endpoint"
+    },
+    {
+      "oldKey": "webSearchBaseUrlHint",
+      "ru": "Оставьте пустым, чтобы использовать значение провайдера по умолчанию.",
+      "ns": "settings.webSearch",
+      "key": "baseUrlHint",
+      "en": "Leave blank to use the provider default."
+    },
+    {
+      "oldKey": "webSearchMaxUses",
+      "ru": "Максимум поисков на запрос",
+      "ns": "settings.webSearch",
+      "key": "maxUses",
+      "en": "Max searches per request"
+    },
+    {
+      "oldKey": "webSearchMaxUsesHint",
+      "ru": "Сколько раз один запрос может искать, прежде чем должен ответить.",
+      "ns": "settings.webSearch",
+      "key": "maxUsesHint",
+      "en": "How many times one request may search before it must answer."
+    },
+    {
+      "oldKey": "webSearchTitle",
+      "ru": "Веб-поиск",
+      "ns": "settings.webSearch",
+      "key": "title",
+      "en": "Web search"
+    }
+  ],
+  "shared": [
+    {
+      "oldKey": "invalidNumber",
+      "ru": "Введите число или оставьте поле пустым, чтобы использовать значение по умолчанию.",
+      "en": "Enter a number, or leave blank to use the default.",
+      "targets": [
+        {
+          "ns": "settings.agentLoop",
+          "key": "invalidNumber"
+        },
+        {
+          "ns": "settings.shell",
+          "key": "invalidNumber"
+        },
+        {
+          "ns": "settings.webSearch",
+          "key": "invalidNumber"
+        }
+      ]
+    },
+    {
+      "oldKey": "overridden",
+      "ru": "Перекрыто",
+      "en": "Overridden",
+      "targets": [
+        {
+          "ns": "settings.agentLoop",
+          "key": "overridden"
+        },
+        {
+          "ns": "settings.shell",
+          "key": "overridden"
+        },
+        {
+          "ns": "settings.subagent",
+          "key": "overridden"
+        },
+        {
+          "ns": "settings.webSearch",
+          "key": "overridden"
+        }
+      ]
+    },
+    {
+      "oldKey": "readOnly",
+      "ru": "В этом развёртывании настройки хранятся только для чтения.",
+      "en": "This deployment stores settings read-only.",
+      "targets": [
+        {
+          "ns": "settings.agentLoop",
+          "key": "readOnly"
+        },
+        {
+          "ns": "settings.shell",
+          "key": "readOnly"
+        },
+        {
+          "ns": "settings.subagent",
+          "key": "readOnly"
+        },
+        {
+          "ns": "settings.webSearch",
+          "key": "readOnly"
+        }
+      ]
+    },
+    {
+      "oldKey": "reset",
+      "ru": "Сбросить к значению по умолчанию",
+      "en": "Reset to default",
+      "targets": [
+        {
+          "ns": "settings.agentLoop",
+          "key": "reset"
+        },
+        {
+          "ns": "settings.shell",
+          "key": "reset"
+        },
+        {
+          "ns": "settings.subagent",
+          "key": "reset"
+        },
+        {
+          "ns": "settings.webSearch",
+          "key": "reset"
+        }
+      ]
+    },
+    {
+      "oldKey": "save",
+      "ru": "Сохранить",
+      "en": "Save",
+      "targets": [
+        {
+          "ns": "settings.agentLoop",
+          "key": "save"
+        },
+        {
+          "ns": "settings.shell",
+          "key": "save"
+        },
+        {
+          "ns": "settings.subagent",
+          "key": "save"
+        },
+        {
+          "ns": "settings.webSearch",
+          "key": "save"
+        }
+      ]
+    },
+    {
+      "oldKey": "saveFailed",
+      "ru": "Развёртывание не приняло эти значения; они оставлены для исправления.",
+      "en": "The deployment did not accept these values; they were left for you to correct.",
+      "targets": [
+        {
+          "ns": "settings.agentLoop",
+          "key": "saveFailed"
+        },
+        {
+          "ns": "settings.shell",
+          "key": "saveFailed"
+        },
+        {
+          "ns": "settings.subagent",
+          "key": "saveFailed"
+        },
+        {
+          "ns": "settings.webSearch",
+          "key": "saveFailed"
+        }
+      ]
+    },
+    {
+      "oldKey": "saving",
+      "ru": "Сохранение…",
+      "en": "Saving…",
+      "targets": [
+        {
+          "ns": "settings.agentLoop",
+          "key": "saving"
+        },
+        {
+          "ns": "settings.shell",
+          "key": "saving"
+        },
+        {
+          "ns": "settings.subagent",
+          "key": "saving"
+        },
+        {
+          "ns": "settings.webSearch",
+          "key": "saving"
+        }
+      ]
+    },
+    {
+      "oldKey": "unavailable",
+      "ru": "Этот плагин не загружен, поэтому сейчас его нельзя настроить.",
+      "en": "This plugin is not loaded, so it cannot be configured right now.",
+      "targets": [
+        {
+          "ns": "settings.agentLoop",
+          "key": "unavailable"
+        },
+        {
+          "ns": "settings.shell",
+          "key": "unavailable"
+        },
+        {
+          "ns": "settings.subagent",
+          "key": "unavailable"
+        },
+        {
+          "ns": "settings.webSearch",
+          "key": "unavailable"
+        }
+      ]
+    }
+  ],
+  "unmatched": [
+    {
+      "oldKey": "agentLoopDescription",
+      "ru": "Как агент отправляет вызовы инструментов.",
+      "oldEn": "How the agent dispatches tool calls.",
+      "likelyTargets": [
+        {
+          "ns": "settings.agentLoop",
+          "key": "description",
+          "en": "Control how the Agent dispatches tool calls."
+        }
+      ]
+    },
+    {
+      "oldKey": "bashDescription",
+      "ru": "Ограничивает каждую команду, которую запускает агент.",
+      "oldEn": "Limits every command the agent runs.",
+      "likelyTargets": [
+        {
+          "ns": "settings.shell",
+          "key": "description",
+          "en": "Limit how long each command may run and how much it may output."
+        }
+      ]
+    },
+    {
+      "oldKey": "webSearchApiKeyUnset",
+      "ru": "Ключ не настроен; поиск недоступен до его настройки.",
+      "oldEn": "No key is configured; search is unavailable until one is.",
+      "likelyTargets": [
+        {
+          "ns": "settings.webSearch",
+          "key": "apiKeyUnset",
+          "en": "No key is configured; only conversations using a DeepSeek Account model can search, through the default endpoint."
+        }
+      ]
+    },
+    {
+      "oldKey": "webSearchDescription",
+      "ru": "Поисковый провайдер DeepSeek.",
+      "oldEn": "The DeepSeek search provider.",
+      "likelyTargets": [
+        {
+          "ns": "settings.webSearch",
+          "key": "description",
+          "en": "Set up the DeepSeek search provider."
+        }
+      ]
+    }
+  ],
+  "method": "old en/zh from git show dsh-v0.1.6-alpha.2:packages/client/ui-settings-plugins/src/client/locales.ts; current ru from lib/client.js; target en from rc.2 owner locales via esbuild; match = exact en equality"
+}

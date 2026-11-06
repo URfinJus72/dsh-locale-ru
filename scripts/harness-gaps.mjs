@@ -9,15 +9,17 @@
  * host does, and writes a machine-readable worklist to `catalogs/core/gaps.json`:
  *
  *   { generatedFor: { harness, version },
- *     namespaces: { <ns>: { missing: [{ key, en, zh }], obsolete: [key],
- *                           ruKeys, coreKeys } } }
+ *     namespaces: { <ns>: { missing: [{ key, en, zh, verbatim? }],
+ *                           obsolete: [key], ruKeys, coreKeys } } }
  *
  * Plural suffixes are normalised away on both sides (`.zero`, `.one`, `.two`,
  * `.few`, `.many`, `.other`), because ru needs `.one/.few/.many` where en/zh
  * need `.one/.other`: `missing` lists base keys, `obsolete` lists base keys the
  * pack still ships that the Harness owner dropped. `en`/`zh` are the Harness
  * source strings of the missing key (the `.other` variant when the owner only
- * ships plural forms); `ruKeys`/`coreKeys` count normalised base keys.
+ * ships plural forms); `ruKeys`/`coreKeys` count normalised base keys. A missing
+ * key whose English source is empty or whitespace carries `verbatim: true`: the
+ * Russian value must be the English source as-is (never translated or invented).
  *
  * Usage: `DSH_HARNESS_ROOT=/tmp/harness-020rc2 node scripts/harness-gaps.mjs
  * [--out catalogs/core/gaps.json]`
@@ -222,7 +224,10 @@ function compareNamespace(ruDictionary, en, zh) {
   const missing = []
   for (const [base, keys] of [...groups].sort(([left], [right]) => compareKeys(left, right))) {
     if (ruBaseKeys.has(base)) continue
-    missing.push({ key: base, ...sourceFor(base, keys, en, zh) })
+    const source = sourceFor(base, keys, en, zh)
+    const entry = { key: base, ...source }
+    if (source.en.trim() === '') entry.verbatim = true
+    missing.push(entry)
   }
   const obsolete = [...ruBaseKeys]
     .filter(base => !groups.has(base))

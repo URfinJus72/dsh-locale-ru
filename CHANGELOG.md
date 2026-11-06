@@ -4,6 +4,24 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the package follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] — 2026-11-06
+
+Локализация карточек плагинов (display metadata) — последний видимый китайский слой в списке плагинов.
+
+### Added
+
+- `scripts/patch-plugin-cards.mjs`: пишет `locale/en.json` + `locale/ru.json` внутрь установленных пакетов
+  девяти плагинов и добавляет пути в их `exports`; `--check` (exit 1 при расхождении), `--revert`, бэкапы
+  оригиналов в `.cards-backup/`. Русские названия и описания: «Терминал», «Контейнеры Docker», «RSS-дайджест»,
+  «Поиск по журналам», «Конфигурация MCP-серверов», «Codegraph», «Настройки плагинов», «Рынок плагинов»,
+  «Команды агентов».
+- npm-скрипты `cards:apply` / `cards:check` / `cards:revert`.
+
+### Notes
+
+- Правки живут внутри `node_modules` профиля и сбрасываются переустановкой плагинов — после `pnpm install`
+  запустите `pnpm run cards:apply` повторно.
+
 ## [0.2.0] — 2026-11-06
 
 Русская локализация китайских плагинов DSH и обновление ядра до Harness `0.2.0-rc.2`.
@@ -44,6 +62,8 @@ All notable changes to this package are documented here. The format follows
 
 - `harness-compatibility.json` закреплён на `dsh-v0.2.0-rc.2` (`0.2.0-rc.2`, revision `639ed01…`).
 - Версия пакета — `0.2.0`; описание охватывает плагины и host-поверхности.
+- Добавлена локализация карточек плагинов (`scripts/patch-plugin-cards.mjs`, `pnpm run cards:apply`): русские
+  названия/описания девяти плагинов в списке и в «Настройки → Плагины».
 - `README.md` / `README.en.md` переписаны под фактические объёмы и статусы; карточки плагинов отмечены как
   пропущенные по решению.
 - `THIRD_PARTY_NOTICES.md` дополнен разделами по `@hyzyn/*` (Apache-2.0, переводы — производная работа)

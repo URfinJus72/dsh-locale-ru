@@ -1,6 +1,6 @@
 {
   "name": "@absolutemikhail/dsh-locale-ru",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Russian localization for DeepSeek Harness: web UI, plugin UI (@hyzyn/*, dshmarket, dsh-agent-teams) and agent-facing tool descriptions",
   "type": "module",
   "main": "lib/index.js",
@@ -38,7 +38,10 @@
     "check:harness:install": "node scripts/smoke-install.mjs",
     "check:harness": "npm run build && npm run check:harness:keys && npm run check:harness:install",
     "check": "npm run build && npm test && npm pack --dry-run",
-    "prepack": "npm run build"
+    "prepack": "npm run build",
+    "cards:apply": "node scripts/patch-plugin-cards.mjs --apply",
+    "cards:check": "node scripts/patch-plugin-cards.mjs --check",
+    "cards:revert": "node scripts/patch-plugin-cards.mjs --revert"
   },
   "keywords": [
     "dsh-plugin",

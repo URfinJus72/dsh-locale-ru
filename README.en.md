@@ -33,7 +33,7 @@ and no upstream plugin is forked.
 | Plugin UI | 9 ns / 2,699 keys | ✅ released |
 | Plugin tool descriptions | 49 tools / 153 parameters | ✅ released |
 | Plugin system-prompt sections | 8 entries (5 static + 3 dynamic) | ✅ released |
-| Plugin cards in Settings → Plugins | — | ⏭ skipped by decision (needs `locale/*.json` inside each package) |
+| Plugin cards in Settings → Plugins | — | ✅ localized by the `cards:apply` script (files inside installed packages) |
 | Plugin runtime messages (non-UI) | — | ⏭ out of scope |
 
 Full analysis and phased plan: [`docs/PLUGINS-RU-PLAN.md`](docs/PLUGINS-RU-PLAN.md).
@@ -106,9 +106,10 @@ overlay never throws and never blocks a model request.
 - Unknown keys render in English instead of raw identifiers.
 - A `(namespace, locale)` pair has a single owner: if a plugin ever ships its own `ru`, our dictionary for
   that namespace is skipped with a warning instead of crashing the whole pack.
-- Plugin cards in Settings → Plugins come from `locale/*.json` **inside** each plugin package, so their
-  localization is a separate optional step (patching installed packages), not part of the bundle.
-  By decision, v0.2.0 skips the cards.
+- Plugin cards come from `locale/*.json` **inside** each plugin package, so they are localized by
+  `scripts/patch-plugin-cards.mjs` rather than by the bundle: it writes `locale/en.json` + `locale/ru.json` and
+  adds the paths to the affected packages' `exports`. Commands: `pnpm run cards:apply` / `cards:check` /
+  `cards:revert`; re-run after reinstalling plugins (`pnpm install`).
 - The host overlay is enabled by `locale-ru: { prompt: 'ru' }` in [`cordis.patch.yml`](cordis.patch.yml).
 
 ## Installation

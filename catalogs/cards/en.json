@@ -1,0 +1,38 @@
+{
+  "@hyzyn/dsh-codegraph": {
+    "title": "Codegraph",
+    "description": "Project code graph: symbol index, relations, and call chains that help the agent navigate the codebase."
+  },
+  "@hyzyn/dsh-mcp": {
+    "title": "MCP server configuration",
+    "description": "Connects MCP servers and their tools to the agent; settings card under Plugins."
+  },
+  "@hyzyn/dsh-rss": {
+    "title": "RSS digest",
+    "description": "Subscribes to RSS/Atom feeds and produces the daily \"Today's worth reading\" digest that is injected into the model context."
+  },
+  "@hyzyn/dsh-loglens": {
+    "title": "Log search",
+    "description": "Search and analyze Loki, Elasticsearch, and OpenSearch logs: matching lines, surrounding context, facets, and time buckets."
+  },
+  "@hyzyn/dsh-kit-settings": {
+    "title": "Plugin settings",
+    "description": "Extra settings page for the dsh-plugin-kit plugins."
+  },
+  "@hyzyn/dsh-tty": {
+    "title": "Terminal",
+    "description": "xterm.js terminal panel: tabs, SSH connections, SFTP, tunnels, and tmux sessions, with host stats in the status bar."
+  },
+  "@hyzyn/dsh-docker": {
+    "title": "Docker containers",
+    "description": "Containers on this machine or over SSH: list, logs, stats, images, and one-off exec — read-only by default."
+  },
+  "dshmarket": {
+    "title": "Plugin market",
+    "description": "Community plugin catalog for DeepSeek Harness: install, update, and manage."
+  },
+  "@nanmicoder/dsh-agent-teams": {
+    "title": "Agent teams",
+    "description": "Multi-agent teams: roles, shared tasks, and coordination between members."
+  }
+}

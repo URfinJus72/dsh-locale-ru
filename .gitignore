@@ -3,3 +3,6 @@ node_modules/
 *.tsbuildinfo
 # Кэш черновиков перевода (scripts/translate.mjs): не коммитим, воспроизводится из catalogs/.
 .cache/
+
+# Бэкапы скрипта patch-plugin-cards.mjs (оригиналы package.json/locale)
+.cards-backup/

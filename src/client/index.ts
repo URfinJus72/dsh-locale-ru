@@ -38,12 +38,14 @@ import * as plan from './dictionaries/plan.ts'
 import * as pluginManager from './dictionaries/plugin-manager.ts'
 import * as reference from './dictionaries/reference.ts'
 import * as schedule from './dictionaries/schedule.ts'
+import * as scheduleManager from './dictionaries/schedule-manager.ts'
 import * as sessionLogDownload from './dictionaries/session-log-download.ts'
 import * as settingsAccount from './dictionaries/settings-account.ts'
 import * as settingsAgentLoop from './dictionaries/settings-agent-loop.ts'
 import * as settingsGeneral from './dictionaries/settings-general.ts'
 import * as settingsLocale from './dictionaries/settings-locale.ts'
 import * as settingsModels from './dictionaries/settings-models.ts'
+import * as settingsSessionLog from './dictionaries/settings-session-log.ts'
 import * as settingsPluginInventory from './dictionaries/settings-plugin-inventory.ts'
 import * as settingsPlugins from './dictionaries/settings-plugins.ts'
 import * as settingsShell from './dictionaries/settings-shell.ts'
@@ -51,6 +53,7 @@ import * as settingsSubagent from './dictionaries/settings-subagent.ts'
 import * as settingsTheme from './dictionaries/settings-theme.ts'
 import * as settingsWebSearch from './dictionaries/settings-web-search.ts'
 import * as shortcuts from './dictionaries/shortcuts.ts'
+import * as shortcutsLayout from './dictionaries/shortcuts-layout.ts'
 import * as sidebar from './dictionaries/sidebar.ts'
 import * as sidebarBrowser from './dictionaries/sidebar-browser.ts'
 import * as sidebarExcel from './dictionaries/sidebar-excel.ts'
@@ -96,7 +99,9 @@ const CORE_PACKS: readonly Pack[] = [
   settingsSubagent,
   settingsWebSearch,
   settingsAccount,
+  settingsSessionLog,
   shortcuts,
+  shortcutsLayout,
   voiceInput,
   agentPreset,
   agentTeam,
@@ -119,6 +124,7 @@ const CORE_PACKS: readonly Pack[] = [
   pluginManager,
   reference,
   schedule,
+  scheduleManager,
   sessionLogDownload,
   sidebar,
   sidebarRight,

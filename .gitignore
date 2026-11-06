@@ -1,3 +1,5 @@
 node_modules/
 *.tgz
 *.tsbuildinfo
+# Кэш черновиков перевода (scripts/translate.mjs): не коммитим, воспроизводится из catalogs/.
+.cache/

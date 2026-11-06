@@ -1,0 +1,87 @@
+{
+  "translated": 0,
+  "cached": 2697,
+  "failed": 0,
+  "requests": 0,
+  "requestsThinkingOff": 0,
+  "requestsThinkingOn": 0,
+  "elapsedMs": 35,
+  "skipped": 2,
+  "model": "ornith-9b",
+  "baseUrl": "http://127.0.0.1:8080/v1",
+  "catalogs": [
+    {
+      "ns": "agentTeams",
+      "translated": 0,
+      "cached": 217,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "codegraph",
+      "translated": 0,
+      "cached": 205,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "docker",
+      "translated": 0,
+      "cached": 564,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "dsh-market",
+      "translated": 0,
+      "cached": 781,
+      "skipped": 2,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "kit-settings",
+      "translated": 0,
+      "cached": 4,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "loglens",
+      "translated": 0,
+      "cached": 205,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "mcp",
+      "translated": 0,
+      "cached": 73,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "rss",
+      "translated": 0,
+      "cached": 132,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    },
+    {
+      "ns": "tty",
+      "translated": 0,
+      "cached": 516,
+      "skipped": 0,
+      "failed": 0,
+      "pending": 0
+    }
+  ],
+  "failures": []
+}

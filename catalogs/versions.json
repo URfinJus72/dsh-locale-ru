@@ -1,0 +1,76 @@
+{
+  "harness": "0.2.0-rc.2",
+  "localeRu": "0.1.0",
+  "plugins": [
+    {
+      "name": "@hyzyn/dsh-codegraph",
+      "version": "0.6.20",
+      "ns": "codegraph",
+      "keys": 205,
+      "hasRu": false
+    },
+    {
+      "name": "@hyzyn/dsh-mcp",
+      "version": "0.3.13",
+      "ns": "mcp",
+      "keys": 73,
+      "hasRu": false
+    },
+    {
+      "name": "@hyzyn/dsh-rss",
+      "version": "0.4.16",
+      "ns": "rss",
+      "keys": 132,
+      "hasRu": false
+    },
+    {
+      "name": "@hyzyn/dsh-loglens",
+      "version": "0.1.8",
+      "ns": "loglens",
+      "keys": 205,
+      "hasRu": false
+    },
+    {
+      "name": "@hyzyn/dsh-kit-settings",
+      "version": "0.2.9",
+      "ns": "kit-settings",
+      "keys": 4,
+      "hasRu": false
+    },
+    {
+      "name": "@hyzyn/dsh-tty",
+      "version": "0.38.0",
+      "ns": "tty",
+      "keys": 516,
+      "hasRu": false
+    },
+    {
+      "name": "@hyzyn/dsh-docker",
+      "version": "0.15.0",
+      "ns": "docker",
+      "keys": 564,
+      "hasRu": false
+    },
+    {
+      "name": "dshmarket",
+      "version": "1.73.12",
+      "ns": "dsh-market",
+      "keys": 783,
+      "hasRu": false
+    },
+    {
+      "name": "@nanmicoder/dsh-agent-teams",
+      "version": "0.1.29",
+      "ns": "agentTeams",
+      "keys": 217,
+      "hasRu": false
+    },
+    {
+      "name": "@xbzbing/dsh-git-panel",
+      "version": "1.12.0",
+      "ns": "gitPanel",
+      "keys": 554,
+      "hasRu": true
+    }
+  ]
+}

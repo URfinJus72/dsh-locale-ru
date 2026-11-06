@@ -1,0 +1,17 @@
+{
+  "package": "@hyzyn/dsh-kit-settings",
+  "version": "0.2.9",
+  "ns": "kit-settings",
+  "en": {
+    "error.render": "Failed to render the configuration entry: ",
+    "list.empty": "No configuration entries available — install at least one kit plugin first.",
+    "section.intro": "Configuration entries for the dsh-plugin-kit family: env, log query, MCP, Prompt, Profile, RSS, Codegraph, Docker and the terminal panel.",
+    "section.title": "Plugin configuration"
+  },
+  "zh": {
+    "error.render": "配置项渲染失败：",
+    "list.empty": "暂无可用配置项：请先安装至少一个 kit 插件。",
+    "section.intro": "dsh-plugin-kit 插件族的配置入口：环境变量、日志查询、MCP、Prompt、Profile、RSS、Codegraph、Docker、终端面板。",
+    "section.title": "插件配置"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "description": "Глоссарий для перевода UI-строк плагинов DSH на русский язык. Читается scripts/translate.mjs и ревьюером.",
+  "terms": {
+    "namespace": "пространство имён",
+    "tool": "инструмент",
+    "plugin": "плагин",
+    "session": "сессия",
+    "workspace": "рабочая область",
+    "container": "контейнер",
+    "image": "образ",
+    "volume": "том",
+    "target": "цель",
+    "tunnel": "туннель",
+    "branch": "ветка",
+    "commit": "фиксация",
+    "sidebar": "боковая панель",
+    "panel": "панель",
+    "settings": "настройки",
+    "token": "токен",
+    "provider": "провайдер",
+    "model": "модель",
+    "server": "сервер",
+    "connection": "подключение",
+    "host": "хост",
+    "log": "журнал",
+    "search": "поиск",
+    "field": "поле"
+  },
+  "keep": [
+    "DSH",
+    "DeepSeek",
+    "tmux",
+    "SSH",
+    "SFTP",
+    "xterm",
+    "Docker",
+    "JSON",
+    "HTTP",
+    "URL",
+    "cwd",
+    "PID",
+    "CPU",
+    "RAM"
+  ],
+  "notes": [
+    "Счётные конструкции — нейтральные: «{count} элементов», без .one/.few/.many.",
+    "Плейсхолдеры ({name}, {0}, {count}) переносятся без изменений и без перевода.",
+    "Названия плагинов и пакетов (@hyzyn/dsh-tty, dshmarket и т. п.) не переводятся.",
+    "Клавиши и сочетания (Ctrl+C, Esc) не переводятся."
+  ]
+}

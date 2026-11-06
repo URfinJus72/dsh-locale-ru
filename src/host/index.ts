@@ -75,11 +75,21 @@ interface PromptAssembly {
   [key: string]: unknown
 }
 
-/** One translated fragment of a section whose text is rebuilt per request. */
+/**
+ * One translated fragment of a section whose text is rebuilt per request.
+ *
+ * `zh` is the literal as it appears in the source text (once per occurrence —
+ * the same literal is replaced everywhere it appears), `hash` gates the
+ * snapshot, and the optional `count` is how many occurrences the translator saw
+ * when the entry was written. A per-turn text repeats a fragment once per
+ * session, so a declared count is a drift check: a different number means the
+ * surrounding text changed and the entry is not applied.
+ */
 interface FragmentTranslation {
   zh: string
   hash: string
   ru: string
+  count?: number
 }
 
 /** One tool translation: description plus parameter descriptions by schema path. */
@@ -243,13 +253,37 @@ function translateTool(tool: ToolSchema, catalog: Record<string, ToolTranslation
   return { ...tool, description, parameters }
 }
 
+/** One replaceable occurrence of a fragment inside a section text. */
+interface FragmentOccurrence {
+  start: number
+  end: number
+  ru: string
+}
+
+/** One catalog fragment prepared for matching. */
+interface FragmentCandidate {
+  zh: string
+  ru: string
+  hash: unknown
+  count: number | undefined
+  order: number
+}
+
 /**
  * Replace the fragments of a section whose text the plugin rebuilds per request.
  *
- * A fragment is applied only when the source snapshot still matches (hash) and
- * the fragment occurs exactly once in the text; overlapping matches are dropped
- * longest-first, so a shorter fragment that sits inside a longer one cannot be
- * applied twice.
+ * A per-turn section repeats the same sentence once per live session (the tty
+ * terminal list is the reason this exists), so a literal has to be replaced at
+ * *every* occurrence, not just at the first or the only one.
+ *
+ * Replacement is atomic per fragment: when the catalog declares how many
+ * occurrences the snapshot had (`count`) and the live text disagrees, that
+ * fragment is left untouched and reported — half a translation (one session in
+ * Russian, the next in Chinese) reads worse than the source language.
+ *
+ * Overlaps are resolved in favour of the longer literal (then the earlier
+ * catalog entry): a fragment that sits inside a longer translated fragment is
+ * not replaced twice, and its free occurrences are still translated.
  * @param text - the assembled text.
  * @param fragments - catalog fragments of this section.
  * @param sectionName - section name, for warnings.
@@ -260,35 +294,74 @@ function translateFragments(
   fragments: unknown[],
   sectionName: string,
 ): string | undefined {
-  const matches: { start: number; end: number; ru: string }[] = []
-  for (const entry of fragments) {
+  // The same literal may be listed twice (alternative phrasings share a tail);
+  // keep the first entry — its hash is the one that gets verified.
+  const candidates: FragmentCandidate[] = []
+  const seen = new Set<string>()
+  for (const [order, entry] of fragments.entries()) {
     if (!isRecord(entry)) continue
-    const zh = entry.zh
-    const ru = entry.ru
-    const expected = entry.hash
+    const { zh, ru } = entry
     if (typeof zh !== 'string' || zh === '' || typeof ru !== 'string' || ru === '') continue
-    if (typeof expected !== 'string' || hashOf(zh) !== expected) {
-      warnOnce(`fragment:${sectionName}:${zh}:drift`, `section ${sectionName}: fragment snapshot changed — left unchanged`)
+    if (seen.has(zh)) continue
+    seen.add(zh)
+    candidates.push({
+      zh,
+      ru,
+      hash: entry.hash,
+      count: typeof entry.count === 'number' && Number.isSafeInteger(entry.count) && entry.count > 0
+        ? entry.count
+        : undefined,
+      order,
+    })
+  }
+  // Longer literals first: `[состояние команды неизвестно — ` wins its span over
+  // a shorter literal that happens to start at the same offset.
+  candidates.sort((left, right) => right.zh.length - left.zh.length || left.order - right.order)
+  const occupied: { start: number; end: number }[] = []
+  const replacements: FragmentOccurrence[] = []
+  for (const candidate of candidates) {
+    if (typeof candidate.hash !== 'string' || hashOf(candidate.zh) !== candidate.hash) {
+      warnOnce(`fragment:${sectionName}:${candidate.zh}:drift`, `section ${sectionName}: fragment snapshot changed — left unchanged`)
       continue
     }
-    const start = text.indexOf(zh)
-    if (start === -1) continue
-    if (text.indexOf(zh, start + 1) !== -1) {
-      warnOnce(`fragment:${sectionName}:${zh}:ambiguous`, `section ${sectionName}: a fragment occurs more than once — left unchanged`)
+    const spans: { start: number; end: number }[] = []
+    // Non-overlapping scan of one literal: a hit advances by its own length.
+    for (let at = text.indexOf(candidate.zh); at !== -1; at = text.indexOf(candidate.zh, at + candidate.zh.length)) {
+      spans.push({ start: at, end: at + candidate.zh.length })
+    }
+    if (spans.length === 0) continue
+    if (candidate.count !== undefined && spans.length !== candidate.count) {
+      warnOnce(
+        `fragment:${sectionName}:${candidate.zh}:count`,
+        `section ${sectionName}: fragment ${JSON.stringify(candidate.zh)} occurs ${String(spans.length)} time(s), the snapshot expected ${String(candidate.count)} — left unchanged`,
+      )
       continue
     }
-    matches.push({ start, end: start + zh.length, ru })
+    const free = spans.filter(span => !occupied.some(other => span.start < other.end && other.start < span.end))
+    if (free.length === 0) {
+      warnOnce(
+        `fragment:${sectionName}:${candidate.zh}:shadowed`,
+        `section ${sectionName}: every occurrence of ${JSON.stringify(candidate.zh)} sits inside a longer translated fragment — left as part of it`,
+      )
+      continue
+    }
+    if (free.length < spans.length) {
+      warnOnce(
+        `fragment:${sectionName}:${candidate.zh}:partial`,
+        `section ${sectionName}: ${String(spans.length - free.length)} of ${String(spans.length)} occurrence(s) of ${JSON.stringify(candidate.zh)} sit inside a longer translated fragment and stay as part of it`,
+      )
+    }
+    for (const span of free) {
+      occupied.push(span)
+      replacements.push({ ...span, ru: candidate.ru })
+    }
   }
-  if (matches.length === 0) return undefined
-  matches.sort((left, right) => (right.end - right.start) - (left.end - left.start))
-  const kept: typeof matches = []
-  for (const match of matches) {
-    if (kept.some(other => match.start < other.end && other.start < match.end)) continue
-    kept.push(match)
-  }
-  kept.sort((left, right) => right.start - left.start)
+  if (replacements.length === 0) return undefined
+  replacements.sort((left, right) => right.start - left.start)
   let result = text
-  for (const match of kept) result = result.slice(0, match.start) + match.ru + result.slice(match.end)
+  for (const occurrence of replacements) {
+    result = result.slice(0, occurrence.start) + occurrence.ru + result.slice(occurrence.end)
+  }
   return result
 }
 

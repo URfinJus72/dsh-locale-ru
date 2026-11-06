@@ -183,7 +183,7 @@ test('dynamic sections are translated fragment by fragment', async () => {
   assert.equal(out.sections[0].text, 'docker guidance')
 })
 
-test('a fragment that occurs twice is not replaced', async () => {
+test('a fragment repeated in one text is replaced at every occurrence', async () => {
   const assembly = fixture()
   assembly.contexts[0].text = '会话: 会话'
   const dynamic = catalogs() as Record<string, unknown>
@@ -193,8 +193,74 @@ test('a fragment that occurs twice is not replaced', async () => {
     },
   }
   const { out, warnings } = await run(assembly, { prompt: 'ru', catalogs: dynamic })
-  assert.equal(out.contexts[0].text, '会话: 会话')
-  assert.ok(warnings.some(line => line.includes('occurs more than once')), `expected an ambiguity warning, got ${JSON.stringify(warnings)}`)
+  assert.equal(out.contexts[0].text, 'сессия: сессия')
+  assert.deepEqual(warnings, [], `a repeated literal is not a warning, got ${JSON.stringify(warnings)}`)
+})
+
+test('three occurrences are replaced and an overlapping fragment is skipped with a warning', async () => {
+  const assembly = fixture()
+  // The short literal occurs four times; one of them sits inside the longer one.
+  assembly.contexts[0].text = '会话 会话 会话 终端面板会话：'
+  const dynamic = catalogs() as Record<string, unknown>
+  dynamic.sections = {
+    'plugin:dsh-tty:terminals': {
+      fragments: [
+        { zh: '终端面板会话：', hash: hashOf('终端面板会话：'), ru: 'Сессии терминала: ' },
+        { zh: '会话', hash: hashOf('会话'), ru: 'сессия' },
+      ],
+    },
+  }
+  const { out, warnings } = await run(assembly, { prompt: 'ru', catalogs: dynamic })
+  assert.equal(out.contexts[0].text, 'сессия сессия сессия Сессии терминала: ')
+  assert.ok(
+    warnings.some(line => line.includes('sit inside a longer translated fragment')),
+    `expected an overlap warning, got ${JSON.stringify(warnings)}`,
+  )
+  // Nothing is applied twice: the overlap warning says so, the text proves it.
+  assert.equal(out.contexts[0].text.split('сессия').length - 1, 3)
+})
+
+test('a fragment whose occurrence count drifted from the snapshot is left untouched', async () => {
+  const assembly = fixture()
+  assembly.contexts[0].text = '会话 会话 会话'
+  const dynamic = catalogs() as Record<string, unknown>
+  dynamic.sections = {
+    'plugin:dsh-tty:terminals': {
+      fragments: [{ zh: '会话', hash: hashOf('会话'), ru: 'сессия', count: 2 }],
+    },
+  }
+  const { out, warnings } = await run(assembly, { prompt: 'ru', catalogs: dynamic })
+  assert.equal(out.contexts[0].text, '会话 会话 会话', 'a drifted count must leave the whole fragment alone')
+  assert.ok(
+    warnings.some(line => line.includes('the snapshot expected 2')),
+    `expected a count-drift warning, got ${JSON.stringify(warnings)}`,
+  )
+  // The same entry with the matching count is applied at every occurrence.
+  const matchingAssembly = fixture()
+  matchingAssembly.contexts[0].text = '会话 会话 会话'
+  const matching = catalogs() as Record<string, unknown>
+  matching.sections = {
+    'plugin:dsh-tty:terminals': {
+      fragments: [{ zh: '会话', hash: hashOf('会话'), ru: 'сессия', count: 3 }],
+    },
+  }
+  const applied = await run(matchingAssembly, { prompt: 'ru', catalogs: matching })
+  assert.equal(applied.out.contexts[0].text, 'сессия сессия сессия')
+  assert.deepEqual(applied.warnings, [])
+})
+
+test('a single fragment occurrence is still replaced (regression)', async () => {
+  const assembly = fixture()
+  assembly.contexts[0].text = '终端面板会话：sid=1'
+  const dynamic = catalogs() as Record<string, unknown>
+  dynamic.sections = {
+    'plugin:dsh-tty:terminals': {
+      fragments: [{ zh: '终端面板会话：', hash: hashOf('终端面板会话：'), ru: 'Сессии терминала: ' }],
+    },
+  }
+  const { out, warnings } = await run(assembly, { prompt: 'ru', catalogs: dynamic })
+  assert.equal(out.contexts[0].text, 'Сессии терминала: sid=1')
+  assert.deepEqual(warnings, [])
 })
 
 test('the bundled catalogs are a well-formed translation contract', () => {
@@ -464,4 +530,66 @@ test('the snapshot covers 49 tools, including the loop-generated tunnel tools', 
     const parameters = out.tools[0].parameters as { properties: Record<string, { description?: string }> }
     assert.equal(parameters.properties.name.description, 'ru:name', `${toolName}: its name parameter must be addressable`)
   }
+})
+
+test('the tty terminals context of three sessions has no Chinese left', async (t) => {
+  // Regression for the reason this fix exists: a per-turn context repeats the
+  // same literal once per session, and the old "exactly one occurrence" rule
+  // left every repeated sentence in Chinese.
+  const sectionName = 'plugin:dsh-tty:terminals'
+  const snapshot = JSON.parse(readFileSync(new URL('../catalogs/host/prompt.json', import.meta.url), 'utf8')) as {
+    sections: Record<string, { fragments?: { zh: string; hash: string }[] }>
+  }
+  const translation = (JSON.parse(readFileSync(new URL('../src/host/ru/prompt.json', import.meta.url), 'utf8')) as {
+    sections?: Record<string, { fragments?: { zh: string; hash: string; ru: string }[] }>
+  }).sections ?? {}
+  const fragments = snapshot.sections[sectionName].fragments ?? []
+  const entry = translation[sectionName]
+  if (entry?.fragments === undefined || entry.fragments.length === 0) {
+    t.skip('src/host/ru/prompt.json has no fragment translations for the tty terminals context yet')
+    return
+  }
+  const rendered = new Map(entry.fragments.map(fragment => [fragment.zh, fragment.ru]))
+  const literal = (prefix: string): string => {
+    const found = fragments.find(fragment => fragment.zh.startsWith(prefix))?.zh
+    assert.ok(found !== undefined, `the snapshot has no fragment starting with ${JSON.stringify(prefix)}`)
+    return found
+  }
+  const header = literal('当前活跃的终端面板会话')
+  const exitedTail = literal('条已退出但输出仍可读的会话')
+  const hiddenNote = literal('条标签被用户设为')
+  const agentTag = '[agent 开的]'
+  const busyTag = '[运行中——现在别往里发命令]'
+  const lastActivity = '(最后活动'
+  const otherNote = '另有'
+  const unknownExit = '退出码未知'
+  const needed = [header, exitedTail, hiddenNote, agentTag, busyTag, lastActivity, otherNote, unknownExit]
+  const untranslated = needed.filter(fragment => rendered.get(fragment) === undefined)
+  if (untranslated.length > 0) {
+    t.skip(`${String(untranslated.length)} fragment(s) are not translated yet`)
+    return
+  }
+  const zh = (fragment: string): string => fragment
+  // Two live sessions (both repeating the tag and the activity stamp) plus one
+  // exited session and a hidden-tab note — the shape the plugin renders.
+  const text = [
+    header,
+    `- sid=a1 [local] ${zh(agentTag)} ${zh(busyTag)} pid=4242 cwd=/home/user ${zh(lastActivity)} 21:00:01)`,
+    `- sid=b2 [ssh] ${zh(agentTag)} ${zh(busyTag)} ssh prod-host ${zh(lastActivity)} 21:00:02)`,
+    `${zh(otherNote)} 1 ${zh(exitedTail)} sid=c3 (${zh(unknownExit)})`,
+    `1 ${zh(hiddenNote)}`,
+  ].join('\n')
+  const { out, warnings } = await run(
+    { sections: [], contexts: [{ name: sectionName, text }], tools: [], variables: {} },
+    { prompt: 'ru', catalogs: { tools: {}, sections: { [sectionName]: entry } } },
+  )
+  const result = out.contexts[0].text
+  assert.ok(!HAN.test(result), `the overlay left Chinese in the context: ${JSON.stringify(result)}`)
+  assert.equal(result.split(rendered.get(agentTag) ?? '').length - 1, 2, 'both live sessions must carry the translated agent tag')
+  assert.equal(result.split(rendered.get(busyTag) ?? '').length - 1, 2, 'both live sessions must carry the translated busy tag')
+  assert.equal(result.split(rendered.get(lastActivity) ?? '').length - 1, 2, 'both live sessions must carry the translated activity stamp')
+  for (const fragment of [header, exitedTail, hiddenNote, otherNote, unknownExit]) {
+    assert.ok(result.includes(rendered.get(fragment) ?? fragment), `fragment ${JSON.stringify(fragment)} was not translated`)
+  }
+  assert.deepEqual(warnings, [], `the snapshot must match the rendered text, got ${JSON.stringify(warnings)}`)
 })

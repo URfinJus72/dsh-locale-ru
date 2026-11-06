@@ -1,9 +1,13 @@
-# Install the Russian browser locale and localize the built-in permission
-# preset names that originate in Host configuration rather than UI dictionaries.
+# Install the Russian browser locale, turn on the host-plane overlay (Russian
+# tool descriptions and prompt sections, gated by the catalog hashes), and
+# localize the built-in permission preset names that originate in Host
+# configuration rather than UI dictionaries.
 
 - insert:
     - id: locale-ru
       name: '@absolutemikhail/dsh-locale-ru'
+      config:
+        prompt: ru
 
 # This row mirrors the built-in permission preset table. Keep its ids and
 # security settings aligned with the DeepSeek Harness base profile.

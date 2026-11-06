@@ -1,0 +1,745 @@
+{
+  "harness": "0.2.0-rc.2",
+  "plugins": [
+    {
+      "name": "@hyzyn/dsh-codegraph",
+      "version": "0.6.20"
+    },
+    {
+      "name": "@hyzyn/dsh-docker",
+      "version": "0.15.0"
+    },
+    {
+      "name": "@hyzyn/dsh-loglens",
+      "version": "0.1.8"
+    },
+    {
+      "name": "@hyzyn/dsh-mcp",
+      "version": "0.3.13"
+    },
+    {
+      "name": "@hyzyn/dsh-rss",
+      "version": "0.4.16"
+    },
+    {
+      "name": "@hyzyn/dsh-tty",
+      "version": "0.38.0"
+    }
+  ],
+  "counts": {
+    "tools": 47,
+    "parameters": 151
+  },
+  "tools": {
+    "docker_action": {
+      "hash": "7a88265c927656577d8b63e7cc6c605fef1d265b",
+      "paramHashes": {
+        "properties.action.description": "df179b82da5a8ecef6260962f2e32dbb3f97b545",
+        "properties.id.description": "b7b3e5e2e831635ec5b0400d4f6b25f2313e85c9",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.action.description": "start | stop | restart | remove（四选一）",
+        "properties.id.description": "容器名或 ID",
+        "properties.target.description": "目标名（docker_targets 列出；只有一个目标时可省略。`*` 仅 docker_ps / docker_attention 支持，其他工具请传具体目标名）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "对容器执行生命周期操作：start / stop / restart / remove。**破坏性**：remove 会删除容器（数据卷不在其中，但容器配置与可写层丢失），执行前必须向用户确认目标容器。仅当用户在设置里打开「允许变更操作」时可用。"
+    },
+    "docker_attention": {
+      "hash": "2b818f79f8c1a38e40256b792ffe1c97b0ba6af4",
+      "paramHashes": {
+        "properties.limit.description": "f4e544591fecf07742bdff818ffa9c032d9cdc14",
+        "properties.target.description": "5c980a3968d87b9786ac0e71c3a0d2540c5b8278"
+      },
+      "params": {
+        "properties.limit.description": "每个目标最多返回多少条（1~500，默认 100）",
+        "properties.target.description": "目标名；传 `*` 表示全部目标（docker_targets 列出）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "列出「需要关注」的容器：不健康（unhealthy）/ 反复重启 / 被 OOM 杀 / 非零退出 / 僵死。target 传 `*` 时**跨所有目标聚合**（单目标不可达不影响其他目标）。排障入口：不确定从哪台机器看起时先调它。"
+    },
+    "docker_connect_local": {
+      "hash": "118f366b87a6b13eb4168f218674e512f790adbc",
+      "params": {},
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "添加或复用本机 Docker 目标并探测 daemon，返回目标名、是否新建和连接状态及失败原因。保留已有 SSH 配置；不启动或安装 Docker，不改变 context 或能力授权。随后将返回的 name 作为 docker_ps 等工具的 target。"
+    },
+    "docker_diagnose": {
+      "hash": "10d0ca2299f0d8704e73449344b80f37f69f2803",
+      "paramHashes": {
+        "properties.history.description": "b6394aa5b26f86e0f104c47779a5a15d3171c564",
+        "properties.id.description": "3fb80d01336a318073c9f2f28769c5e4527eb1ec",
+        "properties.logTail.description": "c4d55ba6fc1a0d52babd72b6092ff11e81489bba",
+        "properties.since.description": "b736d3a0968f15dd1655249dbbf9f280bb7a3ccf",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.history.description": "返回多少条历史样本（0~50，默认 10；越界值会被夹紧）。每次调用都会记录本次诊断（30 秒内完全相同的重复不重复记），所以多调几次就能看出「它在慢慢变坏吗」",
+        "properties.id.description": "容器名或 ID（来自 docker_ps）",
+        "properties.logTail.description": "日志尾部行数（1~500，默认 80；越界值会被夹紧到边界）",
+        "properties.since.description": "事件与日志的时间窗（docker --since 语法，默认 1h，如 30m、2h、2026-09-09T10:00:00）",
+        "properties.target.description": "目标名（docker_targets 列出；只有一个目标时可省略。`*` 仅 docker_ps / docker_attention 支持，其他工具请传具体目标名）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "诊断容器「为什么不行」（**只读**）：一次采集 inspect + logs + events + stats 四路，按固定判据给出结论——OOM / 非零退出 / 反复重启 / 健康检查失败 / 内存或 CPU 逼近上限 / 日志里有报错。结论是**判据**不是猜测：每条 finding 都带证据（detail），evidence 给结构化字段，**没采到的字段是缺席而不是 0**（findings 里另有 *-unavailable 说明原因）。日志默认只抓尾部 80 行：要更多日志 / 找关键词用 docker_logs_grep。"
+    },
+    "docker_disk_usage": {
+      "hash": "f31c454ce86cabcaa80424113c67e2e1c8231d7b",
+      "paramHashes": {
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.target.description": "目标名（docker_targets 列出；只有一个目标时可省略。`*` 仅 docker_ps / docker_attention 支持，其他工具请传具体目标名）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "读取目标上的磁盘占用（docker system df）：四类汇总 + 镜像 / 卷 / 构建缓存明细，并给出**谁在用**（镜像的容器数、卷的链接数）——这两个数字来自 docker 自己的 `Images[].Containers` / `Volumes[].Links`，不是按 ps 反推的。只读；明细每类最多 20 行（超了给 truncated 与 total）。**删之前先看 containers 是不是 0**：0 才是没人用。老 docker 取不到明细时 degraded=true，汇总仍可用。"
+    },
+    "docker_events": {
+      "hash": "2647da5a17e21335a8bc5fec41c9f0b3cfe604bc",
+      "paramHashes": {
+        "properties.since.description": "d7b00325be230ab481502635f383bfc0a7bc7090",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.since.description": "起始时间（docker --since 语法，如 30m、2h；默认 10m）",
+        "properties.target.description": "目标名（docker_targets 列出；只有一个目标时可省略。`*` 仅 docker_ps / docker_attention 支持，其他工具请传具体目标名）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "读取某个目标最近的容器事件（docker events 快照）：start / die / stop / kill / oom / health_status / destroy / rename / update 九类，已过滤掉 exec_* 等噪音。默认看最近 10m。要持续观察请让用户打开面板容器列表的「活动」条。"
+    },
+    "docker_exec": {
+      "hash": "c72bc19900cf08544aa3466218cd9764b013787f",
+      "paramHashes": {
+        "properties.command.description": "cccf4804e99fc3eb8d5789bfcfd35be75302039c",
+        "properties.id.description": "b7b3e5e2e831635ec5b0400d4f6b25f2313e85c9",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83",
+        "properties.timeoutSec.description": "02e2af1a728db858b3925478c18524abaa31fc15"
+      },
+      "params": {
+        "properties.command.description": "要执行的命令（经容器内 sh -c 执行）",
+        "properties.id.description": "容器名或 ID",
+        "properties.target.description": "目标名（docker_targets 列出；只有一个目标时可省略。`*` 仅 docker_ps / docker_attention 支持，其他工具请传具体目标名）",
+        "properties.timeoutSec.description": "超时秒数（1~120，默认取插件配置 execTimeoutSec；越界值会被静默夹紧）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "在容器内执行一条一次性命令（docker exec，无 TTY）：如 `ls -la /app`、`cat /etc/nginx/nginx.conf`、`env`。仅当用户在设置里打开「允许 exec」时可用；不要在容器里做破坏性操作，交互式排障请让用户到终端面板执行 `docker exec -it <容器> sh`。"
+    },
+    "docker_image_inspect": {
+      "hash": "7cc5e8083d3eb5bf46f6ab20e767d4121065f9db",
+      "paramHashes": {
+        "properties.ref.description": "f57c664c7fb5856a8be5f7acad8faca2201e16bf",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.ref.description": "镜像引用：repository:tag、镜像 ID（sha256:…）或 digest",
+        "properties.target.description": "目标名（docker_targets 列出；只有一个目标时可省略。`*` 仅 docker_ps / docker_attention 支持，其他工具请传具体目标名）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "读取某个镜像的详情（docker image inspect）与构建历史（docker history）：大小 / 创建时间 / 平台 / 层数与层列表 / 入口与命令 / 暴露端口 / digest / 每步构建命令与大小。"
+    },
+    "docker_image_prune": {
+      "hash": "3c643ae2e8d1e9442ca06c11f5b6c4a4288c6b3a",
+      "paramHashes": {
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.target.description": "目标名（docker_targets 列出；只有一个目标时可省略。`*` 仅 docker_ps / docker_attention 支持，其他工具请传具体目标名）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "清理 dangling（无标签 <none>:<none>）镜像（docker image prune -f）。只删无标签镜像，不动有 tag 的镜像（刻意不加 --all，避免误删未使用的普通镜像）。返回删除列表与释放的空间。仅当用户在设置里打开「允许变更操作」时可用。"
+    },
+    "docker_image_pull": {
+      "hash": "970c0cd092e10c0e2ba3a97947ae7974aa670219",
+      "paramHashes": {
+        "properties.ref.description": "b648d9fafd454a59500cb117c3e83dc2650c44c6",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83",
+        "properties.timeoutSec.description": "e9678e115e58853cfeb3da71242a635ecf620d9c"
+      },
+      "params": {
+        "properties.ref.description": "镜像引用：repository:tag 或 digest",
+        "properties.target.description": "目标名（docker_targets 列出；只有一个目标时可省略。`*` 仅 docker_ps / docker_attention 支持，其他工具请传具体目标名）",
+        "properties.timeoutSec.description": "超时秒数（10~1800，默认 600；越界值会被静默夹紧）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "拉取镜像（docker pull），例 nginx:1.27、ghcr.io/org/app:latest。**可能耗时数分钟**（逐层下载）；可用 timeoutSec 调整上限（10~1800 秒，默认 600）。仅当用户在设置里打开「允许变更操作」时可用。交互式观察进度请让用户到面板镜像页的「拉取」里看 SSE 进度流。"
+    },
+    "docker_image_remove": {
+      "hash": "e0eb8c310a994a83b31d2c6a0a5445a362578969",
+      "paramHashes": {
+        "properties.ref.description": "89d279bb07e256bcfeb10aeef74fa845994980be",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.ref.description": "镜像引用：repository:tag 或镜像 ID（sha256:…）",
+        "properties.target.description": "目标名（docker_targets 列出；只有一个目标时可省略。`*` 仅 docker_ps / docker_attention 支持，其他工具请传具体目标名）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "删除一个镜像（docker image rm，不带 -f）。**破坏性**：镜像被容器或子镜像引用时会失败；执行前须向用户确认目标镜像，并复述后果（需要重新拉取或构建才能恢复）。仅当用户在设置里打开「允许变更操作」时可用。"
+    },
+    "docker_images": {
+      "hash": "d5e3397d2a88a8cb249736e4d2643634d63d6794",
+      "paramHashes": {
+        "properties.limit.description": "8998ed1433123bad2d4a96807d39ab2e7d8b80c2",
+        "properties.offset.description": "bde5281c777d97c4dbe44d83660432ec53e26499",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.limit.description": "本页最多返回多少条（1~500，默认 100）",
+        "properties.offset.description": "跳过前多少条（默认 0）；翻页时传上一页提示里给出的 offset",
+        "properties.target.description": "目标名（docker_targets 列出；只有一个目标时可省略。`*` 仅 docker_ps / docker_attention 支持，其他工具请传具体目标名）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "列出某个目标上的镜像（仓库:标签、大小、创建时间、短 ID）。"
+    },
+    "docker_inspect": {
+      "hash": "1993cfef74052504d8368424761b076c0c6a2d70",
+      "paramHashes": {
+        "properties.id.description": "3fb80d01336a318073c9f2f28769c5e4527eb1ec",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.id.description": "容器名或 ID（来自 docker_ps）",
+        "properties.target.description": "目标名（docker_targets 列出；只有一个目标时可省略。`*` 仅 docker_ps / docker_attention 支持，其他工具请传具体目标名）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "读取某个容器的权威详情（docker inspect）：状态/健康检查/退出码/重启次数/端口映射/挂载/网络/启动命令。"
+    },
+    "docker_logs": {
+      "hash": "b2470c3c393123619f1ec81a7ebbed373b97fee9",
+      "paramHashes": {
+        "properties.id.description": "b7b3e5e2e831635ec5b0400d4f6b25f2313e85c9",
+        "properties.since.description": "29b3aa5764b31b7f2428eabb6fcc470835482257",
+        "properties.tail.description": "7517d22aff7bd65f8f9e013d808eb31502f69727",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83",
+        "properties.timestamps.description": "10534297b912956e1bb275684e6f295b8971304b",
+        "properties.until.description": "f6da926a5485f5ae2802b036975b5119497c93b2"
+      },
+      "params": {
+        "properties.id.description": "容器名或 ID",
+        "properties.since.description": "起始时间（docker --since 语法，如 10m、2026-09-09T10:00:00）",
+        "properties.tail.description": "尾部行数（1~5000，默认取配置 logTailDefault；越界值会被静默夹紧到边界）",
+        "properties.target.description": "目标名（docker_targets 列出；只有一个目标时可省略。`*` 仅 docker_ps / docker_attention 支持，其他工具请传具体目标名）",
+        "properties.timestamps.description": "true 时每行带时间戳",
+        "properties.until.description": "结束时间（docker --until 语法，与 since 同一口径，如 2026-09-09T10:05:00；配 since 圈定时间窗）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "读取某个容器的日志尾部（docker logs --tail）。默认行数取插件配置 logTailDefault（出厂 200）、不带时间戳；可加 timestamps / since / until。日志可能很大，优先用 tail 而不是全量。报错埋在更早的深处、或要看特定时间窗时改用 docker_logs_grep（服务端检索）。"
+    },
+    "docker_logs_grep": {
+      "hash": "5c81dbfae2b4239b7f8724f04f0e857f06d617bc",
+      "paramHashes": {
+        "properties.context.description": "7206397f0432b61f987d9b654ab1185f21b8517b",
+        "properties.id.description": "b7b3e5e2e831635ec5b0400d4f6b25f2313e85c9",
+        "properties.ignoreCase.description": "0f3833d0f80349c132f47bb570516d0e12bc1a02",
+        "properties.limit.description": "c74c906c098c0236f890c88138743e1e9f944fca",
+        "properties.pattern.description": "317934b1b6567ee8766c7829d2f25bc08b440d83",
+        "properties.regexp.description": "60fa688a0e6774dab01b02b4e08aabd6cff0d5c3",
+        "properties.since.description": "408032755ef738547fbf5a61b0389385d4268643",
+        "properties.tail.description": "6ebfa36058ebaa250eeca46379fc63939f437057",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83",
+        "properties.timestamps.description": "fb0158ab7d1519569f8602f9150c553ada2e50d2",
+        "properties.until.description": "5f725cde256978cb0f73a64125c7e7614e9182dd"
+      },
+      "params": {
+        "properties.context.description": "每个命中前后各保留的上下文行数（0~20，默认 2；堆栈需要更大值）",
+        "properties.id.description": "容器名或 ID",
+        "properties.ignoreCase.description": "true = 忽略大小写（字面模式等价 grep -i，正则模式加 i 标志）",
+        "properties.limit.description": "返回命中数上限（1~500，默认 200；matched 仍报全量命中数）",
+        "properties.pattern.description": "要搜索的字面子串（默认），或 regexp=true 时的 JS 正则源文；≤512 字符",
+        "properties.regexp.description": "true = 把 pattern 当 JS 正则；默认 false = 字面子串。正则请避免嵌套量词（回溯风险）",
+        "properties.since.description": "起始时间（与 docker_logs 同一口径，如 2h、2026-09-09T10:00:00）；大日志强烈建议配 since/until 圈窗",
+        "properties.tail.description": "扫描行数上限（1~5000）；缺省 = 扫全部历史（--tail all）",
+        "properties.target.description": "目标名（docker_targets 列出；只有一个目标时可省略。`*` 仅 docker_ps / docker_attention 支持，其他工具请传具体目标名）",
+        "properties.timestamps.description": "每行带时间戳（默认 true——深处的命中没有时间等于没用；传 false 关闭）",
+        "properties.until.description": "结束时间（docker --until 语法，与 since 同一口径）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "在容器日志里做**服务端检索**：扫全部历史（可用 since/until 圈时间窗），返回命中行及其前后 context 行。与 docker_logs 的分工：报错就在最近尾部 → docker_logs（更便宜）；埋在大量日志深处 / 找关键词、异常码、请求 ID / 特定时间段 → 本工具。默认字面子串匹配（grep -F 语义，零 ReDoS）；regexp=true 才按 JS 正则解释。返回如实报告 matched（总命中数，即使没返回）/ scanned（扫描行数）/ limited / truncated——「只扫到这些」与「扫完了没更多」是可区分的。返回行数另有上限（4000）：超了截到上限并给 truncatedForSize 与 notes（缩小 limit / 减小 context / 加 since·until），matched 仍报全量。"
+    },
+    "docker_networks": {
+      "hash": "6a46e8c47a45fa4b033ded0bb6ff83525d8a4394",
+      "paramHashes": {
+        "properties.limit.description": "8998ed1433123bad2d4a96807d39ab2e7d8b80c2",
+        "properties.offset.description": "bde5281c777d97c4dbe44d83660432ec53e26499",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.limit.description": "本页最多返回多少条（1~500，默认 100）",
+        "properties.offset.description": "跳过前多少条（默认 0）；翻页时传上一页提示里给出的 offset",
+        "properties.target.description": "目标名（docker_targets 列出；只有一个目标时可省略。`*` 仅 docker_ps / docker_attention 支持，其他工具请传具体目标名）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "列出某个目标上的 docker 网络（名称 / 驱动 / 范围 / 是否 internal / 短 ID）。接入的容器列表要进详情页看，不在列表里逐条 inspect。"
+    },
+    "docker_ps": {
+      "hash": "945122d2782d38b7f398aaa39222cd857479fa36",
+      "paramHashes": {
+        "properties.all.description": "3b9fbbd3497334285d5a307e785163ea77599d87",
+        "properties.limit.description": "8998ed1433123bad2d4a96807d39ab2e7d8b80c2",
+        "properties.offset.description": "bde5281c777d97c4dbe44d83660432ec53e26499",
+        "properties.target.description": "4131d8192a8008e1994463d736f2da64102ed50d"
+      },
+      "params": {
+        "properties.all.description": "true 时包含已停止容器（默认 false）",
+        "properties.limit.description": "本页最多返回多少条（1~500，默认 100）",
+        "properties.offset.description": "跳过前多少条（默认 0）；翻页时传上一页提示里给出的 offset",
+        "properties.target.description": "目标名；传 `*` 或省略（仅一个目标时）表示当前目标/全部目标（docker_targets 列出）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "列出容器（默认只列运行中的；all:true 含已停止）。**target 传 `*` = 一次列出所有目标**（跨主机，按目标分组返回，单个目标不可达不影响其他目标）。排障第一步。注意：`ports` 为空**不等于**「没暴露端口」——host 网络容器的端口就是宿主机端口、ps 里没有映射，这种情况会给 `net` 字段（如 `net:\"host\"`），别为此再逐个 docker_inspect。"
+    },
+    "docker_run_command": {
+      "hash": "1fe7a166c90e7277763808f2967e08dd514961ce",
+      "paramHashes": {
+        "properties.id.description": "3fb80d01336a318073c9f2f28769c5e4527eb1ec",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.id.description": "容器名或 ID（来自 docker_ps）",
+        "properties.target.description": "目标名（docker_targets 列出；只有一个目标时可省略。`*` 仅 docker_ps / docker_attention 支持，其他工具请传具体目标名）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "从容器配置反推一条**等价的 docker run 命令**（只生成命令文本，**不执行任何操作**）：端口 / 挂载 / 网络 / 环境变量 / 资源限制 / 设备都会还原。**故意没还原的**东西（--privileged、匿名卷、自定义 ENTRYPOINT、健康检查等）在 omitted 里点名，不许静默丢；命中敏感键名的环境变量在 secretKeys 里（**值不改写**，命令里是原值——贴出去前先确认）。适合手动复现 / 迁移。Compose 管理的容器只是近似。"
+    },
+    "docker_stats": {
+      "hash": "80e70ff762e7820c68d6899349796806e09add65",
+      "paramHashes": {
+        "properties.ids.description": "239bab0884c9ca9ecd648b86e0b0b0816ffeb6e8",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.ids.description": "容器名/ID，逗号分隔（省略 = 全部运行中）",
+        "properties.target.description": "目标名（docker_targets 列出；只有一个目标时可省略。`*` 仅 docker_ps / docker_attention 支持，其他工具请传具体目标名）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "读取容器实时资源占用（docker stats --no-stream）：CPU%、内存用量/上限、网络与磁盘 IO、PIDs。不传 ids 时返回该目标上全部运行中容器。"
+    },
+    "docker_targets": {
+      "hash": "879a294d7af3991fa5000b9b889c503bdd1489e2",
+      "paramHashes": {
+        "properties.probe.description": "3763d9acd1ebd1d935f2489279619781cedfb877"
+      },
+      "params": {
+        "properties.probe.description": "true 时逐个探测 docker 版本与 daemon 可达性（SSH 目标会建连接，较慢）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "列出已配置的 Docker 目标（本机 / SSH 主机），可选探测每个目标的 docker daemon 是否可达；SSH 目标会带出它引用的 tty 连接簿条目名（book，可直接用于 sftp_* 的 book）。其他 docker_* 工具的 target 参数取自这里。"
+    },
+    "docker_top": {
+      "hash": "0bed865c4789751cd3c9e969f044fc94bad0aed9",
+      "paramHashes": {
+        "properties.id.description": "3fb80d01336a318073c9f2f28769c5e4527eb1ec",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.id.description": "容器名或 ID（来自 docker_ps）",
+        "properties.target.description": "目标名（docker_targets 列出；只有一个目标时可省略。`*` 仅 docker_ps / docker_attention 支持，其他工具请传具体目标名）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "列出容器内的进程快照（docker top）：PID / PPID / USER / STAT / 运行时长 / CPU% / 内存% / 命令。**只读**；看「谁在吃 CPU / 内存」先看这里，整体「为什么不行」用 docker_diagnose。容器没在运行会直接报错（不是空列表）。"
+    },
+    "docker_volumes": {
+      "hash": "6f931f50184d755319070010285b84516e726f6b",
+      "paramHashes": {
+        "properties.limit.description": "8998ed1433123bad2d4a96807d39ab2e7d8b80c2",
+        "properties.offset.description": "bde5281c777d97c4dbe44d83660432ec53e26499",
+        "properties.target.description": "99078460ff54a0afb2b8af80b759b5a36922cf83"
+      },
+      "params": {
+        "properties.limit.description": "本页最多返回多少条（1~500，默认 100）",
+        "properties.offset.description": "跳过前多少条（默认 0）；翻页时传上一页提示里给出的 offset",
+        "properties.target.description": "目标名（docker_targets 列出；只有一个目标时可省略。`*` 仅 docker_ps / docker_attention 支持，其他工具请传具体目标名）"
+      },
+      "plugin": "@hyzyn/dsh-docker",
+      "zh": "列出某个目标上的 docker 卷（名称 / 驱动 / 范围 / 挂载点）。"
+    },
+    "loglens_context": {
+      "hash": "bd8ddc9bd749be4b195b2cb71670863bfd3b00e1",
+      "paramHashes": {
+        "properties.after.description": "377007fe02a0ee1d213a408bc52e1819df5b39b2",
+        "properties.before.description": "7d90b7842a2f25eea454e3e6897658033e170541",
+        "properties.expand.description": "e55d04d65bd50534efcdc8a6ffef7a8a19d8fb12",
+        "properties.id.description": "c0169766fdfaab55a5181c23e4e69d00e9ff1571",
+        "properties.message.description": "73acc64c59e769e59294303ebeb69d05a6dfd1e6",
+        "properties.spanMs.description": "0520fe20ccd15a5b652433bbdf08009ec9e09c88",
+        "properties.target.description": "d1a67c8575ef1ef76adde344f5de4f42a2ee9f54",
+        "properties.ts.description": "83f3b3c2ff447562e03bfc5796f7b1c354388fa5"
+      },
+      "params": {
+        "properties.after.description": "要几行更晚的（默认 5，上限 50）",
+        "properties.before.description": "要几行更早的（默认 5，上限 50）",
+        "properties.expand.description": "true = 正文**整段展开**（多行堆栈默认只渲染 20 行，超出会报「还有 N 行未显示」）。只影响**渲染文本**，返回值里 anchor / before / after 的 message 一直是全文。排查长堆栈时先用默认、确认是你要的那条再用 expand 重查（省 token）。",
+        "properties.id.description": "锚点行的 id（loglens_search 的 lines[].id）；给了它就用它精确定位",
+        "properties.message.description": "锚点行的正文（没有 id 时配合 ts 一起定位）",
+        "properties.spanMs.description": "重查的时间窗半径（默认 60000，即锚点前后各一分钟）",
+        "properties.target.description": "来源 id 或名称（loglens_sources 列出）；只有一个来源时可省略",
+        "properties.ts.description": "锚点行的时间，epoch 毫秒（loglens_search 的 lines[].ts）"
+      },
+      "plugin": "@hyzyn/dsh-loglens",
+      "zh": "取某一行的上下文：拿 loglens_search 返回的 ts（+ id 或 message）回到来源重查一遍，返回它前后各若干行（时间升序）。三个后端都没有原生的「某行前后 N 行」，所以这是重查，不是缓存。"
+    },
+    "loglens_facets": {
+      "hash": "45035a0cafe927ac940d53d3d540777ba499e2d4",
+      "paramHashes": {
+        "properties.by.description": "19088c6f34f016609ca7d99ecdfe23daa1ff45e3",
+        "properties.filters.description": "25d1390bfc097c515a9319d2fe46b53d5c38642b",
+        "properties.from.description": "22b75ee212e1b12fb95190631f7c5324c9019a53",
+        "properties.from.oneOf.0.description": "67b968af136dfa549016c400db4d6e8e34b924be",
+        "properties.from.oneOf.1.description": "44b94932c790548d5f36fb1971808d2c82efeaba",
+        "properties.interval.description": "989f7730758edcef76a775adaa5e297db7d378fc",
+        "properties.q.description": "7be16173c41cf4c02564f8ab59af1cc798fc5771",
+        "properties.size.description": "b073bcc9145ab8c36ae6b87bd97f6e2bcffb63d0",
+        "properties.target.description": "d1a67c8575ef1ef76adde344f5de4f42a2ee9f54",
+        "properties.to.description": "32f08792f9498e892948ac25cd089154339ffffe",
+        "properties.to.oneOf.0.description": "67b968af136dfa549016c400db4d6e8e34b924be",
+        "properties.to.oneOf.1.description": "0469b5d5a5e0c3b1c8777bdedee85ee8e3c5acfe"
+      },
+      "params": {
+        "properties.by.description": "按这个字段分组（terms），如 container.name / host.name / log.level",
+        "properties.filters.description": "结构化过滤：字段 → 值（与 loglens_search 同一口径）",
+        "properties.from.description": "起始时间：epoch 毫秒整数 / ISO 8601 / 相对时间；缺省 = to 前面 15 分钟",
+        "properties.from.oneOf.0.description": "epoch 毫秒整数",
+        "properties.from.oneOf.1.description": "ISO 8601 或相对时间（-30m / -2h）",
+        "properties.interval.description": "按时间分桶（如 5m / 1h / 1d）；与 by 可以同时要",
+        "properties.q.description": "查询串（先筛出要统计的那部分日志；留空即全量）。ES / OpenSearch 侧的写法陷阱见 loglens_search 的 q：方括号是区间、`=` 无特殊含义、只有大写 AND/OR 是运算符——写法不同会静默改变计数口径",
+        "properties.size.description": "桶数上限（默认 10，硬上限 100）",
+        "properties.target.description": "来源 id 或名称（loglens_sources 列出）；只有一个来源时可省略",
+        "properties.to.description": "结束时间，写法同 from；缺省取当前时刻",
+        "properties.to.oneOf.0.description": "epoch 毫秒整数",
+        "properties.to.oneOf.1.description": "ISO 8601 或相对时间"
+      },
+      "plugin": "@hyzyn/dsh-loglens",
+      "zh": "聚合：按字段分组（terms）看「谁在报错」/  按时间分桶（date_histogram）看趋势。这是回答「某个服务健不健康」的正确工具——拉一页行到本地数既慢又错。返回里的 otherCount（没列出来的桶还有多少条）与 countErrorUpperBound（计数误差上界）是**截断与近似信号**，别当成精确值。当前只有 ES / OpenSearch 有它。"
+    },
+    "loglens_fields": {
+      "hash": "1d57d6bb4891f11a3f33febdb98b3fa5db87e1d4",
+      "paramHashes": {
+        "properties.limit.description": "50903d7b216c1e799ae4d3d61a000e6bf05c243a",
+        "properties.target.description": "d1a67c8575ef1ef76adde344f5de4f42a2ee9f54"
+      },
+      "params": {
+        "properties.limit.description": "最多列几个字段（默认 200；正整数，要更多可分段取）",
+        "properties.target.description": "来源 id 或名称（loglens_sources 列出）；只有一个来源时可省略"
+      },
+      "plugin": "@hyzyn/dsh-loglens",
+      "zh": "列出一个日志来源可用的字段，常用筛选项排在前面。默认只列前 200 个（总数见 total）；同名在不同索引里类型冲突的字段标 conflict；字段名不用带 .keyword。"
+    },
+    "loglens_search": {
+      "hash": "4c35b818843dacb17bd3042f34bc478d2ecad8a8",
+      "paramHashes": {
+        "properties.cursor.description": "ef9cfdf628826cb65ba6a0b57c1fef604e61563c",
+        "properties.direction.description": "02acf4e63ca44d7c072de6feb3f021d139bfeef2",
+        "properties.expand.description": "93f874fed5f898a7eb4258e30f156eb7aa4c809f",
+        "properties.filters.description": "6cb2eeab74ac46ad0c47505011d44d1c247e2706",
+        "properties.from.description": "2f0b45e46972b6b4f11bd7fed4a70ae69b0e5cf1",
+        "properties.from.oneOf.0.description": "7962dd44abc390740bc97b4ec5becad558514515",
+        "properties.from.oneOf.1.description": "e47add8b302ee7da461541b7a1b05ffb2218153f",
+        "properties.level.description": "e0ab8698a9ca5b0cc2fad682e8c6f0ff6fb66739",
+        "properties.limit.description": "e376fd54c04d008df0096612e2809494decee44b",
+        "properties.q.description": "85d2be5e8a5941072b23e91677e9f3837e2e71a7",
+        "properties.target.description": "d1a67c8575ef1ef76adde344f5de4f42a2ee9f54",
+        "properties.to.description": "391cd69ee633f4e382eac970466f020601aa02e0",
+        "properties.to.oneOf.0.description": "67b968af136dfa549016c400db4d6e8e34b924be",
+        "properties.to.oneOf.1.description": "af1f5d5a98446fdc0c05260f3eeda55dc561880d"
+      },
+      "params": {
+        "properties.cursor.description": "上一页返回的 nextCursor；来源声明 pagination=none 时不会有它",
+        "properties.direction.description": "forward（旧的在前）或 backward（新的在前，默认）",
+        "properties.expand.description": "true = 正文**整段展开**（多行堆栈默认只渲染 20 行，超出会报「还有 N 行未显示」）。只影响**渲染文本**，返回值里 `lines[].message` 一直是全文。排查长堆栈时先用默认、确认是你要的那条再用 expand 重查（省 token）。",
+        "properties.filters.description": "结构化过滤：字段 → 值（如 {\"container.name\":\"app-svc-1\",\"log.level\":\"error\"}）。**字段该不该带 .keyword 由适配器查 _field_caps 决定**，你不用管；是 text 且没有子字段时自动退回 match_phrase（近似匹配）。Loki 不支持它（过滤写进 LogQL 的 {} 或过滤表达式）",
+        "properties.from.description": "起始时间：epoch 毫秒整数、ISO 8601（不带时区按本机时区）或相对时间；缺省 = to 前面 15 分钟",
+        "properties.from.oneOf.0.description": "epoch 毫秒整数，如 1760000000000（填成秒会报错）",
+        "properties.from.oneOf.1.description": "ISO 8601（2026-10-11T14:00:00Z）或相对时间（-30m / -2h / -1d）",
+        "properties.level.description": "只要这个级别及以上的行（如 warn 含 error、fatal）。这是在返回的这一页上筛，counts 仍是整页；级别认不出会直接报错",
+        "properties.limit.description": "返回条数上限（默认 100）；超过来源单页上限会被夹取，warnings 里会说明",
+        "properties.q.description": "查询串：Loki 是 LogQL，ES / OpenSearch 是 Lucene 方言；留空即全量。精确匹配用 \"词\"（短语）——方括号、= 与小写 and/or 都是静默陷阱（写错不报错、只是数字不对）",
+        "properties.target.description": "来源 id 或名称（loglens_sources 列出）；只有一个来源时可省略",
+        "properties.to.description": "结束时间，写法同 from；缺省取当前时刻（只给 to，「看最新日志」就够）。实际生效的时间窗见返回值 window",
+        "properties.to.oneOf.0.description": "epoch 毫秒整数",
+        "properties.to.oneOf.1.description": "ISO 8601 或相对时间（-30m / now 等）"
+      },
+      "plugin": "@hyzyn/dsh-loglens",
+      "zh": "查一个日志来源：返回归一化后的行 + 诚实的计数与截断信号。一次只查一个来源（v1 不做跨后端 fan-out）。返回值里的时间戳一律 epoch 毫秒；**入参**的 from / to 还能写 ISO 8601 或 -30m 这类相对时间（省得自己算毫秒）。"
+    },
+    "loglens_sources": {
+      "hash": "bc40f2e665547bd7399b29e7b2758cbab98fd53c",
+      "paramHashes": {
+        "properties.probe.description": "63c9edf3c3403434f974d60159cab514e61dc662"
+      },
+      "params": {
+        "properties.probe.description": "true 时逐个探测来源（Loki 是 /ready）；远端来源会建连接，慢一些"
+      },
+      "plugin": "@hyzyn/dsh-loglens",
+      "zh": "列出已配置的日志来源（类型 / 名称 / 地址 / 查询方言 / 分页能力），可选探测连通性。其他 loglens_* 工具的 target 参数取自这里。"
+    },
+    "mcp_load": {
+      "hash": "b7ea0322834bf49002687a61f9982a48749eec6c",
+      "paramHashes": {
+        "properties.servers.description": "43109be9d278fdb7b7d7e67d992480c64722b207"
+      },
+      "params": {
+        "properties.servers.description": "要装载的 serverName 列表；传空数组 = 全部卸掉"
+      },
+      "plugin": "@hyzyn/dsh-mcp",
+      "zh": "装载（或卸载）MCP server 的工具到当前会话：参数是该 server 的 serverName 列表（来自 mcp_servers），传空数组 = 全部卸掉。只装载认识的 server，未知名字会被忽略并回报；返回装载后当前会话真正能调用的 MCP 工具名。"
+    },
+    "mcp_servers": {
+      "hash": "69b881cfa1b1a2abda507fa881c12e65b128f89b",
+      "params": {},
+      "plugin": "@hyzyn/dsh-mcp",
+      "zh": "列出本机配置的 MCP server（名称 / 传输方式 / 启用状态 / 工具数 / 当前会话是否已装载）。MCP 工具默认不加载：先用本工具看有哪些 server，再用 mcp_load({servers:[…]}) 装载需要的。"
+    },
+    "sftp_list": {
+      "hash": "779792086e3940ab6e8e4d1cfba361240c7526e0",
+      "paramHashes": {
+        "properties.book.description": "19e11c08988dd5fc566b90d1d7b75fb20def7e38",
+        "properties.maxEntries.description": "301eb8cfdf098c1f6cf96a0e06a9e9fe77992238",
+        "properties.path.description": "d7b1219f59486178599241f6a3b78aba39b551a5"
+      },
+      "params": {
+        "properties.book.description": "SSH 连接簿条目名（插件配置 → 终端面板 维护）",
+        "properties.maxEntries.description": "最大条目数（1~2000，默认 500）",
+        "properties.path.description": "远程目录路径（缺省 = 登录 home）"
+      },
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "列出 SSH 远程目录内容（名称/类型/大小/修改时间，目录在前；isSymlink 区分符号链接与真目录）。book 为 SSH 连接簿条目名；path 缺省为远程登录 home。默认最多列 500 项（超限 truncated:true，可按子目录分批）。"
+    },
+    "sftp_mkdir": {
+      "hash": "8e1079b608c1c06568fda76c64b06566b0c21c2f",
+      "paramHashes": {
+        "properties.book.description": "19e11c08988dd5fc566b90d1d7b75fb20def7e38",
+        "properties.parents.description": "333c02f7e405ee644b4ae91640008eb49bd4d50f",
+        "properties.path.description": "62a854c8d62810659370a06a2cbefcb9ebdabd92"
+      },
+      "params": {
+        "properties.book.description": "SSH 连接簿条目名（插件配置 → 终端面板 维护）",
+        "properties.parents.description": "true 逐级补齐缺失父目录（默认 false）",
+        "properties.path.description": "要创建的远程目录路径"
+      },
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "在 SSH 远程创建目录（book 连接簿条目 + path）。parents:true 时逐级补齐缺失的父目录（等效 mkdir -p，默认 false，父目录缺失直接报错）。"
+    },
+    "sftp_read": {
+      "hash": "8326414335e76890947ec9aecded098e0bd2070c",
+      "paramHashes": {
+        "properties.book.description": "ca65c6e6d006b4983dcab276a2a3d02926b5f624",
+        "properties.maxBytes.description": "c2dc0051147c10afbd2283773f42884be2e87dab",
+        "properties.offset.description": "4c897f41b63a58a03dd2d975682da7214cb90f38",
+        "properties.path.description": "58ed6a4e85f6843f0f1e3245c4ad6de36db056bf"
+      },
+      "params": {
+        "properties.book.description": "SSH 连接簿条目名",
+        "properties.maxBytes.description": "最大读取字节数（1~1048576，默认 262144；非法值报错不再静默回落）",
+        "properties.offset.description": "起始字节偏移（0~2^53-1，默认 0；>0 时跳过前缀，适合读日志尾部）",
+        "properties.path.description": "远程文件路径"
+      },
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "读取 SSH 远程文本文件（book 连接簿条目 + path）。默认最多 256KB（可调至 1MB，非法值直接报错）；offset 可从指定字节起读（配合 maxBytes 分页拿到大文件尾部）；二进制判定用 NUL + 非法 UTF-8 占比双重检测，拒绝时说明原因。"
+    },
+    "sftp_remove": {
+      "hash": "2f40fd94b3e55dfef1b040278e48d77ea02648cc",
+      "paramHashes": {
+        "properties.book.description": "ca65c6e6d006b4983dcab276a2a3d02926b5f624",
+        "properties.path.description": "da187b122ac37e616a189b067f601c562d3f8b34",
+        "properties.recursive.description": "5b2d27b132e020c58a3dc46ff08df153fde56190"
+      },
+      "params": {
+        "properties.book.description": "SSH 连接簿条目名",
+        "properties.path.description": "要删除的远程路径",
+        "properties.recursive.description": "目录 true 时递归删除全部内容（默认 false）"
+      },
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "删除 SSH 远程文件或目录（book 连接簿条目 + path）。文件直接删除；目录默认走 rmdir（非空明确报错），recursive:true 整目录递归删除（不可恢复，谨慎使用）。根目录 / home / 含 . .. 相对段的路径会被直接拒绝（防整树误删），请先解析出具体的绝对路径。"
+    },
+    "sftp_rename": {
+      "hash": "174ceeb8b8d8ab8fc40e0d7dd96054e6c38e1718",
+      "paramHashes": {
+        "properties.book.description": "ca65c6e6d006b4983dcab276a2a3d02926b5f624",
+        "properties.from.description": "1f3278742e0f3bc800a9e4ebdfeaa7402f13fc60",
+        "properties.to.description": "f721dc44671cc41df7f1ee6c45a8a9635e8fd665"
+      },
+      "params": {
+        "properties.book.description": "SSH 连接簿条目名",
+        "properties.from.description": "原远程路径",
+        "properties.to.description": "新远程路径（跨目录即移动）"
+      },
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "在 SSH 远程重命名 / 移动文件或目录（book 连接簿条目 + from + to）。to 与 from 不同目录即为移动（目标目录需已存在）；不会覆盖已存在的目标（服务端 rename 语义）。"
+    },
+    "sftp_tree": {
+      "hash": "4f7a3994386224972ee46fb03cd9e2d730ba068d",
+      "paramHashes": {
+        "properties.book.description": "ca65c6e6d006b4983dcab276a2a3d02926b5f624",
+        "properties.maxDepth.description": "6a1f185027e2986d2fc6499764bf7fc69b6c43e6",
+        "properties.maxEntries.description": "301eb8cfdf098c1f6cf96a0e06a9e9fe77992238",
+        "properties.path.description": "d7b1219f59486178599241f6a3b78aba39b551a5"
+      },
+      "params": {
+        "properties.book.description": "SSH 连接簿条目名",
+        "properties.maxDepth.description": "最大下钻层数（1~8，默认 3）",
+        "properties.maxEntries.description": "最大条目数（1~2000，默认 500）",
+        "properties.path.description": "远程目录路径（缺省 = 登录 home）"
+      },
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "递归列举 SSH 远程目录结构（book 连接簿条目 + path）：深度优先、目录优先，maxDepth（1~8，默认 3）限层、maxEntries（1~2000，默认 500）限条数，超限 truncated:true；符号链接不跟随；读取失败的子目录列入 errors。适合先看远程项目结构再定位文件。"
+    },
+    "sftp_write": {
+      "hash": "626465093f78707a10d06d3746ca0a308ed47709",
+      "paramHashes": {
+        "properties.append.description": "2bb1bc7595bfa1c13d5f1a323ee6f1fbaae643e8",
+        "properties.book.description": "ca65c6e6d006b4983dcab276a2a3d02926b5f624",
+        "properties.content.description": "6f35967203dc50298ffb47ab44c76dc5d06eea0e",
+        "properties.path.description": "58ed6a4e85f6843f0f1e3245c4ad6de36db056bf"
+      },
+      "params": {
+        "properties.append.description": "true 追加到文件尾（默认覆盖）",
+        "properties.book.description": "SSH 连接簿条目名",
+        "properties.content.description": "要写入的文本内容（≤1MB）",
+        "properties.path.description": "远程文件路径"
+      },
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "写 SSH 远程文本文件（book 连接簿条目 + path + content）。默认覆盖写入，append:true 追加到文件尾；单次最多 1MB。适合远程写配置、落结果文件。"
+    },
+    "tty_books": {
+      "hash": "c0bc5258c5517779bf0d85f96feb78a44902dc50",
+      "params": {},
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "列出 tty 的 SSH 连接簿条目（name / host / port / username / 认证方式 / 是否 tmux 持久 / 是否经跳板机或代理命令），**不含任何凭据**。`sftp_*` 的 `book`、隧道的 `bookName`、docker 目标的「连接簿」下拉都取这里的 `name`；book 也接受 `host` / `user@host`（唯一匹配才解析）与 **docker 目标名**（按其引用的条目解析，见返回里的 `dockerTargets`）。名字记不准时先调它，不要去猜、也不要读配置文件。"
+    },
+    "tty_capture": {
+      "hash": "a79ef9ee19833e8a876630a3989cae9229f542e0",
+      "paramHashes": {
+        "properties.last.description": "b64394f4614ffb8e6e6379b9bdf930cc120af29d",
+        "properties.lines.description": "6f98b882dcb9877861d197a049c34fa8a8128989",
+        "properties.raw.description": "2105c876287daa2382d22f336d643797c950b58c",
+        "properties.sid.description": "78cf15ba15a3acd6429453b739d745d534357d60"
+      },
+      "params": {
+        "properties.last.description": "true 只返回上一条命令的输出+退出码（默认 false 读尾部）",
+        "properties.lines.description": "读取尾部行数（1~500，默认 60）；last:true 时忽略",
+        "properties.raw.description": "true 返回含 ANSI 转义序列的原始输出（默认 false 清洗为纯文本）",
+        "properties.sid.description": "会话 id（来自 tty_list）"
+      },
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "读取某个终端面板会话（tty_list 提供 sid）的近期输出。默认读取尾部 N 行（60，最多 500，已剥离 ANSI 转义序列并收敛同行覆盖）；last:true 时只返回「上一条已完成命令」的输出与退出码（依赖 shell 集成标记，更适合拿单条命令的结果）——若命令在途（刚发送/未收到完成标记）返回 inProgress:true 且不携带旧结果，请稍后重试或改用 tty_expect。**进程已退出的会话也能读**（结果带 exited:true + 退出码/信号）：输出在只读保留期里一直都在（保留到显式关闭或宿主重启，`tty_open command=...` 跑完一条命令后就这么用）；这类会话不能再写，要接着操作请新开一条。**命令型会话（`tty_open command=` / `tty_run`）没有「上一条命令」**（它们不注入 shell 集成钩子），对它们用 last:true 会明确报错——改用默认的 lines 读尾部。"
+    },
+    "tty_close": {
+      "hash": "0b58b6ba7b133e302ffa37b21c93bb40ba4fa566",
+      "paramHashes": {
+        "properties.sid.description": "52751d847c028d33e2fea699c61524f1cfcc86b6"
+      },
+      "params": {
+        "properties.sid.description": "会话 id（tty_open 或 tty_list 提供）"
+      },
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "关闭一个由 tty_open 开的终端会话（结束其中的进程）。**只能关 agent 自己开的会话**：用户在面板里开的标签会被拒绝，请让用户自己在面板里关，不要越权结束用户正在用的终端。对**进程已退出但仍只读保留着**的会话同样可用——那就是它的释放入口（把屏与缓冲还回去）。只读保留默认留到显式关闭（宿主重启也会清空），不按时间释放；同时最多留 16 条，超出按最旧淘汰。"
+    },
+    "tty_expect": {
+      "hash": "b0c3f15ebe7ee7f3e96d0a6c0f2e18299ba1ad82",
+      "paramHashes": {
+        "properties.pattern.description": "1a2aa3fbda31068aa0a6a1af792db512d6b4fcd9",
+        "properties.sid.description": "78cf15ba15a3acd6429453b739d745d534357d60",
+        "properties.timeoutSec.description": "81c0ccccdfeebff488dd076841a831e38ec438aa"
+      },
+      "params": {
+        "properties.pattern.description": "等待匹配的正则表达式（JavaScript RegExp 语法）",
+        "properties.sid.description": "会话 id（来自 tty_list）",
+        "properties.timeoutSec.description": "等待秒数（1~600，默认 30）"
+      },
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "在某个终端面板会话（tty_list 提供 sid）等待一个正则出现（如 dev server 的 ready/URL、构建完成标记、交互提示）。**先回溯**还没被读过的输出（含「上一条命令」的完整输出），再等后续输出——所以命令瞬间跑完也不会白等；匹配到立即返回 matched:true（matchedFrom 说明匹配来自哪里：live=本次等待期间新产生 / last=上一条命令的输出 / buffered=此前已到达的缓冲输出）与周边输出。**刚发进去的命令回显不算命中**（命令还没执行时回显先到，命中它等于谎报）；若等满超时且 pattern 只命中过回显，结果带 echoOnly:true——那说明命中的只是回显、不是输出（命令可能没被执行），先复核它到底跑没跑。超时不抛错，返回 matched:false + 尾部输出；期间该命令若已结束（shell 集成标记）也会提前返回并带退出码。适合先发一条命令启动长任务、再 tty_expect 等就绪信号的流程。注意：只对「还没读过的输出」负责——要回看更早的内容用 tty_capture。"
+    },
+    "tty_list": {
+      "hash": "94b44d244839416ef01b53a7436b7195c8dd2272",
+      "params": {},
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "列出当前终端面板会话（sid / kind(local|ssh) / target / pid / cwd / 创建与最后活动时间），**含进程已退出但仍只读保留着的会话**（带 exited:true + 退出码/信号；按时间释放时另带 retainMs）。**running** 说明这个会话有没有命令在跑（true = 在跑，现在别往里发命令，那些字节会被正在跑的程序当输入吃掉；false = 命令已结束；**省略 = 无法判断**，**不是**「没在跑」——此时看 `runningUnknown`：ssh（远端 shell 不受控，永久未知）/ tmux-attach（接回后还没跑过命令，跑完一条即恢复）/ no-integration（fish·csh·cmd 等不受支持的 shell，或「shell 集成」被关））；同源的 lastExitCode / lastExitAt 是「上一条已完成命令」的退出码与结束时刻。用户开了终端面板后，用 tty_capture 读某个 sid 的输出。**写侧（发按键 / 开新会话）工具是否可用以你的工具表为准**——「仅可查看」档会把它们整批裁掉（请让用户切「工作区内修改」档，那档可用但**每次调用要用户确认**），「工作区内修改」及以上的档位里它们都在。已退出的会话只能读（写会报错），要接着操作请新开一条。"
+    },
+    "tty_open": {
+      "hash": "9e86e63a6b75122604ac645934154edc0f7c5ea1",
+      "paramHashes": {
+        "properties.cols.description": "31178875c9f83c010c6afad613f687c99868ba1b",
+        "properties.command.description": "e9baf377b7b15522e685588a8e3bc9c206a4ca6a",
+        "properties.cwd.description": "e249fd836db1413933b640b4537f8c4f0854bd90",
+        "properties.persistName.description": "860057a0dbeb003400d4cac99b0159fb4dec8fd8",
+        "properties.rows.description": "746753ddf5dee791ec7c706cdd9a2792b2def717"
+      },
+      "params": {
+        "properties.cols.description": "列数（2~500，默认 80）",
+        "properties.command.description": "直接执行的命令（非交互）：按**整段 shell 代码**执行，`cd x && cmd`、`a; b`、管道、多行脚本都可以（D78）；给出时不做 tmux 持久化。省略或全空白 = 交互式 shell",
+        "properties.cwd.description": "工作目录（必须是已存在的绝对路径）；缺省用插件配置的 cwd",
+        "properties.persistName.description": "tmux 持久会话名（开启「会话持久化」时有效；同名复用既有会话）。适合宿主重启后仍需存活的长任务",
+        "properties.rows.description": "行数（2~200，默认 24）"
+      },
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "开一个新的终端会话（本地 shell，或 `command` 直接跑一条命令，如 dev server）。会话出现在用户的终端面板里、用户可见可接管，长驻进程与 watch 类任务应该用它（不要在 bash 工具里挂起等待）。开了之后用 tty_expect 等就绪信号、tty_capture{last:true} 拿结果；用完用 tty_close 关闭。`command` 按 **宿主 shell 的语法整段执行**（D78：旧版本里 `exec` 包装只跑第一条）——POSIX shell 上 `cd dir && cmd`、`a; b`、`for …; do …; done` 都可以，**Windows 的 cmd / PowerShell 则按它们自己的语法**（当前执行命令的 shell 与语法见 systemPrompt 里的终端一行）；**它跑完退出后会话不会立刻消失**：会转成只读保留（留到显式关闭，最多留 16 条），退出前最后的输出与退出码都还能用 tty_capture / tty_screen 读——所以「跑一条会结束的命令、回头再取结果」不需要套一层 `sh`。cwd 缺省为插件配置的工作目录。"
+    },
+    "tty_run": {
+      "hash": "6970af44b6981ffb9eceeaa84197aa2756ebfacc",
+      "paramHashes": {
+        "properties.cols.description": "31178875c9f83c010c6afad613f687c99868ba1b",
+        "properties.command.description": "09fbce9a76bb2308e0661b8d87406383dd0aee0c",
+        "properties.cwd.description": "e249fd836db1413933b640b4537f8c4f0854bd90",
+        "properties.keep.description": "e030002fc7a5610ddaf5ff19770073e81ddb2556",
+        "properties.lines.description": "c1321e9e09a4dba068dfd99cb2f7073763fb58e6",
+        "properties.rows.description": "746753ddf5dee791ec7c706cdd9a2792b2def717",
+        "properties.timeoutSec.description": "cecfbebe667669521cd3a1e707044aa8c7c5b9d2"
+      },
+      "params": {
+        "properties.cols.description": "列数（2~500，默认 80）",
+        "properties.command.description": "要执行的命令（整段 shell 代码，支持 `cd x && cmd`、管道、多行脚本）",
+        "properties.cwd.description": "工作目录（必须是已存在的绝对路径）；缺省用插件配置的 cwd",
+        "properties.keep.description": "true = 跑完留在只读保留态（可回看/接管）；默认 false = 跑完即关（结果已在本调用返回）",
+        "properties.lines.description": "返回的输出尾部行数（1~500，默认 60）",
+        "properties.rows.description": "行数（2~200，默认 24）",
+        "properties.timeoutSec.description": "等待命令结束的上限秒数（1~600，默认 120）；到点没结束返回 running:true，会话不会被杀"
+      },
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "**一次性命令**：开一个终端会话跑 `command`，等它结束，直接返回尾部输出 + 退出码（会话出现在用户面板里、可见可接管）——把「tty_open → 等 → tty_capture{last} → tty_close」四步压成一次调用。命令**跑完就结束**：默认把这个会话关掉（结果已在本调用返回），`keep:true` 则留在「只读保留」态供回看。到 `timeoutSec` 还没结束会返回 `running:true`（会话照旧在跑，**杀不杀由你决定**），接着用 tty_expect / tty_capture 看，或 tty_close 关掉。何时用它而不是 bash 工具：需要用户**看得见**这条命令、或要跑在终端会话里（同一套 PTY / 会话名额 / 后续可接管）时用它；纯非交互、不需要用户看见的命令用 bash 工具更直接。`command` 按宿主 shell 的语法整段执行（POSIX 上 `cd x && cmd`、多行脚本都可以；Windows 的 cmd / PowerShell 按它们自己的语法）。"
+    },
+    "tty_screen": {
+      "hash": "1f05ce4c5c3a879ae5ca924ba4e09210b4f2c53b",
+      "paramHashes": {
+        "properties.sid.description": "78cf15ba15a3acd6429453b739d745d534357d60"
+      },
+      "params": {
+        "properties.sid.description": "会话 id（来自 tty_list）"
+      },
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "读取某个终端面板会话（tty_list 提供 sid）当前可见屏幕的渲染结果（纯文本，等价于用户此刻看到的画面）。适合查看全屏交互程序（vim / htop / 菜单选择）的当前界面状态；要历史滚动输出用 tty_capture。**进程已退出的会话也能读**（结果带 exited:true）：屏在只读保留期内不释放，读到的就是它退出那一刻的画面。"
+    },
+    "tty_send": {
+      "hash": "c8bcdc8d0056d0fea86f2285965bf3309c42fb74",
+      "paramHashes": {
+        "properties.data.description": "1a19d9fc47af0029aea2f98511b1270455714400",
+        "properties.keys.description": "cf339ae9686e2f0d46027d07dc13def89c507048",
+        "properties.sid.description": "78cf15ba15a3acd6429453b739d745d534357d60"
+      },
+      "params": {
+        "properties.data.description": "要发送的文本（含换行则直接发送命令）；与 keys 至少给一个",
+        "properties.keys.description": "具名按键数组，按序发送：Enter / Tab / Shift+Tab / Esc / Backspace / Delete / Insert / Up / Down / Left / Right / Home / End / PageUp / PageDown / Space / F1~F12 / C-a~C-z，或单个字符（按字面发送）。例：[\"C-c\"]、[\"Down\",\"Down\",\"Enter\"]、[\"Esc\", \":\", \"w\", \"q\", \"Enter\"]",
+        "properties.sid.description": "会话 id（来自 tty_list）"
+      },
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "向某个终端面板会话（tty_list 提供 sid）的 PTY 发送文本与/或按键（data 含换行则以回车提交；Windows 本地会话上插件会把 `\\n` 归一成 CRLF，照常写 `\\n` 即可）。**控制键与方向键用具名 `keys`，不要自己在 data 里拼转义序列**：`\"\\x1b[B\"` / `\"^[[B\"` 这类写法会被当成普通字符打印进终端（而 sent 计数一样，看不出错）。data 与 keys 至少给一个；两个都给时先发 data、再按序发 keys（如 data=\":wq\" + keys=[\"Enter\"]）。适合给用户终端里运行的程序发交互输入（如 dev server 的 q 键、menu 选择、vim/less 的翻页、回答提示）。操作会实时显示在用户的终端面板里。**对已退出（只读保留）的会话会报错**——那种会话只能读，要接着操作请 tty_open 新开一条。"
+    },
+    "tty_stats": {
+      "hash": "9d25bc5a2b32f56e7cda565fb94676b324e26ed0",
+      "paramHashes": {
+        "properties.sid.description": "ba5dd6bb5edb69c5d3bcb5b6952b1ba4bae28077"
+      },
+      "params": {
+        "properties.sid.description": "会话 id（tty_list 提供）"
+      },
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "读取某个终端会话所在机器的实时指标（CPU / 内存 / 磁盘 / TCP 连接数 / 网速 / 温度 / 在线时长 / 1 分钟负载 / 交换分区 / SSH 连接往返）——本地会话取宿主机，SSH 会话取那台远程主机（另开一条非 PTY 通道，不影响终端）。部署、压测、排查「机器是不是满了」之前先看它。仅 Linux 远端字段齐全，Windows 远端部分字段可采，macOS/BSD 远端取不到。"
+    },
+    "tunnel_list": {
+      "hash": "0c7d93524493cb01779c78b8c1712c32e8247792",
+      "params": {},
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "列出端口转发隧道及其实时状态（活跃/连接中/错误/停止、规则、当前与累计连接数、最近错误）。用户说「隧道连不上 / 转发挂了 / 端口转发不通」时先用它诊断；隧道在 插件配置 → 终端面板 卡片维护。"
+    }
+  }
+}

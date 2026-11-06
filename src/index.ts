@@ -1,11 +1,16 @@
 /**
- * Russian language pack, node half. The pack is a browser contribution
- * (language definition plus dictionaries over the locale service); the Host
- * has no Russian-resolved runtime state of its own, so this entry is a mount
- * placeholder. The one host-plane asset, the opt-in permission-presets
- * restatement in cordis.patch.yml, applies as a config layer when a profile
- * lists this package among its bundles — no code runs here.
+ * Russian language pack, node half.
+ *
+ * Two layers live behind this entry:
+ *
+ * - `cordis.patch.yml` restates the built-in permission preset names in Russian
+ *   (a config layer applied when a profile lists this package among its
+ *   bundles);
+ * - `src/host` (re-exported here) is the runtime overlay that rewrites tool
+ *   descriptions, tool parameter descriptions and the prompt sections plugins
+ *   contribute, on `system-prompt/assemble`.
+ *
+ * The browser half (`./client`) is the unrelated Web-GUI contribution.
  */
-
-/** Host plugin body — no host-half contribution. */
-export function apply(): void {}
+export { name, inject, apply } from './host/index.ts'
+export type { HostCatalogs, LocaleRuHostConfig } from './host/index.ts'

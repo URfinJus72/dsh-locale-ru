@@ -245,6 +245,12 @@ test('the ru catalogs cover the snapshot (strict once they are filled)', (t) => 
     sections?: Record<string, { hash?: string; ru?: string; fragments?: { zh: string; hash: string; ru: string }[] }>
   }).sections ?? {}
 
+  assert.equal(Object.keys(snapshot.tools).length, 49, 'the reviewed matrix is 49 tools')
+  assert.equal(
+    Object.values(snapshot.tools).reduce((total, tool) => total + Object.keys(tool.params ?? {}).length, 0),
+    153,
+    'the reviewed matrix is 153 parameter descriptions',
+  )
   if (Object.keys(ruTools).length === 0) {
     t.skip('src/host/ru/tools.json is empty — the host translations are not written yet')
     return
@@ -403,4 +409,59 @@ test('every fragment of the snapshot is addressable by the overlay', async () =>
     }
   }
   assert.ok(checked > 0)
+})
+
+test('the snapshot covers 49 tools, including the loop-generated tunnel tools', async () => {
+  const snapshot = JSON.parse(readFileSync(new URL('../catalogs/host/tools.json', import.meta.url), 'utf8')) as {
+    counts: { tools: number; parameters: number }
+    tools: Record<string, { plugin: string; zh: string; hash: string; params?: Record<string, string>; paramHashes?: Record<string, string> }>
+  }
+  const names = Object.keys(snapshot.tools)
+  assert.equal(names.length, 49)
+  assert.equal(snapshot.counts.tools, 49)
+  assert.equal(snapshot.counts.parameters, 153)
+  assert.equal(
+    names.reduce((total, name) => total + Object.keys(snapshot.tools[name].params ?? {}).length, 0),
+    153,
+  )
+  // The two tools registered from `for (const [toolName, enable, verb] of [...])`
+  // have no literal `name:` in the bundle; the extractor materializes the loop
+  // tuple, so both the name and the `${verb}` description hole must be concrete.
+  for (const [toolName, verb] of [['tunnel_start', '启动'], ['tunnel_stop', '停止']] as const) {
+    const entry = snapshot.tools[toolName]
+    assert.ok(entry !== undefined, `${toolName} must be extracted from the registration loop`)
+    assert.equal(entry.plugin, '@hyzyn/dsh-tty')
+    assert.ok(
+      entry.zh.startsWith(`${verb}一条端口转发隧道`),
+      `${toolName}: the template hole must be materialized, got ${JSON.stringify(entry.zh.slice(0, 24))}`,
+    )
+    assert.deepEqual(Object.keys(entry.params ?? {}), ['properties.name.description'])
+    assert.equal(entry.hash, hashOf(entry.zh))
+    assert.equal(entry.paramHashes?.['properties.name.description'], hashOf(entry.params?.['properties.name.description'] ?? ''))
+  }
+  // The `name` parameter of a loop-generated tool is addressed like any other.
+  for (const toolName of ['tunnel_start', 'tunnel_stop'] as const) {
+    const entry = snapshot.tools[toolName]
+    const { out, warnings } = await run(
+      { sections: [], contexts: [], tools: [{ name: toolName, description: entry.zh, parameters: schemaFromPaths(Object.keys(entry.params ?? {})) }], variables: {} },
+      {
+        prompt: 'ru',
+        catalogs: {
+          tools: {
+            [toolName]: {
+              hash: entry.hash,
+              ru: `ru:${toolName}`,
+              params: { 'properties.name.description': 'ru:name' },
+              paramHashes: { 'properties.name.description': hashOf('zh:properties.name.description') },
+            },
+          },
+          sections: {},
+        },
+      },
+    )
+    assert.deepEqual(warnings, [], `${toolName}: the snapshot must match itself, got ${JSON.stringify(warnings)}`)
+    assert.equal(out.tools[0].description, `ru:${toolName}`)
+    const parameters = out.tools[0].parameters as { properties: Record<string, { description?: string }> }
+    assert.equal(parameters.properties.name.description, 'ru:name', `${toolName}: its name parameter must be addressable`)
+  }
 })

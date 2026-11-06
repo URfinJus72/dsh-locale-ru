@@ -58,10 +58,16 @@ const HAN = /[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/
  * installed version (see `catalogs/versions.json`). A different count is
  * reported as version drift: the snapshot must be re-reviewed, not silently
  * updated, because the translators work against these exact strings.
+ *
+ * The count is the number of *extracted* tools, which is not always the number
+ * of `defineTool({...})` sites: a definition registered from a loop is expanded
+ * per loop iteration (see {@link extractTools}).
  */
 const TOOL_SOURCES = [
   { plugin: '@hyzyn/dsh-docker', file: 'lib/index.js', tools: 22 },
-  { plugin: '@hyzyn/dsh-tty', file: 'lib/index.js', tools: 18 },
+  // 18 literal registrations (tty_* 10, sftp_* 7, tunnel_list) plus the two
+  // tools the tunnel loop materializes (tunnel_start / tunnel_stop).
+  { plugin: '@hyzyn/dsh-tty', file: 'lib/index.js', tools: 20 },
   { plugin: '@hyzyn/dsh-loglens', file: 'lib/tools.js', tools: 5 },
   { plugin: '@hyzyn/dsh-mcp', file: 'lib/index.js', tools: 2 },
 ]
@@ -788,31 +794,24 @@ function parameterDescriptions(spec) {
  * @returns array of tool entries.
  */
 function extractTools(source, evaluator, options) {
+  const mask = options.mask
   const tools = []
-  const pattern = /\bdefineTool\s*\(/g
-  for (const match of source.matchAll(pattern)) {
-    const openParen = match.index + match[0].length - 1
-    const closeParen = findMatching(source, openParen)
-    const objectStart = source.indexOf('{', openParen)
-    if (objectStart === -1 || objectStart > closeParen) continue
-    const fields = objectFields(source, objectStart)
+  /** Build one tool entry from an already-located `defineTool({...})` object. */
+  const buildEntry = (fields, offset, label) => {
     const nameField = fields.get('name')
-    if (nameField === undefined) continue
+    if (nameField === undefined) return undefined
     const name = evaluator.resolve(source.slice(nameField.valueStart, nameField.valueEnd), nameField.valueStart)
     if (typeof name !== 'string' || name === '') {
-      // A definition produced inside a loop (`for (const [name, ...] of [...]`)
-      // has no literal name at the registration site; it cannot be snapshotted
-      // by name and is reported instead of guessed.
-      options.skipped.push(`offset ${String(match.index)}: ${JSON.stringify(source.slice(objectStart, objectStart + 80))}`)
-      continue
+      options.failures.push(`tool at offset ${String(offset)}: name is not a plain string${label === undefined ? '' : ` (${label})`}`)
+      return undefined
     }
     const descriptionField = fields.get('description')
     const description = descriptionField === undefined
       ? UNRESOLVED
       : evaluator.resolve(source.slice(descriptionField.valueStart, descriptionField.valueEnd), descriptionField.valueStart)
     if (typeof description !== 'string' || description === '') {
-      options.failures.push(`tool ${name}: description is not a plain string`)
-      continue
+      options.failures.push(`tool ${name}: description is not a plain string${label === undefined ? '' : ` (${label})`}`)
+      return undefined
     }
     const parameterField = fields.get('parameters')
     const unresolvedParams = []
@@ -824,12 +823,12 @@ function extractTools(source, evaluator, options) {
         unresolvedParams,
       )
     if (spec === UNRESOLVED) {
-      options.failures.push(`tool ${name}: parameters are not a plain object`)
-      continue
+      options.failures.push(`tool ${name}: parameters are not a plain object${label === undefined ? '' : ` (${label})`}`)
+      return undefined
     }
     if (unresolvedParams.length > 0) {
       options.failures.push(`tool ${name}: unresolved parameter entries: ${unresolvedParams.join(', ')}`)
-      continue
+      return undefined
     }
     const descriptions = parameterDescriptions(spec)
     const params = {}
@@ -838,7 +837,7 @@ function extractTools(source, evaluator, options) {
       params[path] = text
       paramHashes[path] = hash(text)
     }
-    tools.push({
+    return {
       name,
       entry: {
         zh: description,
@@ -846,9 +845,127 @@ function extractTools(source, evaluator, options) {
         params: sortObject(params),
         ...(Object.keys(paramHashes).length === 0 ? {} : { paramHashes: sortObject(paramHashes) }),
       },
-    })
+    }
+  }
+  const pattern = /\bdefineTool\s*\(/g
+  for (const match of source.matchAll(pattern)) {
+    if (mask !== undefined && mask[match.index] !== 1) continue
+    const openParen = match.index + match[0].length - 1
+    const closeParen = findMatching(source, openParen)
+    const objectStart = source.indexOf('{', openParen)
+    if (objectStart === -1 || objectStart > closeParen) continue
+    const fields = objectFields(source, objectStart)
+    const nameField = fields.get('name')
+    if (nameField === undefined) continue
+    const name = evaluator.resolve(source.slice(nameField.valueStart, nameField.valueEnd), nameField.valueStart)
+    if (typeof name === 'string' && name !== '') {
+      const built = buildEntry(fields, match.index)
+      if (built !== undefined) tools.push(built)
+      continue
+    }
+    /*
+     * A definition registered from a loop — `for (const [toolName, enable, verb]
+     * of [['tunnel_start', true, '启动'], ['tunnel_stop', false, '停止']]) { …
+     * defineTool({ name: toolName, description: `${verb}…` }) }` — has no literal
+     * name at the registration site. The loop tuple is the only place the real
+     * strings live, so each iteration is materialized by binding the tuple names
+     * into the evaluation context and re-resolving the same object.
+     */
+    const iterations = loopBindings(source, match.index, evaluator, mask)
+    if (iterations.length === 0) {
+      options.skipped.push(`offset ${String(match.index)}: ${JSON.stringify(source.slice(objectStart, objectStart + 80))}`)
+      continue
+    }
+    for (const bindings of iterations) {
+      const built = withBindings(evaluator, bindings, () => buildEntry(fields, match.index, Object.values(bindings).join(',')))
+      if (built !== undefined) tools.push(built)
+    }
   }
   return tools
+}
+
+/** Sentinel for "this name was not bound before the temporary binding". */
+const UNBOUND = Symbol('unbound')
+
+/**
+ * Run `callback` with extra identifier bindings visible to the module evaluator.
+ *
+ * Loop-produced tool definitions substitute their tuple into a template
+ * (`` `${verb}一条…` ``); the evaluator resolves identifiers through the vm
+ * context, so the tuple is installed there for the duration of one iteration and
+ * restored afterwards.
+ * @param evaluator - evaluator of the module.
+ * @param bindings - identifier values of one iteration.
+ * @param callback - resolution work of one iteration.
+ * @returns the callback result.
+ */
+function withBindings(evaluator, bindings, callback) {
+  const context = evaluator.context
+  const previous = new Map()
+  for (const [key, value] of Object.entries(bindings)) {
+    previous.set(key, Object.hasOwn(context, key) ? context[key] : UNBOUND)
+    context[key] = value
+  }
+  try {
+    return callback()
+  } finally {
+    for (const [key, value] of previous) {
+      if (value === UNBOUND) delete context[key]
+      else context[key] = value
+    }
+  }
+}
+
+/**
+ * Materialize the iterations of the `for (const [a, b] of [ [..], [..] ])` loop
+ * that encloses a definition site.
+ * @param source - bundle text.
+ * @param offset - offset of the definition inside the loop body.
+ * @param evaluator - evaluator of the module.
+ * @param mask - 1 for offsets inside code.
+ * @returns one binding map per iteration; empty when the site is not a loop.
+ */
+function loopBindings(source, offset, evaluator, mask) {
+  let best
+  for (const match of source.matchAll(/\bfor\s*\(/g)) {
+    if (mask !== undefined && mask[match.index] !== 1) continue
+    const parenStart = match.index + match[0].length - 1
+    const parenEnd = findMatching(source, parenStart)
+    // The definition lives in the loop *body*; a brace-less body is not a
+    // shape a tool registration uses (it needs a statement block).
+    let bodyStart = parenEnd + 1
+    while (bodyStart < source.length && /\s/.test(source[bodyStart])) bodyStart += 1
+    if (source[bodyStart] !== '{') continue
+    const bodyEnd = findMatching(source, bodyStart)
+    if (bodyStart > offset || offset > bodyEnd) continue
+    if (best === undefined || bodyEnd - bodyStart < best.bodyEnd - best.bodyStart) {
+      best = { parenStart, parenEnd, bodyStart, bodyEnd }
+    }
+  }
+  if (best === undefined) return []
+  const header = source.slice(best.parenStart + 1, best.parenEnd)
+  const parsed = /^\s*(?:const|let|var)\s+(\[[^\]]*\]|[A-Za-z_$][\w$]*)\s+of\s+([\s\S]+)$/.exec(header)
+  if (parsed === null) return []
+  const names = parsed[1].startsWith('[')
+    ? parsed[1].slice(1, -1).split(',').map(entry => entry.trim()).filter(entry => entry !== '')
+    : [parsed[1]]
+  const iterable = evaluator.resolve(parsed[2], best.parenStart)
+  if (!Array.isArray(iterable)) return []
+  const iterations = []
+  for (const entry of iterable) {
+    const values = Array.isArray(entry) ? entry : [entry]
+    const bindings = {}
+    let complete = true
+    names.forEach((name, index) => {
+      if (values[index] === undefined) {
+        complete = false
+        return
+      }
+      bindings[name] = values[index]
+    })
+    if (complete) iterations.push(bindings)
+  }
+  return iterations
 }
 
 /* ------------------------------------------------------------------ *
@@ -1071,7 +1188,7 @@ export async function buildCatalogs(options) {
     const mask = codeMaskOf(source)
     const declarations = harvestDeclarations(source, mask)
     const imports = harvestImports(source, mask)
-    const module = { source, declarations, imports, evaluator: undefined }
+    const module = { source, mask, declarations, imports, evaluator: undefined }
     sourceCache.set(absolutePath, module)
     module.evaluator = createEvaluator(source, declarations, imports, specifier => {
       const target = resolve(absolutePath, '..', specifier)
@@ -1104,7 +1221,7 @@ export async function buildCatalogs(options) {
   for (const spec of TOOL_SOURCES) {
     versions.set(spec.plugin, await pluginVersion(pluginsRoot, spec.plugin))
     const bundle = await load(join(spec.plugin, spec.file))
-    const found = extractTools(bundle.source, bundle.evaluator, { failures, skipped })
+    const found = extractTools(bundle.source, bundle.evaluator, { failures, skipped, mask: bundle.mask })
     if (found.length !== spec.tools) {
       warnings.push(`${spec.plugin}: ${String(found.length)} tools found, ${String(spec.tools)} expected (version drift?)`)
     }

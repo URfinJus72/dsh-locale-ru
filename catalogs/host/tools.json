@@ -27,8 +27,8 @@
     }
   ],
   "counts": {
-    "tools": 47,
-    "parameters": 151
+    "tools": 49,
+    "parameters": 153
   },
   "tools": {
     "docker_action": {
@@ -740,6 +740,28 @@
       "params": {},
       "plugin": "@hyzyn/dsh-tty",
       "zh": "列出端口转发隧道及其实时状态（活跃/连接中/错误/停止、规则、当前与累计连接数、最近错误）。用户说「隧道连不上 / 转发挂了 / 端口转发不通」时先用它诊断；隧道在 插件配置 → 终端面板 卡片维护。"
+    },
+    "tunnel_start": {
+      "hash": "0447f3e99978d32b628fe37db2fee0e8ccead650",
+      "paramHashes": {
+        "properties.name.description": "67b580b49ee867dcbc0b706106c487cfb01bd05f"
+      },
+      "params": {
+        "properties.name.description": "隧道名（tunnel_list 的 name 字段，形如 <连接簿条目>-L<端口>）"
+      },
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "启动一条端口转发隧道（name 来自 tunnel_list）。**会改写配置**——与在 插件配置 → 终端面板 卡片上勾选/取消「启用」是同一件事，所以是持久的、用户看得到。返回的是操作后的状态快照：state 通常还是 connecting（拨号异步），要最终结论稍后 tunnel_list。"
+    },
+    "tunnel_stop": {
+      "hash": "2720ca825fe87f97cdc989843efcf2e36d147078",
+      "paramHashes": {
+        "properties.name.description": "67b580b49ee867dcbc0b706106c487cfb01bd05f"
+      },
+      "params": {
+        "properties.name.description": "隧道名（tunnel_list 的 name 字段，形如 <连接簿条目>-L<端口>）"
+      },
+      "plugin": "@hyzyn/dsh-tty",
+      "zh": "停止一条端口转发隧道（name 来自 tunnel_list）。**会改写配置**——与在 插件配置 → 终端面板 卡片上勾选/取消「启用」是同一件事，所以是持久的、用户看得到。返回的是操作后的状态快照：state 通常还是 connecting（拨号异步），要最终结论稍后 tunnel_list。"
     }
   }
 }

@@ -30,7 +30,7 @@ const plugin = definition.factory(() => {
 assert.deepEqual(plugin.inject, ['locale'])
 
 let language
-let effectDisposer
+const effectDisposers = []
 const dictionaries = new Map()
 const disposed = []
 const ctx = {
@@ -46,7 +46,7 @@ const ctx = {
     },
   },
   effect(callback) {
-    effectDisposer = callback()
+    effectDisposers.push(callback())
   },
 }
 plugin.apply(ctx)
@@ -60,7 +60,7 @@ for (const ns of pluginNamespaces) {
   assert.ok(dictionaries.has(ns), `plugin dictionary "${ns}" is declared in src but missing from the bundle`)
 }
 
-effectDisposer()
+for (const dispose of effectDisposers) dispose()
 assert.equal(disposed.length, dictionaries.size + 1)
 
 const host = await import('../lib/index.js')

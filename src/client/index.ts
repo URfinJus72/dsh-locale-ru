@@ -67,6 +67,7 @@ import * as userQuestions from './dictionaries/user-questions.ts'
 import * as voiceInput from './dictionaries/voice-input.ts'
 import * as workflowRun from './dictionaries/workflow-run.ts'
 import * as workspace from './dictionaries/workspace.ts'
+import { installSidebarLabels } from './sidebar-labels.ts'
 import * as pluginAgentTeams from './dictionaries/plugins/agentTeams.ts'
 import * as pluginCodegraph from './dictionaries/plugins/codegraph.ts'
 import * as pluginDocker from './dictionaries/plugins/docker.ts'
@@ -166,6 +167,9 @@ const PLUGIN_PACKS: readonly Pack[] = [
   pluginAgentTeams,
 ]
 
+/** Все паки (ядро + плагины) — источник русских подписей для шима сайдбара. */
+const ALL_PACKS: readonly Pack[] = [...CORE_PACKS, ...PLUGIN_PACKS]
+
 /** Stable id and selector label of the language this pack adds. */
 const RU_ID = 'ru'
 const RU_LABEL = 'Русский'
@@ -204,4 +208,12 @@ export function apply(ctx: ClientContext): void {
     }
     return () => { for (const dispose of disposers) dispose() }
   }, 'locale-ru: language and dictionaries')
+
+  // Три сторонних плагина рисуют свои пункты сайдбара императивно и один раз —
+  // до подписки на locale (см. src/client/sidebar-labels.ts). Шим переписывает
+  // их подписи, когда активен русский (или en/zh — для согласованности).
+  ctx.effect(
+    () => installSidebarLabels(ctx, (namespace, key) => ALL_PACKS.find(pack => pack.ns === namespace)?.dict[key]),
+    'locale-ru: plugin sidebar labels',
+  )
 }

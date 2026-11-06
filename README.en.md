@@ -106,6 +106,9 @@ overlay never throws and never blocks a model request.
 - Unknown keys render in English instead of raw identifiers.
 - A `(namespace, locale)` pair has a single owner: if a plugin ever ships its own `ru`, our dictionary for
   that namespace is skipped with a warning instead of crashing the whole pack.
+- Three plugins (`@hyzyn/dsh-rss`, `@hyzyn/dsh-tty`, `@hyzyn/dsh-docker`) draw their sidebar entries
+  imperatively and once, before the `locale` subscription; a small shim
+  (`src/client/sidebar-labels.ts`) rewrites those three labels.
 - Plugin cards come from `locale/*.json` **inside** each plugin package, so they are localized by
   `scripts/patch-plugin-cards.mjs` rather than by the bundle: it writes `locale/en.json` + `locale/ru.json` and
   adds the paths to the affected packages' `exports`. Commands: `pnpm run cards:apply` / `cards:check` /

@@ -4,6 +4,19 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the package follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.2] — 2026-11-06
+
+Русские подписи в императивных пунктах сайдбара, которые плагины строят сами.
+
+### Fixed
+
+- `@hyzyn/dsh-rss`, `@hyzyn/dsh-tty`, `@hyzyn/dsh-docker` создают кнопки в сайдбаре один раз при
+  монтировании и берут подпись из китайского fallback **до** подписки на `locale`; перерисовки на смену
+  языка у них нет, поэтому в DOM навсегда оставались «今日值得读» / «终端» / «容器».
+  Добавлен точечный шим `src/client/sidebar-labels.ts`: переписывает подпись, `aria-label` и `title`
+  трёх известных элементов на русский (и на en/zh при переключении), ничего больше в DOM не трогает.
+- `tests/sidebar-labels.spec.ts`: юнит-тесты шима на фейковом DOM (ru → en → dispose).
+
 ## [0.2.1] — 2026-11-06
 
 Локализация карточек плагинов (display metadata) — последний видимый китайский слой в списке плагинов.

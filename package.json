@@ -32,7 +32,7 @@
   },
   "scripts": {
     "build": "node scripts/build.mjs",
-    "test": "node scripts/test.mjs && node --test tests/plugins.client.spec.ts",
+    "test": "node scripts/test.mjs && node --test tests/plugins.client.spec.ts tests/host.prompt.spec.ts",
     "check:harness:keys": "node scripts/check-harness-keys.mjs",
     "check:harness:gaps": "node scripts/harness-gaps.mjs",
     "check:harness:install": "node scripts/smoke-install.mjs",

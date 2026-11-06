@@ -131,8 +131,23 @@ const expectedNamespaces = NAMESPACES.map(row => row.ns)
 for (const namespace of expectedNamespaces) {
   if (!russian.has(namespace)) errors.push(`${namespace}: Russian dictionary is not registered`)
 }
+
+/**
+ * Plugin namespaces are third-party surfaces owned by installed plugins, not by
+ * Harness: their key parity is asserted against `catalogs/plugins/*.json` by
+ * tests/plugins.client.spec.ts, so this Harness registry check only rejects
+ * namespaces that have no known owner at all.
+ */
+const pluginCatalogs = await readdir(new URL('../catalogs/plugins/', import.meta.url)).catch(() => [])
+const externalNamespaces = new Set(
+  await Promise.all(pluginCatalogs
+    .filter(name => name.endsWith('.json'))
+    .map(async name => JSON.parse(await readFile(new URL(`../catalogs/plugins/${name}`, import.meta.url), 'utf8')).ns)),
+)
 for (const namespace of russian.keys()) {
-  if (!expectedNamespaces.includes(namespace)) errors.push(`${namespace}: namespace is not listed in the Harness compatibility registry`)
+  if (!expectedNamespaces.includes(namespace) && !externalNamespaces.has(namespace)) {
+    errors.push(`${namespace}: namespace is not listed in the Harness compatibility registry nor in catalogs/plugins`)
+  }
 }
 
 for (const row of NAMESPACES) {

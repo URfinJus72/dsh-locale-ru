@@ -1,7 +1,7 @@
 /**
  * Russian dictionary for the `sidebarRight` namespace owned by
- * `@deepseek-ai/dsh-client-ui-sidebar-right`. Key parity is asserted by
- * tests/dictionaries.client.spec.ts.
+ * `@deepseek-ai/dsh-client-ui-sidebar-right`. Key parity with the Harness dictionary is
+ * asserted by scripts/check-harness-keys.mjs.
  */
 
 /** Registered namespace id. */
@@ -9,6 +9,19 @@ export const ns = 'sidebarRight'
 
 /** Russian dictionary. */
 export const dict: Record<string, string> = {
+  'command.close': 'Закрыть текущую страницу или окно',
+  'command.refresh': 'Обновить текущую страницу',
+  'command.noRefresh': 'Эту страницу нельзя обновить',
+  'command.toggle': 'Переключить правую боковую панель',
+  'command.fullscreen': 'Переключить полноэкранный режим панели',
+  'command.noSession': 'Сначала выберите сессию',
+  'command.noFocus': 'Сначала сфокусируйтесь на правой боковой панели',
+  'command.stale': 'Страница изменилась; снова выберите её',
+  'command.collapsed': 'Сначала разверните правую боковую панель',
+  'command.float': 'Это действие недоступно в плавающей панели',
+  'command.empty': 'Сначала откройте страницу',
+  'command.budget': 'Две панели — предел',
+  'command.width': 'Недостаточно ширины для разделения; расширьте боковую панель',
   'chrome.expand': 'Открыть боковую панель',
   'chrome.expandAria': 'Открыть правую боковую панель',
   'chrome.collapse': 'Свернуть боковую панель',

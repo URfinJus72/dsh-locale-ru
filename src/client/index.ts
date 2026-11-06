@@ -39,15 +39,21 @@ import * as pluginManager from './dictionaries/plugin-manager.ts'
 import * as reference from './dictionaries/reference.ts'
 import * as schedule from './dictionaries/schedule.ts'
 import * as sessionLogDownload from './dictionaries/session-log-download.ts'
-import * as settingsArchivedSessions from './dictionaries/settings-archived-sessions.ts'
+import * as settingsAccount from './dictionaries/settings-account.ts'
+import * as settingsAgentLoop from './dictionaries/settings-agent-loop.ts'
 import * as settingsGeneral from './dictionaries/settings-general.ts'
 import * as settingsLocale from './dictionaries/settings-locale.ts'
 import * as settingsModels from './dictionaries/settings-models.ts'
 import * as settingsPluginInventory from './dictionaries/settings-plugin-inventory.ts'
 import * as settingsPlugins from './dictionaries/settings-plugins.ts'
+import * as settingsShell from './dictionaries/settings-shell.ts'
+import * as settingsSubagent from './dictionaries/settings-subagent.ts'
 import * as settingsTheme from './dictionaries/settings-theme.ts'
+import * as settingsWebSearch from './dictionaries/settings-web-search.ts'
+import * as shortcuts from './dictionaries/shortcuts.ts'
 import * as sidebar from './dictionaries/sidebar.ts'
 import * as sidebarBrowser from './dictionaries/sidebar-browser.ts'
+import * as sidebarExcel from './dictionaries/sidebar-excel.ts'
 import * as sidebarFiles from './dictionaries/sidebar-files.ts'
 import * as sidebarRight from './dictionaries/sidebar-right.ts'
 import * as sidebarTerminal from './dictionaries/sidebar-terminal.ts'
@@ -55,6 +61,7 @@ import * as skill from './dictionaries/skill.ts'
 import * as subagent from './dictionaries/subagent.ts'
 import * as trajectory from './dictionaries/trajectory.ts'
 import * as userQuestions from './dictionaries/user-questions.ts'
+import * as voiceInput from './dictionaries/voice-input.ts'
 import * as workflowRun from './dictionaries/workflow-run.ts'
 import * as workspace from './dictionaries/workspace.ts'
 import * as pluginAgentTeams from './dictionaries/plugins/agentTeams.ts'
@@ -84,7 +91,13 @@ const CORE_PACKS: readonly Pack[] = [
   settingsModels,
   settingsPlugins,
   settingsPluginInventory,
-  settingsArchivedSessions,
+  settingsAgentLoop,
+  settingsShell,
+  settingsSubagent,
+  settingsWebSearch,
+  settingsAccount,
+  shortcuts,
+  voiceInput,
   agentPreset,
   agentTeam,
   permissionSettings,
@@ -119,6 +132,7 @@ const CORE_PACKS: readonly Pack[] = [
   documentMarkdown,
   documentOffice,
   documentPdf,
+  sidebarExcel,
   skill,
   subagent,
   trajectory,

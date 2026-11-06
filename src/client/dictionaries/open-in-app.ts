@@ -1,17 +1,25 @@
 /**
  * Russian dictionary for the `open-in-app` namespace owned by
- * `@deepseek-ai/dsh-client-ui-open-in-app`. Key parity is asserted by
- * tests/dictionaries.client.spec.ts.
+ * `@deepseek-ai/dsh-client-ui-open-in-app`. Key parity with the Harness dictionary is
+ * asserted by scripts/check-harness-keys.mjs.
  */
 
 /** Registered namespace id. */
 export const ns = 'open-in-app'
 
-/* jscpd:ignore-start */
-// Application labels are product names spelled identically in every locale;
-// the owner keeps this same verbatim block shared by its own dictionaries.
-// The repetition is the subject of the data, not a refactor candidate.
-const PRODUCT_NAMES = {
+/** Russian dictionary. */
+export const dict: Record<string, string> = {
+  'open.title': 'Открыть рабочую область в {app}',
+  'path.appDefault': '{app} (по умолчанию)',
+  'path.appsError': 'Не удалось загрузить приложения',
+  'shortcut.busy': 'Открытие рабочей области',
+  'shortcut.unavailable': 'Текущая рабочая область или локальное приложение недоступны',
+  'open.tooltip': 'Открыть локально',
+  'path.open': 'Открыть',
+  'path.more': 'Больше способов открытия',
+  'path.reveal': 'Показать расположение файла',
+  'path.openError': 'Не удалось открыть. Попробуйте снова.',
+  'path.revealError': 'Не удалось показать расположение файла. Попробуйте снова.',
   'app.cursor': 'Cursor',
   'app.vscode': 'VS Code',
   'app.vscodeinsiders': 'VS Code Insiders',
@@ -42,17 +50,6 @@ const PRODUCT_NAMES = {
   'app.gitbash': 'Git Bash',
   'app.gnometerminal': 'GNOME Terminal',
   'app.konsole': 'Konsole',
-} as const
-/* jscpd:ignore-end */
-
-/** Russian dictionary. */
-export const dict: Record<string, string> = {
-  'open.title': 'Открыть рабочую область в {app}',
-  'open.tooltip': 'Открыть локально',
-  'open.error': 'Не удалось открыть',
-  'menu.toggle': 'Выбрать приложение для открытия',
-  'menu.aria': 'Открыть в',
-  ...PRODUCT_NAMES,
   'app.finder': 'Finder',
   'app.explorer': 'Проводник',
   'app.filemanager': 'Файловый менеджер',

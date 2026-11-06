@@ -1,7 +1,7 @@
 /**
  * Russian dictionary for the `command` namespace owned by
- * `@deepseek-ai/dsh-client-ui-commands`. Key parity is asserted by
- * tests/dictionaries.client.spec.ts.
+ * `@deepseek-ai/dsh-client-ui-commands`. Key parity with the Harness dictionary is
+ * asserted by scripts/check-harness-keys.mjs.
  */
 
 /** Registered namespace id. */

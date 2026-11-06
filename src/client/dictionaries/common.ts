@@ -1,7 +1,7 @@
 /**
  * Russian dictionary for the `common` namespace owned by
- * `@deepseek-ai/dsh-client-locale`. Key parity is asserted by
- * tests/dictionaries.client.spec.ts.
+ * `@deepseek-ai/dsh-client-locale`. Key parity with the Harness dictionary is
+ * asserted by scripts/check-harness-keys.mjs.
  */
 
 /** Registered namespace id. */
@@ -14,6 +14,9 @@ export const dict: Record<string, string> = {
   'close': 'Закрыть',
   'copy': 'Копировать',
   'copied': 'Скопировано',
+  'codeBlock.title': 'Блок кода',
+  'codeBlock.wrap': 'Оборачивать строки',
+  'codeBlock.unwrap': 'Не оборачивать строки',
   'copy.failed': 'Не удалось скопировать',
   'copy.value': 'Копировать значение',
   'copy.json': 'Копировать JSON',
@@ -38,6 +41,7 @@ export const dict: Record<string, string> = {
   'expand': 'Развернуть',
   'back': 'Назад',
   'brand.localBuild': 'Локальная сборка DSH',
+  'workspace.defaultName': 'Рабочая область по умолчанию',
   'unknown': 'Неизвестно',
   'none': 'Нет',
   'truncated': 'Усечено',

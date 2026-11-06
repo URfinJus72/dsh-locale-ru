@@ -1,7 +1,7 @@
 /**
  * Russian dictionary for the `deliverables` namespace owned by
- * `@deepseek-ai/dsh-client-ui-deliverables`. Key parity is asserted by
- * tests/dictionaries.client.spec.ts.
+ * `@deepseek-ai/dsh-client-ui-deliverables`. Key parity with the Harness dictionary is
+ * asserted by scripts/check-harness-keys.mjs.
  */
 
 /** Registered namespace id. */
@@ -19,12 +19,6 @@ export const dict: Record<string, string> = {
   'presented.unavailable': 'На этом компьютере нет доступного рабочего стола для открытия файлов и папок во внешних приложениях. Файлы по-прежнему можно просматривать в боковой панели.',
   'presented.retry': 'Повторить',
   'presented.hostError': 'Не удалось получить сведения о рабочем столе компьютера',
-  'presented.directory': 'Открыть содержащую папку',
-  'presented.explorer': 'Показать в проводнике',
-  'presented.finder': 'Показать в Finder',
-  'presented.defaultApp': 'Открыть в приложении по умолчанию',
-  'presented.more': 'Другие действия с файлом {name}',
-  'presented.action': 'Открыть',
   'presented.preview': 'Предпросмотр в боковой панели',
   'presented.previewButton': 'Открыть {name} в боковой панели',
   'presented.previewCard': 'Предпросмотр {name} в боковой панели',
@@ -38,11 +32,13 @@ export const dict: Record<string, string> = {
   'presented.file': 'Файл',
   'row.title': 'Результаты',
   'row.running': 'Передача',
+  'row.preparing': 'Подготовка продуктов',
   'row.ok': 'Передано',
   'row.error': 'Ошибка передачи',
   'row.stopped': 'Прервано',
   'row.inspect': 'Просмотр вызова',
   'changes.title': 'Изменено файлов: {count}',
+  'changes.singleTitle': 'Изменено {name}',
   'changes.added': '+{count}',
   'changes.deleted': '-{count}',
   'changes.binary': 'двоичный',
@@ -63,7 +59,6 @@ export const dict: Record<string, string> = {
   'review.wrapAria': 'Перенос строк',
   'review.openFile': 'Открыть весь файл в боковой панели',
   'review.openFileAria': 'Открыть {name} в боковой панели',
-  'diff.openNativeAria': 'Открыть {name} в приложении по умолчанию',
   'diff.loading': 'Чтение изменений…',
   'diff.missing': 'Содержимое изменений этого хода больше недоступно',
   'diff.error': 'Не удалось прочитать изменения',
@@ -74,6 +69,4 @@ export const dict: Record<string, string> = {
   'diff.unchanged': 'Содержимое с обеих сторон совпадает',
   'diff.coarse': 'Построчное сравнение превысило время; показана замена всего файла',
   'diff.truncated': 'Показаны первые {count} строк',
-  'diff.openNative': 'Открыть в приложении по умолчанию',
-  'diff.openNativeError': 'Не удалось открыть. Нажмите, чтобы повторить.',
 }

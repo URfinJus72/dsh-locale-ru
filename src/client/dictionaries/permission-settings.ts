@@ -1,7 +1,7 @@
 /**
  * Russian dictionary for the `settings.permission` namespace owned by
- * `@deepseek-ai/dsh-client-ui-permission-presets`. Key parity is asserted by
- * tests/dictionaries.client.spec.ts.
+ * `@deepseek-ai/dsh-client-ui-permission-presets`. Key parity with the Harness dictionary is
+ * asserted by scripts/check-harness-keys.mjs.
  */
 
 /** Registered namespace id. */

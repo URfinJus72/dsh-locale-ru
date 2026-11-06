@@ -1,8 +1,7 @@
 /**
  * Russian dictionary for the `directory-browser` namespace owned by
- * `@deepseek-ai/dsh-client-ui-directory-picker-browse` (the Select Workspace
- * Directory dialog). Key parity is asserted by
- * tests/dictionaries.client.spec.ts.
+ * `the shared directory browser`. Key parity with the Harness dictionary is
+ * asserted by scripts/check-harness-keys.mjs.
  */
 
 /** Registered namespace id. */

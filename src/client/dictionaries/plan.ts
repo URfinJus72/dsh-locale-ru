@@ -1,7 +1,7 @@
 /**
  * Russian dictionary for the `plan` namespace owned by
- * `@deepseek-ai/dsh-client-ui-plan`. Key parity is asserted by
- * tests/dictionaries.client.spec.ts.
+ * `@deepseek-ai/dsh-client-ui-plan`. Key parity with the Harness dictionary is
+ * asserted by scripts/check-harness-keys.mjs.
  */
 
 /** Registered namespace id. */
@@ -25,7 +25,5 @@ export const dict: Record<string, string> = {
   'preview.expired': 'Срок действия временного предпросмотра плана истёк. Откройте его заново из карточки, ожидающей разрешения.',
   'chip.on.aria': 'plan mode включён, нажмите, чтобы выключить',
   'chip.on.title': 'plan mode включён — нажмите, чтобы выключить (/plan off)',
-  'chip.off.aria': 'plan mode выключен, нажмите, чтобы включить',
-  'chip.off.title': 'plan mode выключен — нажмите, чтобы включить (/plan)',
   'chip.exitFailed': 'Не удалось выйти из plan mode',
 }

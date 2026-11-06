@@ -1,7 +1,7 @@
 /**
  * Russian dictionary for the `settings.locale` namespace owned by
- * `@deepseek-ai/dsh-client-locale` (the Language row's copy). Key parity is
- * asserted by tests/dictionaries.client.spec.ts.
+ * `@deepseek-ai/dsh-client-locale`. Key parity with the Harness dictionary is
+ * asserted by scripts/check-harness-keys.mjs.
  */
 
 /** Registered namespace id. */

@@ -1,7 +1,7 @@
 /**
  * Russian dictionary for the `cordis` namespace owned by
- * `@deepseek-ai/dsh-client-ui-cordis`. Key parity is asserted by
- * tests/dictionaries.client.spec.ts.
+ * `@deepseek-ai/dsh-client-ui-cordis`. Key parity with the Harness dictionary is
+ * asserted by scripts/check-harness-keys.mjs.
  */
 
 /** Registered namespace id. */
@@ -10,6 +10,7 @@ export const ns = 'cordis'
 /** Russian dictionary. */
 export const dict: Record<string, string> = {
   'row.defineTitle': 'Зарегистрировать плагин Cordis',
+  'a11y.preparing': 'Подготовка вызова инструмента Cordis',
   'row.runTitle': 'Запустить плагин Cordis',
   'row.updateTitle': 'Обновить плагин Cordis',
   'row.stopTitle': 'Остановить плагин Cordis',

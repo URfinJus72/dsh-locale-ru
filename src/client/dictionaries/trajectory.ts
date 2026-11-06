@@ -1,7 +1,7 @@
 /**
  * Russian dictionary for the `trajectory` namespace owned by
- * `@deepseek-ai/dsh-client-ui-trajectory`. Key parity is asserted by
- * tests/dictionaries.client.spec.ts.
+ * `@deepseek-ai/dsh-client-ui-trajectory`. Key parity with the Harness dictionary is
+ * asserted by scripts/check-harness-keys.mjs.
  */
 
 /** Registered namespace id. */
@@ -150,13 +150,13 @@ export const dict: Record<string, string> = {
   'request.rowAriaCompaction': 'Запрос {request}, сжатие',
   'request.noContent': 'нет содержимого',
   'summary.toolCalls.one': '{count} вызов инструмента',
+  'summary.toolCalls.other': '{count} вызовов инструментов',
   'summary.toolCalls.few': '{count} вызова инструмента',
   'summary.toolCalls.many': '{count} вызовов инструментов',
-  'summary.toolCalls.other': '{count} вызовов инструментов',
   'summary.steps.one': '{count} шаг',
+  'summary.steps.other': '{count} шагов',
   'summary.steps.few': '{count} шага',
   'summary.steps.many': '{count} шагов',
-  'summary.steps.other': '{count} шагов',
   'details.event': 'Детали события',
   'details.resize': 'Изменить ширину деталей события',
   'details.resizeTitle': 'Перетащите, чтобы изменить размер; двойной щелчок — сброс.',
@@ -194,7 +194,15 @@ export const dict: Record<string, string> = {
   'layout.fileAttachments': 'Файлов ×{count}',
   'layout.initialSystemPrompt': 'Начальный системный промпт',
   'layout.systemPromptUpdated': 'Системный промпт обновлён',
-  'layout.toolsUpdated': 'Инструменты обновлены',
-  'layout.systemPromptAndToolsUpdated': 'Системный промпт и инструменты обновлены',
+  'layout.toolsUpdated': 'Инструменты обновлёны',
+  'layout.toolAdded': 'Добавлен инструмент: {name}',
+  'layout.toolRemoved': 'Удалён инструмент: {name}',
+  'layout.toolUpdateNotice': 'Инструменты обновлёны',
+  'layout.toolsAdded': 'Добавлено: {names}',
+  'layout.toolsAddedCount': 'Добавлено {count}',
+  'layout.toolsChanged': 'Добавлено {added}, удалено {removed}',
+  'layout.toolsRemoved': 'Удалено: {names}',
+  'layout.toolsRemovedCount': 'Удалено {count}',
+  'layout.systemPromptAndToolsUpdated': 'Системный промпт и инструменты обновлёны',
   'layout.compactionInterrupted': 'Сжатие контекста было прервано до завершения.',
 }

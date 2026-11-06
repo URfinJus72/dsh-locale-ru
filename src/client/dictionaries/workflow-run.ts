@@ -1,7 +1,7 @@
 /**
  * Russian dictionary for the `workflowRun` namespace owned by
- * `@deepseek-ai/dsh-client-ui-workflow-run`. Key parity is asserted by
- * tests/dictionaries.client.spec.ts.
+ * `@deepseek-ai/dsh-client-ui-workflow-run`. Key parity with the Harness dictionary is
+ * asserted by scripts/check-harness-keys.mjs.
  */
 
 /** Registered namespace id. */
@@ -11,9 +11,9 @@ export const ns = 'workflowRun'
 export const dict: Record<string, string> = {
   'run.title': '{name}',
   'run.members.one': '{count} член',
+  'run.members.other': '{count} членов',
   'run.members.few': '{count} члена',
   'run.members.many': '{count} членов',
-  'run.members.other': '{count} членов',
   'run.empty': 'Члены не запущены',
   'phase.unassigned': 'Вне фаз',
   'phase.empty': 'Пустое название фазы',

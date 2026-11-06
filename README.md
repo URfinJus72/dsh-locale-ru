@@ -1,65 +1,114 @@
 # 🇷🇺 dsh-locale-ru
 
-### Нативная русская локализация веб-интерфейса DeepSeek Harness
+### Нативная русская локализация веб-интерфейса DeepSeek Harness (+ китайские плагины)
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![DeepSeek Harness](https://img.shields.io/badge/DeepSeek_Harness-0.1.6--alpha.2-blue)](https://github.com/deepseek-ai/deepseek-harness)
-[![Check](https://github.com/AbsoluteMikhail/dsh-locale-ru/actions/workflows/check.yml/badge.svg)](https://github.com/AbsoluteMikhail/dsh-locale-ru/actions/workflows/check.yml)
+[![DeepSeek Harness](https://img.shields.io/badge/DeepSeek_Harness-0.2.0--rc.2-blue)](https://github.com/deepseek-ai/deepseek-harness)
+[![Check](https://github.com/URfinJus72/dsh-locale-ru/actions/workflows/check.yml/badge.svg)](https://github.com/URfinJus72/dsh-locale-ru/actions/workflows/check.yml)
 
 [English](README.en.md)
 
-`dsh-locale-ru` добавляет язык **Русский** в штатный переключатель DeepSeek Harness и переводит основные поверхности веб-интерфейса. Пакет использует публичный API языковых пакетов, не подменяет внутренние методы приложения и не изменяет DOM после отрисовки.
+Форк проекта [AbsoluteMikhail/dsh-locale-ru](https://github.com/AbsoluteMikhail/dsh-locale-ru).
+Добавляет язык **Русский** в штатный переключатель DeepSeek Harness и переводит интерфейс ядра,
+а также (в работе) китайскоязычные плагины `@hyzyn/*`, `dshmarket` и `@nanmicoder/dsh-agent-teams`.
 
-**Автор и сопровождающий:** [AbsoluteMikhail](https://github.com/AbsoluteMikhail)
+Пакет использует публичный API языковых пакетов: не подменяет внутренние методы приложения,
+не изменяет DOM после отрисовки и не форкает upstream-плагины.
+
+**Базовая локализация:** [AbsoluteMikhail](https://github.com/AbsoluteMikhail) (MIT).
+**Форк и локализация плагинов:** [URfinJus72](https://github.com/URfinJus72).
+
+## Состояние
+
+| Поверхность | Статус |
+|---|---|
+| Ядро: 48 namespace'ов веб-интерфейса | ✅ работает (база — Harness `0.1.6-alpha.2`) |
+| Ядро: соответствие Harness `0.2.0-rc.2` | ⏳ в работе (см. [Совместимость](#совместимость)) |
+| UI китайских плагинов: 9 namespace'ов, 2 699 ключей | ⏳ план — [матрица версий](#локализация-китайских-плагинов) |
+| Описания инструментов и секции system prompt плагинов | ⏳ план |
+| Карточки плагинов в «Настройки → Плагины» | ⏳ опционально (требует файлов внутри пакетов) |
+
+Подробный анализ и пофазный план: [`docs/PLUGINS-RU-PLAN.md`](docs/PLUGINS-RU-PLAN.md).
 
 ## Возможности
 
-- 48 пространств перевода и более 1600 строк интерфейса.
+- 48 пространств перевода и более 1 600 строк интерфейса ядра.
 - Чат, настройки, рабочие области, плагины, разрешения, терминал, файлы, планы, задания, субагенты и служебные панели.
 - Мгновенное переключение языка через **Настройки → Общие настройки → Язык**.
 - Сохранение выбранного языка в штатных настройках профиля.
 - Русские формы числительных: `1 вызов`, `2 вызова`, `5 вызовов`, `21 вызов`.
-- Английский fallback для ключей сторонних плагинов, которых ещё нет в русском словаре.
+- Английский fallback для ключей, которых ещё нет в русском словаре (в том числе сторонних плагинов).
 - Локализованные названия встроенных режимов доступа.
-- Автоматическая сверка ключей и плейсхолдеров с совместимой версией Harness.
+- Автоматическая сверка ключей и плейсхолдеров с Harness.
 - Установочный smoke-тест на изолированном реальном профиле `web`.
 
-```mermaid
-flowchart LR
-    A[Профиль DSH] --> B[Bundle dsh-locale-ru]
-    B --> C[Язык ru]
-    B --> D[48 словарей]
-    C --> E[Штатный LocaleRuntime]
-    D --> E
-    E --> F[Русский Web UI]
-```
+## Локализация китайских плагинов
+
+Плагины `@hyzyn/*`, `dshmarket` и `@nanmicoder/dsh-agent-teams` поставляют словари `zh` + `en` и не имеют
+`ru`; при выбранном русском языке их интерфейс показывается на английском через штатный fallback.
+Форк добавляет русские словари для их namespace'ов.
+
+Ключи сняты с перечисленных версий; для каждой версии в форке будет тест паритета ключей `ru == en`:
+
+| Плагин | Версия, с которой сняты ключи | namespace | Ключей | Статус |
+|---|---|---:|---:|---|
+| @hyzyn/dsh-codegraph | 0.6.20 | `codegraph` | 205 | ⏳ план |
+| @hyzyn/dsh-mcp | 0.3.13 | `mcp` | 73 | ⏳ план |
+| @hyzyn/dsh-rss | 0.4.16 | `rss` | 132 | ⏳ план |
+| @hyzyn/dsh-loglens | 0.1.8 | `loglens` | 205 | ⏳ план |
+| @hyzyn/dsh-kit-settings | 0.2.9 | `kit-settings` | 4 | ⏳ план |
+| @hyzyn/dsh-tty | 0.38.0 | `tty` | 516 | ⏳ план |
+| @hyzyn/dsh-docker | 0.15.0 | `docker` | 564 | ⏳ план |
+| dshmarket | 1.73.12 | `dsh-market` | 783 | ⏳ план |
+| @nanmicoder/dsh-agent-teams | 0.1.29 | `agentTeams` | 217 | ⏳ план |
+| **итого** | — | 9 namespace'ов | **2 699** | — |
+| @xbzbing/dsh-git-panel | 1.12.0 | `gitPanel` | 554 | ✅ `ru` уже есть в самом плагине |
+
+Дополнительно в плане: 47 описаний инструментов (`docker_*` — 22, `tty_*`/`sftp_*`/`tunnel_list` — 18,
+`loglens_*` — 5, `mcp_*` — 2), описания их параметров и 8 секций `plugin:dsh-*` в system prompt —
+они переписываются официальным хуком `system-prompt/assemble`, без правки upstream-плагинов.
+
+### Как это работает
+
+- Регистрируется язык `ru` (fallback `en`) и словари: `ctx.locale.register(ns, 'ru', dict)`.
+- Неизвестные ключи показываются по-английски, а не как сырые идентификаторы.
+- Пара `(namespace, locale)` имеет одного владельца: если плагин сам добавит `ru`, наш словарь для этого
+  namespace тихо пропускается (без падения всего пакета).
+- Карточки плагинов в «Настройки → Плагины» берутся из `locale/*.json` **внутри** пакета плагина, поэтому
+  их русификация — отдельный опциональный шаг (патч установленных пакетов), а не часть bundle-пакета.
 
 ## Установка
 
-### Из GitHub
+### Из GitHub (форк)
 
 ```sh
-dsh plugin --profile web add github:AbsoluteMikhail/dsh-locale-ru
+dsh plugin --profile web add github:URfinJus72/dsh-locale-ru
 ```
 
-Собранные файлы `lib/` хранятся в репозитории. Установка из GitHub не запускает сборочный код на компьютере пользователя и не требует разрешать install-скрипты.
+Собранные файлы `lib/` хранятся в репозитории. Установка из GitHub не запускает сборочный код
+на компьютере пользователя и не требует разрешать install-скрипты.
 
 После установки перезапустите профиль, откройте **Настройки → Общие настройки → Язык** и выберите **Русский**.
 
-### Из npm
+### Замена upstream на форк
 
-Команда станет доступна после публикации пакета `@absolutemikhail/dsh-locale-ru`:
+Если `@absolutemikhail/dsh-locale-ru` уже установлен из upstream, замените источник в `package.json` профиля:
 
-```sh
-dsh plugin --profile web add @absolutemikhail/dsh-locale-ru
+```json
+"@absolutemikhail/dsh-locale-ru": "github:URfinJus72/dsh-locale-ru"
 ```
+
+и выполните `pnpm install` в каталоге профиля (`~/.dsh/profiles/web`).
+
+> ⚠️ Не устанавливайте upstream и форк одновременно: оба регистрируют язык `ru`, и вторая регистрация
+> завершится ошибкой. Форк — drop-in замена, имя пакета сохранено.
 
 ### Через интерфейс
 
 Откройте **Плагины → Добавить плагин** и вставьте:
 
 ```text
-github:AbsoluteMikhail/dsh-locale-ru
+github:URfinJus72/dsh-locale-ru
 ```
 
 ## Проверка установки
@@ -87,12 +136,12 @@ dsh --profile web --dump-config
 | Агенты | Субагенты, команда агентов, пресеты |
 | Боковые панели | Браузер, терминал, файлы, документы |
 | Документы | Markdown, HTML, PDF, изображения, Office |
-
-Сторонний плагин со своим пространством перевода продолжит работать: неизвестные русскому пакету ключи отображаются на английском через штатную цепочку fallback.
+| Плагины (в работе) | Codegraph, MCP, RSS, Loglens, Kit-settings, TTY, Docker, Market, Agent Teams |
 
 ## Русские числительные
 
-В словарях предусмотрены категории CLDR `one`, `few`, `many` и `other`. Версии Harness с расширенной поддержкой числительных автоматически выбирают правильную форму по параметру `count` или `n`.
+В ядровых словарях предусмотрены категории CLDR `one`, `few`, `many` и `other`. Версии Harness
+с расширенной поддержкой числительных автоматически выбирают правильную форму по параметру `count` или `n`.
 
 | Число | Результат |
 |---:|---|
@@ -101,13 +150,30 @@ dsh --profile web --dump-config
 | 5 | 5 вызовов инструментов |
 | 21 | 21 вызов инструмента |
 
+В словарях сторонних плагинов категорий числительных нет: там `{n}` подставляется в одну строку,
+поэтому счётные строки переводятся нейтральными конструкциями («Файлов: {n}»).
+
 ## Совместимость
 
-Первая версия подготовлена для DeepSeek Harness `0.1.6-alpha.2` и использует публичные методы `addLanguage` и `register`. Словари соответствуют интерфейсным ключам этой версии Harness.
+| Компонент | Версия |
+|---|---|
+| DeepSeek Harness (целевая) | `0.2.0-rc.2` |
+| База ядровых словарей (upstream 0.1.0) | `0.1.6-alpha.2` |
+| Плагины (ключи сняты) | см. [матрицу версий](#локализация-китайских-плагинов) |
 
-Расширенные категории `.few` и `.many` требуют версии `LocaleRuntime` с поддержкой CLDR. На более ранних версиях остальные переводы работают через стандартные ключи `.one` и `.other`.
+Ядровые словари версии 0.1.0 собраны под Harness `0.1.6-alpha.2`. На `0.2.0-rc.2` часть ключей уже
+переименована или добавлена: например, в `chat` не хватает 91 ключа, в `conversation` — 216;
+удалён namespace `settings.archivedSessions`, появились `settings.agentLoop`, `settings.shell`,
+`settings.subagent`, `settings.webSearch`. Поэтому штатная проверка `pnpm run check:harness` на `0.2.0-rc.2`
+сейчас **падает** — карта namespace'ов обновляется (фаза 0.5 плана), после чего словари ядра будут
+дополнены и проверка станет зелёной.
 
-При обновлении Harness состав ключей может измениться. Выпуск новой совместимой версии русификатора должен сопровождать такие изменения.
+До этого момента часть ядровых строк на `0.2.0-rc.2` остаётся на английском через fallback — это не
+регрессия русификатора, а расхождение версий.
+
+Расширенные категории `.few` и `.many` требуют версии `LocaleRuntime` с поддержкой CLDR.
+При обновлении Harness состав ключей меняется: выпуск новой совместимой версии русификатора должен
+сопровождать такие изменения (в форке для этого есть тесты паритета и снимки ключей).
 
 ## Обновление и удаление
 
@@ -119,36 +185,49 @@ dsh plugin --profile web remove @absolutemikhail/dsh-locale-ru
 Для GitHub-установки можно закрепить конкретный тег:
 
 ```sh
-dsh plugin --profile web add github:AbsoluteMikhail/dsh-locale-ru#v0.1.0
+dsh plugin --profile web add github:URfinJus72/dsh-locale-ru#v0.2.0
 ```
 
 ## Разработка
 
-Словари находятся в [`src/client/dictionaries`](src/client/dictionaries), регистрация языка — в [`src/client/index.ts`](src/client/index.ts), установочный слой — в [`cordis.patch.yml`](cordis.patch.yml).
+Словари находятся в [`src/client/dictionaries`](src/client/dictionaries), регистрация языка —
+в [`src/client/index.ts`](src/client/index.ts), установочный слой — в [`cordis.patch.yml`](cordis.patch.yml).
 
 ```sh
 pnpm install
 pnpm run check
 ```
 
-`pnpm run check` выполняет сборку, проверяет регистрацию всех 48 словарей и содержимое npm-архива. После изменения исходников добавьте обновлённые `lib/index.js` и `lib/client.js` в тот же коммит: благодаря этому установка из GitHub остаётся безопасной и не запускает локальную сборку.
+`pnpm run check` выполняет сборку, проверяет регистрацию словарей и содержимое npm-архива.
+После изменения исходников добавьте обновлённые `lib/index.js` и `lib/client.js` в тот же коммит:
+благодаря этому установка из GitHub остаётся безопасной и не запускает локальную сборку.
 
-Полная проверка совместимости требует checkout DeepSeek Harness `0.1.6-alpha.2`:
+Полная проверка совместимости требует checkout DeepSeek Harness:
 
 ```sh
 DSH_HARNESS_ROOT=/path/to/deepseek-harness pnpm run check:harness
 ```
 
-Команда сверяет ключи, порядок и плейсхолдеры всех словарей с владельцами пространств перевода в Harness. Затем она собирает npm-архив, устанавливает его через `dsh plugin --profile web add` во временный `DSH_HOME` и проверяет появление `locale-ru` в собранной конфигурации. Закреплённые репозиторий, версия и commit находятся в [`harness-compatibility.json`](harness-compatibility.json); GitHub Actions выполняет обе проверки автоматически.
+Сейчас в [`harness-compatibility.json`](harness-compatibility.json) закреплён Harness `0.1.6-alpha.2`
+(база upstream); целевая версия форка — `dsh-v0.2.0-rc.2`, обновление закрепления входит в фазу 0.5.
+GitHub Actions выполняет проверки автоматически.
+
+Матрица версий плагинов и снимки их словарей ведутся в `catalogs/` (появится в фазе 0 плана).
 
 ## Обратная связь
 
-Нашли неточный перевод или непререведённую строку — [создайте issue](https://github.com/AbsoluteMikhail/dsh-locale-ru/issues). Укажите экран, исходный текст и желаемый вариант перевода.
+Нашли неточный перевод или непререведённую строку — [создайте issue](https://github.com/URfinJus72/dsh-locale-ru/issues).
+Укажите экран, исходный текст и желаемый вариант перевода.
 
 ## Авторство и лицензия
 
-Русская локализация и код этого пакета созданы и сопровождаются **AbsoluteMikhail** и распространяются по лицензии [MIT](LICENSE).
+Базовая русская локализация и код пакета созданы и сопровождаются **AbsoluteMikhail** и распространяются
+по лицензии [MIT](LICENSE). Форк поддерживается **URfinJus72** и сохраняет исходную лицензию и уведомления.
 
-DeepSeek Harness — отдельный проект компании DeepSeek. Исходное уведомление об авторских правах и лицензии сохранено в [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Этот репозиторий является независимым проектом сообщества и не заявляет об официальной поддержке со стороны DeepSeek.
+Переводы строк плагинов `@hyzyn/*` (Apache-2.0) являются производной работой: исходные лицензии и
+уведомления сохраняются в [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md), изменения отмечаются в CHANGELOG.
+`dshmarket`, `@nanmicoder/dsh-agent-teams` и `@xbzbing/dsh-git-panel` распространяются по MIT.
 
-Проекты [GooDAnDReaDY/dsh-russian-lang](https://github.com/GooDAnDReaDY/dsh-russian-lang) и [warment/deepseek-harness-locale-ru](https://github.com/warment/deepseek-harness-locale-ru) изучались для сравнения подходов. Их исходники и словари в этот пакет не переносились.
+DeepSeek Harness — отдельный проект компании DeepSeek. Исходное уведомление об авторских правах и лицензии
+сохранено в [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Этот репозиторий является независимым
+проектом сообщества и не заявляет об официальной поддержке со стороны DeepSeek.

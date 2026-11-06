@@ -16,6 +16,16 @@
  *
  * The report (`{translated,cached,failed,requests,elapsedMs,...}`) goes to
  * stdout and to `<out>/report.json`; progress and warnings go to stderr.
+ *
+ * Short batches ask the model to skip its chain of thought
+ * (`chat_template_kwargs.enable_thinking = false`): ordinary UI labels need no
+ * reasoning and the answer costs ~30 output tokens instead of ~1000. A batch
+ * only takes that fast path when every entry is short (en and zh under 80
+ * characters, en+zh under 160), because long strings are visibly better with
+ * the model's own reasoning left on. Those reasoning batches get an output
+ * budget that scales with the batch size (reasoning can eat thousands of
+ * tokens), and a single entry that still yields no JSON is retried once with
+ * reasoning off before it is reported as a failure.
  */
 import { createHash } from 'node:crypto'
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises'
@@ -155,6 +165,40 @@ function buildPrompt(entries, glossary) {
   ].join('\n')
 }
 
+/** Longest single source string that still qualifies for the fast path. */
+const FAST_PATH_STRING_LIMIT = 80
+/** Longest en+zh pair that still qualifies for the fast path. */
+const FAST_PATH_PAIR_LIMIT = 160
+
+/**
+ * Whether a batch may skip the model's chain of thought. Short UI labels are
+ * translated just as well without it and cost a fraction of the tokens; long
+ * strings keep reasoning on because quality drops without it.
+ */
+function isShortBatch(entries) {
+  let total = 0
+  for (const entry of entries) {
+    if (entry.en.length >= FAST_PATH_STRING_LIMIT || entry.zh.length >= FAST_PATH_STRING_LIMIT) return false
+    total += entry.en.length + entry.zh.length
+  }
+  return total < FAST_PATH_PAIR_LIMIT
+}
+
+/** Hard ceiling for one completion, well inside the server's 65k context. */
+const MAX_OUTPUT_TOKENS = 32768
+/** Reasoning budget per entry for batches that keep thinking on. */
+const REASONING_TOKENS_PER_ENTRY = 2048
+
+/**
+ * Output budget for one request: the configured `--max-tokens` for fast
+ * batches, and a per-entry reasoning allowance for batches that keep thinking
+ * on so long strings cannot be cut off mid-JSON.
+ */
+function outputBudget(context, entries, fast) {
+  if (fast) return context.maxTokens
+  return Math.min(MAX_OUTPUT_TOKENS, Math.max(context.maxTokens, REASONING_TOKENS_PER_ENTRY * entries.length))
+}
+
 /** Read the glossary, requiring the reviewed baseline. */
 async function readGlossary(path) {
   const glossary = JSON.parse(await readFile(path, 'utf8'))
@@ -165,9 +209,12 @@ async function readGlossary(path) {
 }
 
 /** One chat-completion request; returns the raw answer object. */
-async function requestTranslations(context, entries) {
+async function requestTranslations(context, entries, { forceThinkingOff = false } = {}) {
   context.report.requests += 1
   const endpoint = `${context.baseUrl.replace(/\/+$/, '')}/chat/completions`
+  const fast = forceThinkingOff || isShortBatch(entries)
+  if (fast) context.report.requestsThinkingOff += 1
+  else context.report.requestsThinkingOn += 1
   const response = await fetch(endpoint, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -175,9 +222,10 @@ async function requestTranslations(context, entries) {
     body: JSON.stringify({
       model: context.model,
       temperature: context.temperature,
-      max_tokens: context.maxTokens,
+      max_tokens: outputBudget(context, entries, fast),
       stream: false,
       response_format: { type: 'json_object' },
+      ...(fast ? { chat_template_kwargs: { enable_thinking: false } } : {}),
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
         { role: 'user', content: buildPrompt(entries, context.glossary) },
@@ -215,9 +263,22 @@ async function translateBatch(context, entries) {
       return
     }
     const entry = entries[0]
-    context.report.failed += 1
-    context.report.failures.push({ ns: context.ns, key: entry.key, reason: error.message })
-    console.warn(`warning: ${context.ns}:${entry.key} failed: ${error.message}`)
+    try {
+      const translations = validateAnswer(entries, await requestTranslations(context, entries, { forceThinkingOff: true }))
+      for (const [key, value] of Object.entries(translations)) context.resolved.set(key, value)
+      context.report.translated += entries.length
+      await writeCache(context)
+      console.warn(`warning: ${context.ns}:${entry.key} needed the thinking-off fallback`)
+      return
+    } catch (fallbackError) {
+      context.report.failed += 1
+      context.report.failures.push({
+        ns: context.ns,
+        key: entry.key,
+        reason: `${error.message}; thinking-off retry: ${fallbackError.message}`,
+      })
+      console.warn(`warning: ${context.ns}:${entry.key} failed: ${error.message}; fallback: ${fallbackError.message}`)
+    }
   }
 }
 
@@ -333,7 +394,18 @@ const context = {
   limit,
   glossary,
   outDirectory,
-  report: { translated: 0, cached: 0, failed: 0, skipped: 0, requests: 0, elapsedMs: 0, catalogs: [], failures: [] },
+  report: {
+    translated: 0,
+    cached: 0,
+    failed: 0,
+    skipped: 0,
+    requests: 0,
+    requestsThinkingOff: 0,
+    requestsThinkingOn: 0,
+    elapsedMs: 0,
+    catalogs: [],
+    failures: [],
+  },
 }
 
 const files = (await readdir(catalogDirectory)).filter(file => file.endsWith('.json')).sort()
@@ -355,6 +427,8 @@ const report = {
   cached: context.report.cached,
   failed: context.report.failed,
   requests: context.report.requests,
+  requestsThinkingOff: context.report.requestsThinkingOff,
+  requestsThinkingOn: context.report.requestsThinkingOn,
   elapsedMs: context.report.elapsedMs,
   skipped: context.report.skipped,
   model,

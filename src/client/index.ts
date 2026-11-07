@@ -77,6 +77,7 @@ import * as pluginLoglens from './dictionaries/plugins/loglens.ts'
 import * as pluginMcp from './dictionaries/plugins/mcp.ts'
 import * as pluginRss from './dictionaries/plugins/rss.ts'
 import * as pluginTty from './dictionaries/plugins/tty.ts'
+import * as pluginTokenOptimizer from './dictionaries/plugins/tokenOptimizer.ts'
 
 /** One shipped dictionary contribution: namespace id plus ru entries. */
 interface Pack {
@@ -165,6 +166,7 @@ const PLUGIN_PACKS: readonly Pack[] = [
   pluginDocker,
   pluginDshMarket,
   pluginAgentTeams,
+  pluginTokenOptimizer,
 ]
 
 /** Все паки (ядро + плагины) — источник русских подписей для шима сайдбара. */

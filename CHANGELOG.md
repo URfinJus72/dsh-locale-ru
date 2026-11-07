@@ -4,6 +4,31 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the package follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.3] — 2026-11-07
+
+Русские описания навыков в меню «/» и патчи двух плагинов без системы локалей.
+
+### Added
+
+- Русские `description` для 25 навыков `dsh-mattpocock-skills@0.2.0` (engineering 18, productivity 7) —
+  это то, что показывается в меню «/» рядом с именем навыка. Патч `patches/dsh-mattpocock-skills@0.2.0.patch`
+  зарегистрирован через `patchedDependencies` и переживает `pnpm install`.
+- Русский словарь namespace `token-optimizer` (47 ключей) для `@zoria-lind/dsh-token-optimizer`.
+- Патч `@zoria-lind/dsh-token-optimizer`: команды `/token-status` и `/token-archive-retry`
+  (описания и вывод, 100 строк) и UI настроек сжатия — плагин не использует систему локалей.
+- Патч `dsh-web-startup-auth`: вкладка «认证» → «Авторизация», весь UI вкладки (~62 строки) и страница входа.
+
+### Changed
+
+- `README.md` / `README.en.md`: 68 словарей, 10 плагинных namespace'ов, 5 411 строк; новый раздел
+  «Патчи плагинов без системы локалей»; честный статус карточек плагинов (нужен `cards:apply`).
+- `catalogs/versions.json` синхронизирован с `catalogs/plugins/token-optimizer.json`.
+
+### Not included
+
+- Тело `SKILL.md` (полные инструкции навыков) остаётся китайским: переведён только frontmatter
+  `description`, видимый в меню «/».
+
 ## [0.2.2] — 2026-11-06
 
 Русские подписи в императивных пунктах сайдбара, которые плагины строят сами.

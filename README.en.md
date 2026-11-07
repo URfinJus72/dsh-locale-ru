@@ -12,14 +12,18 @@ A fork of [AbsoluteMikhail/dsh-locale-ru](https://github.com/AbsoluteMikhail/dsh
 It adds **Русский** to the built-in DeepSeek Harness language selector and translates:
 
 - the core web interface — **58 namespaces, 2,665 strings**;
-- the UI of the Chinese-language plugins `@hyzyn/*`, `dshmarket`, and `@nanmicoder/dsh-agent-teams` —
-  **9 namespaces, 2,699 strings**;
+- the UI of the Chinese-language plugins `@hyzyn/*`, `dshmarket`, `@nanmicoder/dsh-agent-teams`, and
+  `@zoria-lind/dsh-token-optimizer` — **10 namespaces, 2,746 strings**;
 - the plugin tool descriptions (**49 tools, 153 parameter descriptions**) and **8 system-prompt entries**
-  the plugins contribute to the agent.
+  the plugins contribute to the agent;
+- two plugins with no locale system — `dsh-web-startup-auth` (the «认证» tab and the login page) and
+  `@zoria-lind/dsh-token-optimizer` (the `/token-status` and `/token-archive-retry` commands): their
+  hardcoded Chinese is translated by **pnpm patches** that survive `pnpm install`.
 
-That is **67 dictionaries and 5,364 strings** in total. The package uses the public locale-pack API and the
-official `system-prompt/assemble` hook: no application internals are replaced, no rendered DOM is rewritten,
-and no upstream plugin is forked.
+That is **68 dictionaries and 5,411 strings** plus two plugin patches. The package uses the public locale-pack
+API and the official `system-prompt/assemble` hook: no application internals are replaced and no rendered DOM
+is rewritten. Plugins without locales are fixed through the official pnpm patch mechanism rather than by
+editing sources in place.
 
 **Base localization:** [AbsoluteMikhail](https://github.com/AbsoluteMikhail) (MIT).
 **Fork, plugin localization and host overlay:** [URfinJus72](https://github.com/URfinJus72).
@@ -29,23 +33,27 @@ and no upstream plugin is forked.
 | Surface | Size | Status |
 |---|---|---|
 | Core: web-interface namespaces | 58 ns / 2,665 keys | ✅ working on Harness `0.2.0-rc.2` |
-| Core: Harness `0.2.0-rc.2` parity | 67 dictionaries | ✅ `pnpm run check:harness` is green |
-| Plugin UI | 9 ns / 2,699 keys | ✅ released |
+| Core: Harness `0.2.0-rc.2` parity | 68 dictionaries | ✅ `pnpm run check:harness` is green |
+| Plugin UI | 10 ns / 2,746 keys | ✅ released |
 | Plugin tool descriptions | 49 tools / 153 parameters | ✅ released |
 | Plugin system-prompt sections | 8 entries (5 static + 3 dynamic) | ✅ released |
-| Plugin cards in Settings → Plugins | — | ✅ localized by the `cards:apply` script (files inside installed packages) |
-| Plugin runtime messages (non-UI) | — | ⏭ out of scope |
+| «Авторизация» tab (`dsh-web-startup-auth`) | ~62 strings + login page | ✅ `patches/dsh-web-startup-auth@0.1.14.patch` |
+| Slash menu and command output (`dsh-token-optimizer`) | 100 strings (`/token-status`, `/token-archive-retry`) | ✅ `patches/@zoria-lind__dsh-token-optimizer@3.0.0.patch` |
+| Plugin cards in Settings → Plugins | — | ⚠️ `cards:apply` script; re-run after plugin updates (currently drifted for `@hyzyn/dsh-docker` and `dshmarket`) |
+| Plugin runtime messages (logs, non-UI) | — | ⏭ out of scope |
 
 Full analysis and phased plan: [`docs/PLUGINS-RU-PLAN.md`](docs/PLUGINS-RU-PLAN.md).
 Editorial glossary: [`docs/GLOSSARY.md`](docs/GLOSSARY.md).
 
 ## Features
 
-- 58 core translation namespaces and 2,665 interface strings; 5,364 strings in the package overall.
+- 58 core translation namespaces and 2,665 interface strings; 5,411 strings in the package overall.
 - Coverage for chat, settings, workspaces, plugins, permissions, terminal, files, plans, jobs, subagents,
   trajectories, voice input, shortcuts, account, and utility panels.
-- UI of nine Chinese-language plugins: Codegraph, MCP, RSS, Loglens, Kit-settings, TTY, Docker, Market,
-  Agent Teams.
+- UI of ten Chinese-language plugins: Codegraph, MCP, RSS, Loglens, Kit-settings, TTY, Docker, Market,
+  Agent Teams, Token Optimizer.
+- Russian UI of two plugins that ship no dictionaries (`dsh-web-startup-auth`, `dsh-token-optimizer`),
+  applied as pnpm patches that survive reinstall.
 - Russian descriptions of 49 tools and their parameters for the agent — through `system-prompt/assemble`,
   gated by the SHA-1 of the source string: when a plugin updates its text, the stale translation is not used.
 - Russian text for the 8 system-prompt entries the plugins contribute, including dynamic fragments
@@ -61,8 +69,9 @@ Editorial glossary: [`docs/GLOSSARY.md`](docs/GLOSSARY.md).
 
 ## Localizing Chinese-language plugins
 
-`@hyzyn/*`, `dshmarket`, and `@nanmicoder/dsh-agent-teams` ship `zh` + `en` dictionaries and no `ru`, so with
-Russian selected their interface fell back to English. The fork adds Russian dictionaries for their namespaces.
+`@hyzyn/*`, `dshmarket`, `@nanmicoder/dsh-agent-teams`, and `@zoria-lind/dsh-token-optimizer` ship `zh` +
+`en` dictionaries and no `ru`, so with Russian selected their interface fell back to English. The fork adds
+Russian dictionaries for their namespaces.
 
 Keys are taken from the versions below; the `ru == en` key parity is tested against the same snapshots
 ([`catalogs/plugins`](catalogs/plugins), [`catalogs/versions.json`](catalogs/versions.json)):
@@ -78,8 +87,26 @@ Keys are taken from the versions below; the `ru == en` key parity is tested agai
 | @hyzyn/dsh-docker | 0.15.0 | `docker` | 564 | ✅ |
 | dshmarket | 1.73.12 | `dsh-market` | 783 | ✅ |
 | @nanmicoder/dsh-agent-teams | 0.1.29 | `agentTeams` | 217 | ✅ |
-| **total** | — | 9 namespaces | **2,699** | — |
+| @zoria-lind/dsh-token-optimizer | 3.0.0 | `token-optimizer` | 47 | ✅ (settings UI dictionary) |
+| **total** | — | 10 namespaces | **2,746** | — |
 | @xbzbing/dsh-git-panel | 1.12.0 | `gitPanel` | 554 | ✅ `ru` already ships with the plugin (not our dictionary) |
+
+### Patches for plugins without a locale system
+
+Two plugins have no dictionaries at all and keep Chinese text directly in their code. Their UI is translated
+by pnpm patches that are applied on install and **survive `pnpm install`**:
+
+| Plugin | What is translated | Patch |
+|---|---|---|
+| `dsh-web-startup-auth` 0.1.14 | the «认证» tab → «Авторизация», its whole UI (~62 strings: switches, labels, messages) and the login page | `patches/dsh-web-startup-auth@0.1.14.patch` |
+| `@zoria-lind/dsh-token-optimizer` 3.0.0 | the `/token-status` and `/token-archive-retry` commands (descriptions + output, 100 strings) and the compression settings UI | `patches/@zoria-lind__dsh-token-optimizer@3.0.0.patch` |
+
+The patches are registered in the profile's `pnpm-workspace.yaml` → `patchedDependencies`
+(`~/.dsh/profiles/web`). After a plugin version bump the patch must be rebuilt:
+`pnpm patch <pkg>@<version>` → edits → `pnpm patch-commit <dir>`.
+
+> ⚠️ Commands (`/token-status`, `/token-archive-retry`) are registered by the **host at startup**. After
+> installing the patch, the Russian descriptions appear in the «/» menu only after the profile is restarted.
 
 ### Tool descriptions and the system prompt
 
@@ -114,6 +141,9 @@ overlay never throws and never blocks a model request.
   adds the paths to the affected packages' `exports`. Commands: `pnpm run cards:apply` / `cards:check` /
   `cards:revert`; re-run after reinstalling plugins (`pnpm install`).
 - The host overlay is enabled by `locale-ru: { prompt: 'ru' }` in [`cordis.patch.yml`](cordis.patch.yml).
+- Plugins without dictionaries (`dsh-web-startup-auth`, `@zoria-lind/dsh-token-optimizer`) are fixed by pnpm
+  patches in the profile directory: `patches/*.patch` plus `patchedDependencies` in `pnpm-workspace.yaml`.
+  The patches are applied on every `pnpm install`, so reinstalling plugins does not bring the Chinese back.
 
 ## Installation
 
@@ -177,7 +207,8 @@ The assembled configuration should contain:
 | Agents | Subagents, agent teams, presets |
 | Sidebars | Browser, terminal, files, documents |
 | Documents | Markdown, HTML, PDF, images, Office, Excel |
-| Plugins | Codegraph, MCP, RSS, Loglens, Kit-settings, TTY, Docker, Market, Agent Teams |
+| Plugins | Codegraph, MCP, RSS, Loglens, Kit-settings, TTY, Docker, Market, Agent Teams, Token Optimizer |
+| Plugin patches | The «Авторизация» tab (`dsh-web-startup-auth`), the `/token-status` and `/token-archive-retry` commands |
 | Agent prompt | 49 tool descriptions, 153 parameters and 8 system-prompt entries |
 
 ## Russian plurals
@@ -202,13 +233,13 @@ counted strings are translated with neutral phrasing ("Файлов: {n}").
 | DeepSeek Harness (target) | `0.2.0-rc.2` (tag `dsh-v0.2.0-rc.2`) |
 | Pinned revision | [`harness-compatibility.json`](harness-compatibility.json) → `639ed01…` |
 | Core dictionaries | 58 ns / 2,665 keys against `0.2.0-rc.2` |
-| Plugin dictionaries | 9 ns / 2,699 keys |
+| Plugin dictionaries | 10 ns / 2,746 keys |
 | Plugins (key source) | see the [version matrix](#localizing-chinese-language-plugins) |
 
 The compatibility check on `0.2.0-rc.2` is **green**:
 
 ```text
-verified 67 Russian dictionaries against DeepSeek Harness 0.2.0-rc.2
+verified 68 Russian dictionaries against DeepSeek Harness 0.2.0-rc.2
 ```
 
 What changed relative to the upstream `0.1.6-alpha.2` base:

@@ -71,6 +71,13 @@
       "ns": "gitPanel",
       "keys": 554,
       "hasRu": true
+    },
+    {
+      "name": "@zoria-lind/dsh-token-optimizer",
+      "version": "3.0.0",
+      "ns": "token-optimizer",
+      "keys": 47,
+      "hasRu": false
     }
   ]
 }

@@ -12,14 +12,18 @@
 Добавляет язык **Русский** в штатный переключатель DeepSeek Harness и переводит:
 
 - интерфейс ядра — **58 namespace'ов, 2 665 строк**;
-- UI китайскоязычных плагинов `@hyzyn/*`, `dshmarket` и `@nanmicoder/dsh-agent-teams` —
-  **9 namespace'ов, 2 699 строк**;
+- UI китайскоязычных плагинов `@hyzyn/*`, `dshmarket`, `@nanmicoder/dsh-agent-teams` и
+  `@zoria-lind/dsh-token-optimizer` — **10 namespace'ов, 2 746 строк**;
 - описания инструментов плагинов (**49 инструментов, 153 описания параметров**) и **8 записей system prompt**,
-  которые плагины добавляют агенту.
+  которые плагины добавляют агенту;
+- два плагина без системы локалей — `dsh-web-startup-auth` (вкладка «认证» и страница входа) и
+  `@zoria-lind/dsh-token-optimizer` (команды `/token-status`, `/token-archive-retry`): их захардкоженный
+  китайский переводится **pnpm-патчами**, которые переживают `pnpm install`.
 
-Итого **67 словарей и 5 364 строки**. Пакет использует публичный API языковых пакетов и официальный хук
-`system-prompt/assemble`: не подменяет внутренние методы приложения, не изменяет DOM после отрисовки и не
-форкает upstream-плагины.
+Итого **68 словарей и 5 411 строк** плюс два патча плагинов. Пакет использует публичный API языковых пакетов
+и официальный хук `system-prompt/assemble`: не подменяет внутренние методы приложения и не изменяет DOM
+после отрисовки. Плагины без локалей правятся официальным механизмом pnpm-патчей, а не редактированием
+исходников на месте.
 
 **Базовая локализация:** [AbsoluteMikhail](https://github.com/AbsoluteMikhail) (MIT).
 **Форк, локализация плагинов и host-оверлей:** [URfinJus72](https://github.com/URfinJus72).
@@ -29,12 +33,14 @@
 | Поверхность | Объём | Статус |
 |---|---|---|
 | Ядро: namespace'ы веб-интерфейса | 58 ns / 2 665 ключей | ✅ работает на Harness `0.2.0-rc.2` |
-| Ядро: соответствие Harness `0.2.0-rc.2` | 67 словарей | ✅ `pnpm run check:harness` зелёный |
-| UI китайских плагинов | 9 ns / 2 699 ключей | ✅ выпущено |
+| Ядро: соответствие Harness `0.2.0-rc.2` | 68 словарей | ✅ `pnpm run check:harness` зелёный |
+| UI китайских плагинов | 10 ns / 2 746 ключей | ✅ выпущено |
 | Описания инструментов плагинов | 49 инструментов / 153 параметра | ✅ выпущено |
 | Секции system prompt плагинов | 8 записей (5 статических + 3 динамических) | ✅ выпущено |
-| Карточки плагинов в «Настройки → Плагины» | — | ✅ локализуются скриптом `cards:apply` (файлы внутри установленных пакетов) |
-| Рантайм-сообщения плагинов (не UI) | — | ⏭ вне объёма |
+| Вкладка «Авторизация» (`dsh-web-startup-auth`) | ~62 строки + страница входа | ✅ патч `patches/dsh-web-startup-auth@0.1.14.patch` |
+| Меню «/» и вывод команд (`dsh-token-optimizer`) | 100 строк (`/token-status`, `/token-archive-retry`) | ✅ патч `patches/@zoria-lind__dsh-token-optimizer@3.0.0.patch` |
+| Карточки плагинов в «Настройки → Плагины» | — | ⚠️ скрипт `cards:apply`; после обновления плагинов нужен повторный запуск (сейчас drift у `@hyzyn/dsh-docker` и `dshmarket`) |
+| Рантайм-сообщения плагинов (логи, не UI) | — | ⏭ вне объёма |
 
 Подробный анализ и пофазный план: [`docs/PLUGINS-RU-PLAN.md`](docs/PLUGINS-RU-PLAN.md).
 Редакционный глоссарий: [`docs/GLOSSARY.md`](docs/GLOSSARY.md).
@@ -60,9 +66,9 @@
 
 ## Локализация китайских плагинов
 
-Плагины `@hyzyn/*`, `dshmarket` и `@nanmicoder/dsh-agent-teams` поставляют словари `zh` + `en` и не имеют
-`ru`; при выбранном русском языке их интерфейс показывался на английском через штатный fallback. Форк
-добавляет русские словари для их namespace'ов.
+Плагины `@hyzyn/*`, `dshmarket`, `@nanmicoder/dsh-agent-teams` и `@zoria-lind/dsh-token-optimizer`
+поставляют словари `zh` + `en` и не имеют `ru`; при выбранном русском языке их интерфейс показывался на
+английском через штатный fallback. Форк добавляет русские словари для их namespace'ов.
 
 Ключи сняты с перечисленных версий; паритет `ru == en` проверяется тестом на этих же снимках
 ([`catalogs/plugins`](catalogs/plugins), [`catalogs/versions.json`](catalogs/versions.json)):
@@ -78,8 +84,26 @@
 | @hyzyn/dsh-docker | 0.15.0 | `docker` | 564 | ✅ |
 | dshmarket | 1.73.12 | `dsh-market` | 783 | ✅ |
 | @nanmicoder/dsh-agent-teams | 0.1.29 | `agentTeams` | 217 | ✅ |
-| **итого** | — | 9 namespace'ов | **2 699** | — |
+| @zoria-lind/dsh-token-optimizer | 3.0.0 | `token-optimizer` | 47 | ✅ (словарь UI настроек) |
+| **итого** | — | 10 namespace'ов | **2 746** | — |
 | @xbzbing/dsh-git-panel | 1.12.0 | `gitPanel` | 554 | ✅ `ru` уже есть в самом плагине (не наш словарь) |
+
+### Патчи плагинов без системы локалей
+
+Два плагина вообще не используют словари и держат китайский текст прямо в коде. Их UI переводится
+pnpm-патчами, которые применяются при установке профиля и **переживают `pnpm install`**:
+
+| Плагин | Что переведено | Патч |
+|---|---|---|
+| `dsh-web-startup-auth` 0.1.14 | вкладка «认证» → «Авторизация», весь UI вкладки (~62 строки: переключатели, подписи, сообщения) и страница входа | `patches/dsh-web-startup-auth@0.1.14.patch` |
+| `@zoria-lind/dsh-token-optimizer` 3.0.0 | команды `/token-status` и `/token-archive-retry` (описания + вывод, 100 строк) и UI настроек сжатия | `patches/@zoria-lind__dsh-token-optimizer@3.0.0.patch` |
+
+Патчи зарегистрированы в `pnpm-workspace.yaml` → `patchedDependencies` каталога профиля
+(`~/.dsh/profiles/web`). После обновления версии плагина патч нужно пересобрать:
+`pnpm patch <pkg>@<version>` → правки → `pnpm patch-commit <dir>`.
+
+> ⚠️ Команды (`/token-status`, `/token-archive-retry`) регистрируются **хостом при старте**. После установки
+> патча русские описания появятся в меню «/» только после перезапуска профиля.
 
 ### Описания инструментов и system prompt
 
@@ -113,6 +137,9 @@ Host-половина пакета подписывается на официа�
   `exports` затронутых пакетов. Команды: `pnpm run cards:apply` / `cards:check` / `cards:revert`;
   после переустановки плагинов (`pnpm install`) скрипт нужно запустить повторно.
 - Host-оверлей включается конфигом `locale-ru: { prompt: 'ru' }` в [`cordis.patch.yml`](cordis.patch.yml).
+- Плагины без словарей (`dsh-web-startup-auth`, `@zoria-lind/dsh-token-optimizer`) правятся pnpm-патчами в
+  каталоге профиля: `patches/*.patch` + `patchedDependencies` в `pnpm-workspace.yaml`. Патчи применяются
+  при каждом `pnpm install`, поэтому переустановка плагинов не возвращает китайский.
 
 ## Установка
 
@@ -175,7 +202,8 @@ dsh --profile web --dump-config
 | Агенты | Субагенты, команда агентов, пресеты |
 | Боковые панели | Браузер, терминал, файлы, документы |
 | Документы | Markdown, HTML, PDF, изображения, Office, Excel |
-| Плагины | Codegraph, MCP, RSS, Loglens, Kit-settings, TTY, Docker, Market, Agent Teams |
+| Плагины | Codegraph, MCP, RSS, Loglens, Kit-settings, TTY, Docker, Market, Agent Teams, Token Optimizer |
+| Патчи плагинов | Вкладка «Авторизация» (`dsh-web-startup-auth`), команды `/token-status` и `/token-archive-retry` |
 | Промпт агента | Описания 49 инструментов, 153 параметров и 8 записей system prompt |
 
 ## Русские числительные
@@ -200,13 +228,13 @@ dsh --profile web --dump-config
 | DeepSeek Harness (целевая) | `0.2.0-rc.2` (тег `dsh-v0.2.0-rc.2`) |
 | Закреплённый revision | [`harness-compatibility.json`](harness-compatibility.json) → `639ed01…` |
 | Ядровые словари | 58 ns / 2 665 ключей под `0.2.0-rc.2` |
-| Словари плагинов | 9 ns / 2 699 ключей |
+| Словари плагинов | 10 ns / 2 746 ключей |
 | Плагины (ключи сняты) | см. [матрицу версий](#локализация-китайских-плагинов) |
 
 Проверка совместимости на `0.2.0-rc.2` **зелёная**:
 
 ```text
-verified 67 Russian dictionaries against DeepSeek Harness 0.2.0-rc.2
+verified 68 Russian dictionaries against DeepSeek Harness 0.2.0-rc.2
 ```
 
 Что изменилось относительно базы upstream `0.1.6-alpha.2`:

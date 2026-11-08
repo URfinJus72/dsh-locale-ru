@@ -4,6 +4,35 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the package follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.1] — 2026-11-08
+
+Критическое исправление совместимости с DeepSeek Harness `0.2.1+`: клиентская запись пакета больше
+не валит веб-бут, когда хост уже владеет русским языком.
+
+### Fixed
+
+- **`@absolutemikhail/dsh-locale-ru: failed` / `web boot: 1 entry did not activate`.** С Harness
+  `0.2.1` хост сам регистрирует язык `ru` (`packages/client/locale`: `['ru', 'Русский']` среди
+  базовых) и везёт нативный русский для части namespace'ов (`common`, `settings`, плюс
+  `ui-context-menu`, `ui-permission-presets`, `ui-schedule`). `ctx.locale.addLanguage` и
+  `ctx.locale.register` **бросают** на дублях, а пакет регистрировал словари одной строгой
+  транзакцией — первая же коллизия откатывала всё, запись считалась упавшей, и GUI не загружался.
+  Теперь каждая регистрация терпима: namespace, который хост уже локализует, остаётся хосту,
+  остальные регистрируются, а незнакомая ошибка логируется вместо падения записи.
+- Шим подписей сайдбара (`src/client/sidebar-labels.ts`) обёрнут в такую же защиту: его сбой
+  больше не уносит клиентскую запись целиком.
+
+### Added
+
+- Регрессионный тест `client entry survives a host that already owns ru and some namespaces`:
+  имитирует хост, который владеет языком `ru` и namespace'ами `common`/`settings`, и требует,
+  чтобы пакет зарегистрировал остальное, не уронив запись.
+
+### Compatibility
+
+- DeepSeek Harness `0.2.2-rc.1`, `verified 68 Russian dictionaries against DeepSeek Harness 0.2.2-rc.1`.
+- Тесты: 43/43.
+
 ## [0.4.0] — 2026-11-08
 
 Пакет переименован и перестал представляться пакетом постороннего автора. **Ломающее изменение

@@ -181,41 +181,59 @@ export const inject = ['locale']
 
 /**
  * Client plugin body: register the ru language definition and every shipped
- * dictionary as one transactional effect. The core namespaces are all-or-
- * nothing — a namespace already owned by a rival registration rolls the core
- * set back instead of squatting the remaining seats. Plugin namespaces are
- * registered one by one: a conflict there is reported and skipped, because an
- * optional plugin (or the same plugin shipping its own ru) is not a reason to
- * lose the rest of the pack.
+ * dictionary.
+ *
+ * Since DeepSeek Harness `0.2.1` the host owns `ru` itself: it registers the
+ * language and ships native Russian for a few core namespaces. Both
+ * `addLanguage` and `register` throw on duplicates, so every step here is
+ * tolerant — a namespace the host already localizes is left to the host
+ * instead of rolling the pack back. A hard failure inside a registration is
+ * reported and skipped as well: a partially localized GUI is strictly better
+ * than a web boot that loses the whole locale entry (the host treats a failed
+ * client entry as fatal and refuses to render the interface).
+ *
  * @param ctx - client root context.
  */
 export function apply(ctx: ClientContext): void {
   ctx.effect(() => {
-    const disposers: (() => void)[] = [
-      ctx.locale.addLanguage({ id: RU_ID, label: RU_LABEL, fallback: 'en' }),
-    ]
-    try {
-      for (const pack of CORE_PACKS) disposers.push(ctx.locale.register(pack.ns, RU_ID, pack.dict))
-    } catch (error) {
-      for (const dispose of disposers.reverse()) dispose()
-      throw error
-    }
-    for (const pack of PLUGIN_PACKS) {
+    const disposers: (() => void)[] = []
+
+    /** Run one registration; report a conflict instead of aborting the pack. */
+    const attempt = (label: string, register: () => () => void, quiet: boolean): void => {
       try {
-        disposers.push(ctx.locale.register(pack.ns, RU_ID, pack.dict))
+        disposers.push(register())
       } catch (error) {
         const reason = error instanceof Error ? error.message : String(error)
-        console.warn(`[dsh-locale-ru] namespace "${pack.ns}" was not registered (${reason}); its strings stay in English`)
+        if (!quiet) {
+          console.warn(`[dsh-locale-ru] ${label} was not registered (${reason}); those strings keep the host's text`)
+        }
       }
     }
+
+    // The host may already own `ru`; that is the normal case on 0.2.1+, not an error.
+    attempt(`language "${RU_ID}"`, () => ctx.locale.addLanguage({ id: RU_ID, label: RU_LABEL, fallback: 'en' }), true)
+    for (const pack of CORE_PACKS) {
+      attempt(`namespace "${pack.ns}"`, () => ctx.locale.register(pack.ns, RU_ID, pack.dict), false)
+    }
+    for (const pack of PLUGIN_PACKS) {
+      attempt(`namespace "${pack.ns}"`, () => ctx.locale.register(pack.ns, RU_ID, pack.dict), false)
+    }
+
     return () => { for (const dispose of disposers) dispose() }
   }, 'locale-ru: language and dictionaries')
 
   // Три сторонних плагина рисуют свои пункты сайдбара императивно и один раз —
   // до подписки на locale (см. src/client/sidebar-labels.ts). Шим переписывает
   // их подписи, когда активен русский (или en/zh — для согласованности).
-  ctx.effect(
-    () => installSidebarLabels(ctx, (namespace, key) => ALL_PACKS.find(pack => pack.ns === namespace)?.dict[key]),
-    'locale-ru: plugin sidebar labels',
-  )
+  // Ошибка шима не должна уносить всю клиентскую запись: хост считает упавшую
+  // запись фатальной и не рендерит интерфейс.
+  ctx.effect(() => {
+    try {
+      return installSidebarLabels(ctx, (namespace, key) => ALL_PACKS.find(pack => pack.ns === namespace)?.dict[key])
+    } catch (error) {
+      const reason = error instanceof Error ? error.message : String(error)
+      console.warn(`[dsh-locale-ru] sidebar label shim was not installed (${reason}); plugin labels keep the host's text`)
+      return () => {}
+    }
+  }, 'locale-ru: plugin sidebar labels')
 }

@@ -81,8 +81,16 @@ async function pluginDictionaryFiles(): Promise<string[]> {
 /**
  * Load the built browser bundle the way the web host does and collect every
  * registered ru dictionary.
+ *
+ * `hostOwnsRu` / `hostNamespaces` simulate DeepSeek Harness 0.2.1+: the host
+ * registers the `ru` language itself and ships native Russian for a few core
+ * namespaces. The real `locale` service throws on both duplicates, so the pack
+ * must degrade instead of losing the whole client entry.
  */
-async function loadRussianDictionaries(): Promise<Map<string, Record<string, string>>> {
+async function loadRussianDictionaries(
+  owner: { hostOwnsRu?: boolean; hostNamespaces?: string[] } = {},
+): Promise<Map<string, Record<string, string>>> {
+  const hostNamespaces = new Set(owner.hostNamespaces ?? [])
   let definition: { id?: string; factory: (require: (id: string) => unknown) => { apply: (ctx: unknown) => void } } | undefined
   const scope = globalThis as { window?: unknown }
   scope.window = {
@@ -106,10 +114,14 @@ async function loadRussianDictionaries(): Promise<Map<string, Record<string, str
   plugin.apply({
     locale: {
       addLanguage() {
+        if (owner.hostOwnsRu === true) throw new Error('locale "ru" is already registered')
         return () => {}
       },
       register(namespace: string, locale: string, dictionary: Record<string, string>) {
         assert.equal(locale, 'ru')
+        if (hostNamespaces.has(namespace)) {
+          throw new Error(`locale namespace "${namespace}" already has locale "ru"`)
+        }
         dictionaries.set(namespace, dictionary)
         return () => {}
       },
@@ -206,5 +218,18 @@ test('plugin ru dictionaries stay in parity with the snapshots', async t => {
       assert.ok(dictionary !== undefined, `${catalog.ns}: ru dictionary is not registered by lib/client.js`)
       assertDictionary(catalog, dictionary)
     })
+  }
+})
+
+// DeepSeek Harness 0.2.1 started registering `ru` itself and shipping native
+// Russian for a few core namespaces. Both `addLanguage` and `register` throw on
+// duplicates, and the host treats a failed client entry as fatal ("web boot: N
+// entry did not activate"), so a single collision must never take the pack down.
+test('client entry survives a host that already owns ru and some namespaces', async () => {
+  const owned = ['common', 'settings']
+  const dictionaries = await loadRussianDictionaries({ hostOwnsRu: true, hostNamespaces: owned })
+  assert.ok(dictionaries.size > 0, 'the pack registered nothing when the host already owned ru')
+  for (const ns of owned) {
+    assert.equal(dictionaries.has(ns), false, `${ns}: the pack must leave a host-owned namespace to the host`)
   }
 })

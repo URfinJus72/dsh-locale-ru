@@ -35,7 +35,7 @@ async function loadRussianDictionaries() {
       },
     },
     effect(callback) { callback() },
-  })
+  }, { core: true })
   return dictionaries
 }
 

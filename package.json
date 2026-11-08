@@ -1,6 +1,6 @@
 {
   "name": "dsh-locale-ru",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Russian localization for DeepSeek Harness: web UI, plugin UI (@hyzyn/*, dshmarket, dsh-agent-teams) and agent-facing tool descriptions",
   "type": "module",
   "main": "lib/index.js",

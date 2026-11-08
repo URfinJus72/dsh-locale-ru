@@ -194,7 +194,18 @@ export const inject = ['locale']
  *
  * @param ctx - client root context.
  */
-export function apply(ctx: ClientContext): void {
+export interface LocaleRuClientConfig {
+  /**
+   * Register the shipped core dictionaries as well. Off by default: since
+   * DeepSeek Harness 0.2.1 every core UI package ships first-party Russian and
+   * registers it itself, so our registration would run first, take the
+   * namespace and make the owning package fail to activate. Turn this on only
+   * for a host that localizes the core less than this pack (pre-0.2.1).
+   */
+  core?: boolean
+}
+
+export function apply(ctx: ClientContext, config: LocaleRuClientConfig = {}): void {
   ctx.effect(() => {
     const disposers: (() => void)[] = []
 
@@ -212,8 +223,19 @@ export function apply(ctx: ClientContext): void {
 
     // The host may already own `ru`; that is the normal case on 0.2.1+, not an error.
     attempt(`language "${RU_ID}"`, () => ctx.locale.addLanguage({ id: RU_ID, label: RU_LABEL, fallback: 'en' }), true)
-    for (const pack of CORE_PACKS) {
-      attempt(`namespace "${pack.ns}"`, () => ctx.locale.register(pack.ns, RU_ID, pack.dict), false)
+
+    // Core namespaces are registered only on request. Since DeepSeek Harness
+    // 0.2.1 every core UI package ships first-party Russian (`export const ru`
+    // in its `locales.ts` — 46 of 46 at 0.2.2-rc.1) and registers it itself. A
+    // pack registration runs first, takes the namespace, and makes the owning
+    // package throw `locale namespace "<ns>" already has locale "ru"` — which
+    // the host reports as a failed client entry: that is exactly how this pack
+    // once produced "web boot: 51 entries did not activate". Opt in with
+    // `core: true` for a host that predates that first-party coverage.
+    if (config.core === true) {
+      for (const pack of CORE_PACKS) {
+        attempt(`namespace "${pack.ns}"`, () => ctx.locale.register(pack.ns, RU_ID, pack.dict), false)
+      }
     }
     for (const pack of PLUGIN_PACKS) {
       attempt(`namespace "${pack.ns}"`, () => ctx.locale.register(pack.ns, RU_ID, pack.dict), false)

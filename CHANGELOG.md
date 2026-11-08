@@ -4,6 +4,34 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the package follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] — 2026-11-08
+
+Ядро интерфейса больше не локализуется пакетом: с DeepSeek Harness `0.2.1` это делает сам харнесс.
+**Изменение поведения.**
+
+### Fixed
+
+- **`web boot: 51 entries did not activate`.** В `0.2.2-rc.1` **все 46** ядровых клиентских пакетов
+  везут собственный русский (`export const ru` в `locales.ts`) и регистрируют его сами. Наш пакет
+  регистрировал те же namespace'ы раньше (бандл идёт сразу после `dsh-web-app`), поэтому владевший
+  пакет получал `locale namespace "<ns>" already has locale "ru"` и падал при активации — вместе с
+  зависимыми от него (`ui-theme` → `layout` → вся цепочка). Регистрация ядровых словарей теперь
+  **выключена по умолчанию**: namespace остаётся хосту, а пакет регистрирует только свои.
+
+### Added
+
+- `LocaleRuClientConfig.core` (по умолчанию `false`) — включает регистрацию ядровых словарей для
+  хостов, которые локализуют ядро хуже этого пакета (до `0.2.1`). Проверки `check:harness:keys`
+  и смоук-тест запускают пакет в обоих режимах: по умолчанию ядровые namespace'ы не занимаются,
+  с `core: true` по-прежнему проверяются все 68 словарей.
+
+### Compatibility
+
+- DeepSeek Harness `0.2.2-rc.1`, `verified 68 Russian dictionaries against DeepSeek Harness 0.2.2-rc.1`
+  (в режиме `core: true`), 43/43 тестов.
+- Плагинные словари (`@hyzyn/*`, `dshmarket`, `@nanmicoder/dsh-agent-teams`, `@zoria-lind/dsh-token-optimizer`)
+  и хост-плоскость работают как раньше.
+
 ## [0.4.1] — 2026-11-08
 
 Критическое исправление совместимости с DeepSeek Harness `0.2.1+`: клиентская запись пакета больше

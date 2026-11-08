@@ -4,6 +4,20 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the package follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.1] — 2026-11-08
+
+Документация приведена в соответствие с Harness `0.2.2-rc.1`. Функциональных изменений нет.
+
+### Changed
+
+- `README.md` / `README.en.md`: сказано, что ядро веб-интерфейса с Harness `0.2.1` локализует сам
+  харнесс (все 46 ядровых клиентских пакетов везут `export const ru`); регистрация ядровых словарей
+  пакетом — опция `core: true`, а не поведение по умолчанию.
+- Зафиксировано известное ограничение: в `0.2.2-rc.1` `tools` отделены от waterfall
+  `system-prompt/assemble`, поэтому переводы описаний инструментов (`src/host/ru/tools.json`,
+  49 инструментов / 153 параметра) не применяются; секции system prompt переводятся как раньше.
+- Обновлены устаревшие ссылки на `0.2.0-rc.2`, статус карточек плагинов (`drift 0`).
+
 ## [0.5.0] — 2026-11-08
 
 Ядро интерфейса больше не локализуется пакетом: с DeepSeek Harness `0.2.1` это делает сам харнесс.

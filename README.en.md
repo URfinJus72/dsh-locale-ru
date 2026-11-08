@@ -9,6 +9,13 @@
 [Русский](README.md)
 
 A fork of [AbsoluteMikhail/dsh-locale-ru](https://github.com/AbsoluteMikhail/dsh-locale-ru).
+
+> **Important since DeepSeek Harness 0.2.1.** The harness localizes its own web UI core: all 46 core
+> client packages ship first-party Russian (`export const ru` in their `locales.ts`) and register it on
+> activation. The pack therefore **does not register core namespaces by default** — registering first
+> would make the owning package throw `already has locale "ru"` and fail activation, which takes the
+> whole web boot down (`web boot: N entries did not activate`). Core translations stay in the repository
+> behind the `core: true` flag for hosts that localize the core worse than this pack (pre-0.2.1).
 It adds **Русский** to the built-in DeepSeek Harness language selector and translates:
 
 - the core web interface — **58 namespaces, 2,665 strings**;
@@ -32,8 +39,8 @@ editing sources in place.
 
 | Surface | Size | Status |
 |---|---|---|
-| Core: web-interface namespaces | 58 ns / 2,665 keys | ✅ working on Harness `0.2.0-rc.2` |
-| Core: Harness `0.2.0-rc.2` parity | 68 dictionaries | ✅ `pnpm run check:harness` is green |
+| Core: web-interface namespaces | 58 ns / 2,665 keys | ✅ working on Harness `0.2.2-rc.1` |
+| Core: Harness `0.2.2-rc.1` parity | 68 dictionaries | ✅ `pnpm run check:harness` is green |
 | Plugin UI | 10 ns / 2,746 keys | ✅ released |
 | Plugin tool descriptions | 49 tools / 153 parameters | ✅ released |
 | Plugin system-prompt sections | 8 entries (5 static + 3 dynamic) | ✅ released |
@@ -230,16 +237,16 @@ counted strings are translated with neutral phrasing ("Файлов: {n}").
 
 | Component | Version |
 |---|---|
-| DeepSeek Harness (target) | `0.2.0-rc.2` (tag `dsh-v0.2.0-rc.2`) |
+| DeepSeek Harness (target) | `0.2.2-rc.1` (tag `dsh-v0.2.2-rc.1`) |
 | Pinned revision | [`harness-compatibility.json`](harness-compatibility.json) → `639ed01…` |
-| Core dictionaries | 58 ns / 2,665 keys against `0.2.0-rc.2` |
+| Core dictionaries | 58 ns / 2,665 keys against `0.2.2-rc.1` |
 | Plugin dictionaries | 10 ns / 2,746 keys |
 | Plugins (key source) | see the [version matrix](#localizing-chinese-language-plugins) |
 
-The compatibility check on `0.2.0-rc.2` is **green**:
+The compatibility check on `0.2.2-rc.1` is **green**:
 
 ```text
-verified 68 Russian dictionaries against DeepSeek Harness 0.2.0-rc.2
+verified 68 Russian dictionaries against DeepSeek Harness 0.2.2-rc.1
 ```
 
 What changed relative to the upstream `0.1.6-alpha.2` base:
@@ -295,7 +302,7 @@ The full compatibility check needs a DeepSeek Harness checkout:
 DSH_HARNESS_ROOT=/path/to/deepseek-harness pnpm run check:harness
 ```
 
-[`harness-compatibility.json`](harness-compatibility.json) pins Harness `dsh-v0.2.0-rc.2` (`0.2.0-rc.2`).
+[`harness-compatibility.json`](harness-compatibility.json) pins Harness `dsh-v0.2.2-rc.1` (`0.2.2-rc.1`).
 GitHub Actions runs the checks automatically.
 
 Dictionary snapshots and the namespace map:

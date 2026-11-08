@@ -424,12 +424,21 @@ function overlayAssembly(assembly: PromptAssembly, catalogs: HostCatalogs): Prom
 /**
  * Mount the host half.
  *
- * Subscribes globally to `system-prompt/assemble`; the returned assembly is the
- * authoritative one, so the overlay has to run after every other contributor.
- * @param ctx - plugin context (needs `on`).
+ * Two seams, because DeepSeek Harness moved the tool schemas out of the
+ * assembly:
+ *
+ * - `system-prompt/assemble` still carries `sections` and `contexts`, so the
+ *   waterfall rewrites plugin prompt sections there.
+ * - Since `0.2.2-rc.1` that waterfall receives `PromptPresentation` — no
+ *   `tools`. Tool schemas are collected separately and attached to the result
+ *   *after* the waterfall (`system-prompt/src/index.ts`: `return { ...transformed,
+ *   tools }`), so the only place an overlay can still reach them is the
+ *   registry they are read from: `ctx.tools.definitions()` feeds the registered
+ *   tool-schema provider.
+ * @param ctx - plugin context (needs `on`; `tools`/`inject` when present).
  * @param config - plugin configuration.
  */
-export function apply(ctx: { on(event: string, listener: (...args: any[]) => any): unknown }, config: LocaleRuHostConfig = {}): void {
+export function apply(ctx: HostContext, config: LocaleRuHostConfig = {}): void {
   // The bundle smoke test imports the entry and calls `apply()` to prove the
   // node half mounts; without an event bus there is nothing to subscribe to.
   if (ctx === undefined || ctx === null || typeof ctx.on !== 'function') return
@@ -444,4 +453,77 @@ export function apply(ctx: { on(event: string, listener: (...args: any[]) => any
       return assembly
     }
   })
+  installToolsOverlay(ctx, catalogs, config)
+}
+
+/** Minimal shape of the tool registry the overlay wraps. */
+interface ToolRegistryLike {
+  definitions(scope?: unknown, toolSet?: unknown): readonly unknown[]
+}
+
+/** Context surface the tools seam needs. */
+interface HostContext {
+  on?: (event: string, listener: (...args: never[]) => unknown) => unknown
+  tools?: ToolRegistryLike
+  inject?: (deps: string[], callback: (child: HostContext) => void) => unknown
+  effect?: (callback: () => (() => void) | void) => unknown
+}
+
+/**
+ * Wrap `ctx.tools.definitions` so tool descriptions and their parameter
+ * descriptions are translated in place.
+ *
+ * The wrapper is deliberately defensive: it never throws into the assembly path,
+ * it returns the original array when nothing matched, and the registry is
+ * restored on disposal. A host without the service (or an older one that still
+ * passes `tools` through the waterfall) simply keeps the waterfall seam.
+ * @param ctx - plugin context.
+ * @param catalogs - resolved catalogs.
+ * @param config - plugin configuration.
+ */
+function installToolsOverlay(ctx: HostContext, catalogs: HostCatalogs, config: LocaleRuHostConfig): void {
+  const mount = (tools: ToolRegistryLike | undefined): (() => void) | undefined => {
+    if (tools === undefined || typeof tools.definitions !== 'function') return undefined
+    const original = tools.definitions.bind(tools)
+    const wrapped = (scope?: unknown, toolSet?: unknown): readonly unknown[] => {
+      const definitions = original(scope, toolSet)
+      try {
+        if (config.prompt !== 'ru' || !Array.isArray(definitions)) return definitions
+        let changed = false
+        const translated = definitions.map((definition) => {
+          if (!isRecord(definition) || typeof definition.name !== 'string'
+            || typeof definition.description !== 'string') return definition
+          const next = translateTool(definition as unknown as ToolSchema, catalogs.tools)
+          if (next === undefined) return definition
+          changed = true
+          // Keep execution callbacks and any other definition fields intact.
+          return { ...definition, description: next.description, parameters: next.parameters }
+        })
+        return changed ? translated : definitions
+      } catch (error) {
+        warnOnce('tools', `tool overlay skipped: ${messageOf(error)}`)
+        return definitions
+      }
+    }
+    tools.definitions = wrapped
+    return () => {
+      if (tools.definitions === wrapped) delete (tools as { definitions?: unknown }).definitions
+    }
+  }
+
+  const dispose = mount(ctx.tools)
+  if (dispose !== undefined) {
+    if (typeof ctx.effect === 'function') ctx.effect(() => dispose)
+    return
+  }
+  if (typeof ctx.inject === 'function') {
+    ctx.inject(['tools'], (child) => {
+      const later = mount(child.tools)
+      if (later !== undefined && typeof child.effect === 'function') child.effect(() => later)
+    })
+    return
+  }
+  if (config.prompt === 'ru') {
+    warnOnce('tools:absent', 'tools service is not available — tool descriptions keep the source language')
+  }
 }

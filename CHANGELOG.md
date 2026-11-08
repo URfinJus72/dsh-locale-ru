@@ -4,6 +4,35 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the package follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] — 2026-11-08
+
+Описания инструментов снова переводятся на Harness `0.2.2-rc.1` — через новый шов, потому что
+waterfall их больше не видит.
+
+### Fixed
+
+- **Китайские описания инструментов у агента.** В `0.2.2-rc.1` waterfall `system-prompt/assemble`
+  получает `PromptPresentation` (`sections`, `contexts`, `variables`), а `tools` собираются отдельно
+  и прикрепляются к результату **после** waterfall. Оверлей искал `assembly.tools`, не находил их и
+  молча ничего не делал: переводы `src/host/ru/tools.json` (49 инструментов, 153 описания параметров)
+  не применялись.
+- Добавлен второй шов: оборачивается `ctx.tools.definitions()` — метод, из которого зарегистрированный
+  провайдер схем берёт описания (`executor.describe(this.definitions(scope, toolSet))`). Обёртка
+  переводит `description` и вложенные описания параметров, сохраняет исполняющие колбэки и прочие поля
+  определения, возвращает исходный массив, если ничего не совпало, восстанавливает реестр при
+  выгрузке и никогда не бросает в путь сборки промпта. Для старых хостов, где `tools` ещё приходят
+  в waterfall, прежний шов остаётся.
+- Хеш-гейт сохранён: изменённое с момента снимка описание остаётся на языке источника.
+
+### Added
+
+- `tests/host.tools.spec.ts` — пять тестов шва: перевод описания и параметров, неизменность
+  исполняющих колбэков, дрейф источника, неизвестный инструмент, `prompt: off`, хост без реестра.
+
+### Compatibility
+
+- DeepSeek Harness `0.2.2-rc.1`; тесты **48/48**; `verified 68 Russian dictionaries` в режиме `core: true`.
+
 ## [0.5.1] — 2026-11-08
 
 Документация приведена в соответствие с Harness `0.2.2-rc.1`. Функциональных изменений нет.

@@ -16,6 +16,11 @@ A fork of [AbsoluteMikhail/dsh-locale-ru](https://github.com/AbsoluteMikhail/dsh
 > would make the owning package throw `already has locale "ru"` and fail activation, which takes the
 > whole web boot down (`web boot: N entries did not activate`). Core translations stay in the repository
 > behind the `core: true` flag for hosts that localize the core worse than this pack (pre-0.2.1).
+
+> **Tool descriptions since 0.2.2.** The `system-prompt/assemble` waterfall no longer carries `tools`
+> (`PromptPresentation` only), so the pack translates tool descriptions through a second seam: it wraps
+> `ctx.tools.definitions()`, the method the schema provider reads, and rewrites `description` plus nested
+> parameter descriptions under the same hash gate.
 It adds **Русский** to the built-in DeepSeek Harness language selector and translates:
 
 - the core web interface — **58 namespaces, 2,665 strings**;

@@ -13,5 +13,7 @@ export const dict: Record<string, string> = {
   'detail.aria': 'Сведения о разрешении',
   'escalation': 'Инструмент {toolName} запрашивает выполнение с повышенными правами',
   'reject': 'Отклонить',
+  'allow': 'Разрешить',
   'allowOnce': 'Разрешить один раз',
+  'allowAlways': 'Всегда разрешать',
 }

@@ -22,7 +22,7 @@
  * [--versions <file>] [--harness <version>] [--check]`
  */
 import assert from 'node:assert/strict'
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { homedir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -30,7 +30,7 @@ import vm from 'node:vm'
 
 const REPOSITORY_ROOT = fileURLToPath(new URL('../', import.meta.url))
 const DEFAULT_PLUGINS_ROOT = join(homedir(), '.dsh/profiles/web/node_modules')
-const DEFAULT_HARNESS_VERSION = '0.2.0-rc.2'
+const DEFAULT_HARNESS_VERSION = '0.2.2-rc.1'
 
 /** CJK characters, kana and fullwidth forms that must never reach a ru value. */
 const CJK = /[\u2E80-\u2EFF\u3000-\u303F\u3040-\u30FF\u3100-\u312F\u31A0-\u31BF\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF]/
@@ -42,8 +42,9 @@ const CJK = /[\u2E80-\u2EFF\u3000-\u303F\u3040-\u30FF\u3100-\u312F\u31A0-\u31BF\
  * - `minified`: `X = "<ns>", <zh> = {...}, <en> = {...}` on one line.
  * - `const-pair`: a readable `const zh = {...}` / `const en = {...}` pair,
  *   optionally anchored after a namespace declaration.
- * - `locale-map`: `<locales> = { zh: <a>, en: <b>, ..., ru: <c> }`; the ru
- *   dictionary already ships in the bundle, so only its size is recorded.
+ * - `locale-map`: `<locales> = { zh: <zh>, en: <en>, ..., ru: <ru> }`, where the
+ *   map only names dictionaries that are declared elsewhere in the bundle and
+ *   may carry a `ru` dictionary of its own (git-panel).
  */
 const PLUGINS = [
   { name: '@hyzyn/dsh-codegraph', ns: 'codegraph', file: 'client.js', kind: 'i18n' },
@@ -63,11 +64,6 @@ const PLUGINS = [
   },
 ]
 
-/** Plugins that already ship a ru dictionary: recorded, never translated. */
-const RU_ONLY_PLUGINS = [
-  { name: '@xbzbing/dsh-git-panel', ns: 'gitPanel', file: 'lib/client.js', kind: 'locale-map' },
-]
-
 /** Key counts of the reviewed version matrix; a drift warning, not a failure. */
 const EXPECTED_KEYS = new Map([
   ['codegraph', 205],
@@ -77,9 +73,8 @@ const EXPECTED_KEYS = new Map([
   ['kit-settings', 4],
   ['tty', 516],
   ['docker', 564],
-  ['dsh-market', 783],
+  ['dsh-market', 788],
   ['agentTeams', 217],
-  ['gitPanel', 554],
 ])
 
 /** Parse `--name value` / `--name=value` / `--flag` pairs. */
@@ -219,22 +214,89 @@ function extractConstPair(source, spec) {
   }
 }
 
-/** `<locales> = { zh: <a>, en: <b>, ..., ru: <c> }` bundle that already ships ru. */
-function extractRuDictionary(source, spec) {
-  if (!source.includes(`"${spec.ns}"`)) throw new Error(`${spec.ns}: namespace literal was not found`)
-  const mapPattern = /[A-Za-z_$][\w$]*\s*=\s*\{\s*zh\s*:\s*[A-Za-z_$][\w$]*\s*,\s*en\s*:\s*[A-Za-z_$][\w$]*/
-  const mapMatch = mapPattern.exec(source)
-  if (mapMatch === null) throw new Error(`${spec.ns}: the locale map was not found`)
-  const mapStart = mapMatch.index + mapMatch[0].lastIndexOf('{')
+/**
+ * Assert that the bundle belongs to `spec.ns`. Minified bundles do not always
+ * spell the namespace as a standalone literal: one may only carry namespaced
+ * message ids (`"gitPanel.file"`) or a prefixed variant (`"git-panel.file"`),
+ * so any of those anchors is accepted and the failure lists what was searched.
+ */
+function assertNamespaceLiteral(source, spec) {
+  const standalone = [`"${spec.ns}"`, `'${spec.ns}'`]
+  const prefixed = [`"${spec.ns}.`, `'${spec.ns}.`]
+  if ([...standalone, ...prefixed].some(anchor => source.includes(anchor))) return
+  const described = [...standalone, `"${spec.ns}.<key>"`, `'${spec.ns}.<key>'`].join(', ')
+  throw new Error(
+    `${spec.ns}: namespace literal was not found in ${spec.file} `
+    + `(searched for ${described}; the bundle may have renamed its namespace)`,
+  )
+}
+
+/**
+ * Resolve dictionary identifier `<name> = {...}` to its evaluated object.
+ *
+ * Bundlers write the declarations in every shape: `var en = {...}`, a
+ * continuation of the previous declaration (`}, en = {...}`) or `const en = {...}`.
+ */
+function extractNamedLiteral(source, name, spec) {
+  const patterns = [
+    new RegExp(`(?:var|let|const)\\s+${escapeRegExp(name)}\\s*=\\s*\\{`),
+    new RegExp(`[,;]\\s*${escapeRegExp(name)}\\s*=\\s*\\{`),
+  ]
+  for (const pattern of patterns) {
+    const match = pattern.exec(source)
+    if (match === null) continue
+    const start = match.index + match[0].lastIndexOf('{')
+    return evaluateObjectLiteral(extractObjectLiteral(source, start), spec.ns)
+  }
+  throw new Error(
+    `${spec.ns}: dictionary ${name} was not found in ${spec.file} `
+    + '(neither a var/let/const declaration nor a continuation of one)',
+  )
+}
+
+/**
+ * `<locales> = { zh: <zh>, en: <en>, ..., ru: <ru> }` bundle (git-panel).
+ *
+ * The map only names dictionaries declared elsewhere in the bundle. `ru` is
+ * optional: when the plugin ships one, its size is compared against the
+ * snapshot so a partial translation cannot pass unnoticed.
+ */
+function extractLocaleMap(source, spec) {
+  assertNamespaceLiteral(source, spec)
+  const mapPattern = /[A-Za-z_$][\w$]*\s*=\s*\{\s*zh\s*:\s*([A-Za-z_$][\w$]*)\s*,\s*en\s*:\s*([A-Za-z_$][\w$]*)/g
+  const maps = [...source.matchAll(mapPattern)]
+  if (maps.length === 0) throw new Error(`${spec.ns}: the locale map { zh: <zh>, en: <en> } was not found in ${spec.file}`)
+  if (maps.length > 1) {
+    throw new Error(
+      `${spec.ns}: ${maps.length} locale maps found in ${spec.file} `
+      + `(offsets ${maps.map(match => match.index).join(', ')}); the plugin selector needs an explicit marker`,
+    )
+  }
+  const [match] = maps
+  const mapStart = match.index + match[0].lastIndexOf('{')
   const mapText = extractObjectLiteral(source, mapStart)
-  const ruMatch = /\bru\s*:\s*([A-Za-z_$][\w$]*)/.exec(mapText)
-  if (ruMatch === null) throw new Error(`${spec.ns}: the locale map has no ru entry`)
-  const ruName = ruMatch[1]
-  const ruPattern = new RegExp(`(?:var|let|const)\\s+${escapeRegExp(ruName)}\\s*=\\s*\\{`)
-  const ruMatchStart = ruPattern.exec(source)
-  if (ruMatchStart === null) throw new Error(`${spec.ns}: the ru dictionary ${ruName} was not found`)
-  const ruStart = ruMatchStart.index + ruMatchStart[0].lastIndexOf('{')
-  return evaluateObjectLiteral(extractObjectLiteral(source, ruStart), spec.ns)
+  const ruName = /\bru\s*:\s*([A-Za-z_$][\w$]*)/.exec(mapText)
+  return {
+    zh: extractNamedLiteral(source, match[1], spec),
+    en: extractNamedLiteral(source, match[2], spec),
+    ru: ruName === null ? undefined : extractNamedLiteral(source, ruName[1], spec),
+  }
+}
+
+/** Pick the extractor for `spec.kind`, failing loudly on an unknown one. */
+function extractDictionaries(source, spec) {
+  switch (spec.kind) {
+    case 'i18n':
+      return extractI18nPair(source, spec)
+    case 'minified':
+      return extractMinifiedPair(source, spec)
+    case 'const-pair':
+      return extractConstPair(source, spec)
+    case 'locale-map':
+      return extractLocaleMap(source, spec)
+    default:
+      throw new Error(`${spec.ns}: unknown dictionary kind ${JSON.stringify(spec.kind)}`)
+  }
 }
 
 /** Assert that every dictionary key exists as a literal in the bundle. */
@@ -286,16 +348,17 @@ async function pluginVersion(pluginsRoot, spec) {
   return manifest.version
 }
 
-/** Snapshot one translating plugin: en/zh pair plus versions.json row. */
+/** Snapshot one plugin: en/zh pair plus versions.json row. */
 async function snapshotPair(pluginsRoot, spec) {
   const source = await readFile(join(pluginsRoot, spec.name, spec.file), 'utf8')
-  const pair = spec.kind === 'i18n'
-    ? extractI18nPair(source, spec)
-    : spec.kind === 'minified'
-      ? extractMinifiedPair(source, spec)
-      : extractConstPair(source, spec)
+  const pair = extractDictionaries(source, spec)
   const keys = validatePair(spec, pair.en, pair.zh)
   validateLiterals(spec, keys, source)
+  if (pair.ru !== undefined && Object.keys(pair.ru).length !== keys.length) {
+    console.warn(
+      `warning: ${spec.ns}: the plugin ships ru for ${Object.keys(pair.ru).length} of ${keys.length} keys`,
+    )
+  }
   const version = await pluginVersion(pluginsRoot, spec)
   return {
     catalog: {
@@ -309,14 +372,31 @@ async function snapshotPair(pluginsRoot, spec) {
   }
 }
 
-/** Record a plugin that already ships ru: size only, no catalog. */
-async function snapshotRuOnly(pluginsRoot, spec) {
-  const source = await readFile(join(pluginsRoot, spec.name, spec.file), 'utf8')
-  const ru = extractRuDictionary(source, spec)
-  const version = await pluginVersion(pluginsRoot, spec)
-  const keys = Object.keys(ru).length
-  if (keys === 0) throw new Error(`${spec.ns}: the shipped ru dictionary is empty`)
-  return { row: { name: spec.name, version, ns: spec.ns, keys, hasRu: true } }
+/**
+ * Rows for snapshots this script does not extract.
+ *
+ * One plugin keeps its strings hardcoded inside the bundle instead of a
+ * dictionary literal, so its snapshot is maintained by hand; its row is derived
+ * from that snapshot instead of silently disappearing from the version matrix.
+ */
+async function unmanagedRows(directory, managedNamespaces) {
+  const files = (await readdir(directory).catch(() => [])).filter(file => file.endsWith('.json'))
+  const rows = []
+  for (const file of files) {
+    const catalog = JSON.parse(await readFile(join(directory, file), 'utf8'))
+    if (managedNamespaces.has(catalog.ns)) continue
+    if (typeof catalog.package !== 'string' || typeof catalog.en !== 'object') {
+      throw new Error(`${file}: not a plugin catalog snapshot`)
+    }
+    rows.push({
+      name: catalog.package,
+      version: catalog.version,
+      ns: catalog.ns,
+      keys: Object.keys(catalog.en).length,
+      hasRu: false,
+    })
+  }
+  return rows
 }
 
 /** Read/write one JSON file, honouring `--check` (compare, never write). */
@@ -347,10 +427,7 @@ for (const spec of PLUGINS) {
   catalogs.push(catalog)
   rows.push(row)
 }
-for (const spec of RU_ONLY_PLUGINS) {
-  const { row } = await snapshotRuOnly(pluginsRoot, spec)
-  rows.push(row)
-}
+rows.push(...await unmanagedRows(catalogDirectory, new Set(PLUGINS.map(spec => spec.ns))))
 
 for (const row of rows) {
   const expected = EXPECTED_KEYS.get(row.ns)
@@ -371,8 +448,7 @@ await emitJson(versionsPath, {
 
 for (const warning of warnings) console.warn(`warning: ${warning}`)
 const totalKeys = catalogs.reduce((sum, catalog) => sum + Object.keys(catalog.en).length, 0)
-const ruOnlyKeys = rows.filter(row => row.hasRu).reduce((sum, row) => sum + row.keys, 0)
 console.log(
-  `${catalogs.length} plugin catalogs, ${totalKeys} keys to translate, ${ruOnlyKeys} keys already ru; `
+  `${catalogs.length} plugin catalogs, ${totalKeys} keys to translate; `
   + `Harness ${harnessVersion}, locale-ru ${localeManifest.version}`,
 )

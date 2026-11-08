@@ -19,7 +19,6 @@ export const dict: Record<string, string> = {
   'preview.loading': 'Загрузка плана…',
   'preview.failed': 'Не удалось загрузить план',
   'preview.invalidAddress': 'Недопустимый адрес плана',
-  'preview.historyUnavailable': 'История сессии недоступна',
   'preview.notFound': 'Этот план не найден',
   'preview.unavailable': 'Предпросмотр плана недоступен',
   'preview.expired': 'Срок действия временного предпросмотра плана истёк. Откройте его заново из карточки, ожидающей разрешения.',

@@ -1,0 +1,23 @@
+{
+  "package": "@deepseek-ai/dsh",
+  "version": "0.2.2-rc.1",
+  "ns": "workspace",
+  "en": {
+    "draft.initializationFailed": "Could not fill the draft. Please try again shortly.",
+    "draft.workspaceRequired": "Choose a workspace first.",
+    "menu.sessionId": "Copy Session ID",
+    "toast.forkRequiresOpen": "Open the original session to complete migration before creating a branch.",
+    "toast.openForkSource": "Open original session",
+    "toast.sessionIdCopied": "Session ID copied",
+    "toast.sessionIdCopyFailed": "Copy failed. Try again."
+  },
+  "zh": {
+    "draft.initializationFailed": "暂时无法填入草稿，请稍后重试",
+    "draft.workspaceRequired": "请先选择工作区",
+    "menu.sessionId": "复制 Session ID",
+    "toast.forkRequiresOpen": "请先打开原会话完成迁移，再创建分支",
+    "toast.openForkSource": "打开原会话",
+    "toast.sessionIdCopied": "Session ID 已复制",
+    "toast.sessionIdCopyFailed": "复制失败，请重试"
+  }
+}

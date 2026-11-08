@@ -1,0 +1,11 @@
+{
+  "package": "@deepseek-ai/dsh",
+  "version": "0.2.2-rc.1",
+  "ns": "settings.account",
+  "en": {
+    "noResponse": "Something went wrong. Please check your network connection and try again."
+  },
+  "zh": {
+    "noResponse": "操作未完成，可能是网络异常，请检查你的网络状况后重试"
+  }
+}

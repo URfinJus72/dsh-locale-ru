@@ -1,0 +1,17 @@
+{
+  "package": "@deepseek-ai/dsh",
+  "version": "0.2.2-rc.1",
+  "ns": "reference",
+  "en": {
+    "fileOpen.close": "Close",
+    "fileOpen.failed": "Couldn’t open “{path}”. Try again or close this message.",
+    "fileOpen.retry": "Retry",
+    "fileOpen.title": "Couldn’t open file"
+  },
+  "zh": {
+    "fileOpen.close": "关闭",
+    "fileOpen.failed": "无法打开“{path}”，请重试或关闭此提示",
+    "fileOpen.retry": "重试",
+    "fileOpen.title": "无法打开文件"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "package": "@deepseek-ai/dsh",
+  "version": "0.2.2-rc.1",
+  "ns": "open-in-app",
+  "en": {
+    "menu.copied": "Copied",
+    "menu.copyDirectoryPath": "Copy folder path",
+    "menu.copyFailed": "Could not copy. Check that the content is available, then retry.",
+    "menu.copyLink": "Copy link address",
+    "menu.copyPath": "Copy file path",
+    "menu.defaultApp": "Open in default application",
+    "menu.external": "Open in external browser",
+    "menu.finder": "Show in Finder",
+    "menu.openInFloat": "Open in floating panel",
+    "menu.openInSidebar": "Open in sidebar",
+    "menu.reveal": "Show in folder",
+    "path.opened": "Opened on another device",
+    "path.revealed": "File location shown on another device"
+  },
+  "zh": {
+    "menu.copied": "已复制",
+    "menu.copyDirectoryPath": "复制文件夹路径",
+    "menu.copyFailed": "无法复制，请检查内容是否可用后重试",
+    "menu.copyLink": "复制链接地址",
+    "menu.copyPath": "复制文件路径",
+    "menu.defaultApp": "使用默认应用打开",
+    "menu.external": "外部浏览器打开",
+    "menu.finder": "在 Finder 中显示",
+    "menu.openInFloat": "在浮窗中打开",
+    "menu.openInSidebar": "在侧边栏打开",
+    "menu.reveal": "在文件夹显示",
+    "path.opened": "已在其它设备打开",
+    "path.revealed": "已在其它设备显示文件位置"
+  }
+}

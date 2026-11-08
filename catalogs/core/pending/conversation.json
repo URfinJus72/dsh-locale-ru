@@ -1,0 +1,37 @@
+{
+  "package": "@deepseek-ai/dsh",
+  "version": "0.2.2-rc.1",
+  "ns": "conversation",
+  "en": {
+    "detail.schedule.active": "Enabled",
+    "detail.schedule.custom": "Custom",
+    "detail.schedule.ended": "Ended",
+    "detail.schedule.paused": "Paused",
+    "input.sending": "Sending message",
+    "quote.remove": "Remove quote",
+    "row.commandArguments": "Command arguments",
+    "row.imageSize": "{width}x{height}px, {bytes} bytes",
+    "row.imageSizeDownscaled": "{width}x{height}px (downscaled from {originalWidth}x{originalHeight}px), {bytes} bytes",
+    "session.moreViews": "More conversation views",
+    "terminal.commandLine": "Command line {n}",
+    "tool.title.applyPatch": "Apply patch",
+    "tool.title.editSchedule": "Edit automation task",
+    "tool.title.viewSchedule": "View automation task"
+  },
+  "zh": {
+    "detail.schedule.active": "已开启",
+    "detail.schedule.custom": "自定义",
+    "detail.schedule.ended": "已结束",
+    "detail.schedule.paused": "已暂停",
+    "input.sending": "正在发送消息",
+    "quote.remove": "移除引用",
+    "row.commandArguments": "命令参数",
+    "row.imageSize": "{width}x{height}px，{bytes} 字节",
+    "row.imageSizeDownscaled": "{width}x{height}px（由 {originalWidth}x{originalHeight}px 缩小），{bytes} 字节",
+    "session.moreViews": "更多会话视图",
+    "terminal.commandLine": "命令第 {n} 行",
+    "tool.title.applyPatch": "应用补丁",
+    "tool.title.editSchedule": "编辑自动化任务",
+    "tool.title.viewSchedule": "查看自动化任务详情"
+  }
+}

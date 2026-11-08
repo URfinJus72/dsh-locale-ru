@@ -10,6 +10,8 @@ export const ns = 'workspace'
 /** Russian dictionary. */
 export const dict: Record<string, string> = {
   'defaultWorkspace.failed': 'Не удалось создать рабочую область по умолчанию. Используйте «Выбор рабочей области» для выбора папки.',
+  'draft.workspaceRequired': 'Сначала выберите рабочую область.',
+  'draft.initializationFailed': 'Не удалось заполнить черновик. Попробуйте снова через короткое время.',
   'group.ungrouped': 'Без группы',
   'session.new': 'Новая сессия',
   'session.untitled': 'Без названия',
@@ -64,6 +66,9 @@ export const dict: Record<string, string> = {
   'menu.unarchiveSession': 'Разархивировать сессию',
   'menu.pinSession': 'Закрепить сессию',
   'menu.unpinSession': 'Открепить сессию',
+  'menu.sessionId': 'Копировать ID сессии',
+  'toast.sessionIdCopied': 'ID сессии скопирован',
+  'toast.sessionIdCopyFailed': 'Копирование не удалось. Попробуйте снова.',
   'row.archived': 'Архивные',
   'row.pinned': 'Закреплённые',
   'toast.archivedNotOpenable': 'Архивированные сессии нельзя открыть. Отмените архивацию для просмотра.',
@@ -98,6 +103,8 @@ export const dict: Record<string, string> = {
   'toast.pinFailed': 'Не удалось закрепить. Повторите позже.',
   'toast.unpinFailed': 'Не удалось открепить. Повторите позже.',
   'toast.createFailed': 'Ошибка создания сессии: {message}',
+  'toast.forkRequiresOpen': 'Откройте исходную сессию для завершения миграции перед созданием ветки.',
+  'toast.openForkSource': 'Открыть исходную сессию',
   'sessions.count.one': '{n} сессия',
   'sessions.count.other': '{n} сессии',
   'sessions.count.few': '{n} сессии',

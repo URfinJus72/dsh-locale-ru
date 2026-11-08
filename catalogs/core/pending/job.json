@@ -1,0 +1,11 @@
+{
+  "package": "@deepseek-ai/dsh",
+  "version": "0.2.2-rc.1",
+  "ns": "job",
+  "en": {
+    "terminal.commandLine": "Command line {n}"
+  },
+  "zh": {
+    "terminal.commandLine": "命令第 {n} 行"
+  }
+}

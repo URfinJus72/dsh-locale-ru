@@ -1,0 +1,17 @@
+{
+  "package": "@deepseek-ai/dsh",
+  "version": "0.2.2-rc.1",
+  "ns": "sidebarRight",
+  "en": {
+    "menu.close": "Close",
+    "menu.closeOthers": "Close Other Tabs",
+    "menu.closeRight": "Close Tabs to the Right",
+    "tab.guide.more": "More tools"
+  },
+  "zh": {
+    "menu.close": "关闭",
+    "menu.closeOthers": "关闭其他标签页",
+    "menu.closeRight": "关闭右侧标签页",
+    "tab.guide.more": "更多工具"
+  }
+}

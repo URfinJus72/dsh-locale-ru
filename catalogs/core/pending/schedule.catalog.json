@@ -1,0 +1,21 @@
+{
+  "package": "@deepseek-ai/dsh",
+  "version": "0.2.2-rc.1",
+  "ns": "schedule.catalog",
+  "en": {
+    "frequency.hostCustom": "Custom",
+    "frequency.hostDailyInterval": "Every {interval} days at {time}",
+    "frequency.hostMonthly": "Monthly on day {days} at {time}, or month end",
+    "frequency.hostMonthlyInterval": "Every {interval} months on day {days} at {time}, or month end",
+    "frequency.hostWeeklyInterval": "Every {interval} weeks on {weekdays} at {time}",
+    "frequency.hostZone": "{rule} ({timeZone})"
+  },
+  "zh": {
+    "frequency.hostCustom": "自定义",
+    "frequency.hostDailyInterval": "每 {interval} 天 {time}",
+    "frequency.hostMonthly": "每月 {days} 日 {time}，不足该日则月末",
+    "frequency.hostMonthlyInterval": "每 {interval} 个月的 {days} 日 {time}，不足该日则月末",
+    "frequency.hostWeeklyInterval": "每 {interval} 周的周{weekdays} {time}",
+    "frequency.hostZone": "{rule}（{timeZone}）"
+  }
+}

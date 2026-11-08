@@ -1,0 +1,17 @@
+{
+  "package": "@deepseek-ai/dsh",
+  "version": "0.2.2-rc.1",
+  "ns": "sidebarFiles",
+  "en": {
+    "entry.noViewer": "No viewer can open this file.",
+    "navigator.hide": "Hide file tree",
+    "navigator.resize": "Resize file tree",
+    "navigator.show": "Show file tree"
+  },
+  "zh": {
+    "entry.noViewer": "没有可以打开此文件的查看器。",
+    "navigator.hide": "隐藏文件树",
+    "navigator.resize": "调整文件树宽度",
+    "navigator.show": "显示文件树"
+  }
+}

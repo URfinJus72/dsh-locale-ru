@@ -1,0 +1,17 @@
+{
+  "package": "@deepseek-ai/dsh",
+  "version": "0.2.2-rc.1",
+  "ns": "session-log-download",
+  "en": {
+    "menu.copyMarkdown": "Copy Session as Markdown",
+    "toast.clipboardFailed": "Could not write to the clipboard. Check clipboard permission and try again.",
+    "toast.copied": "Session copied as Markdown.",
+    "toast.preparationFailed": "Could not read the Session for copying. Try again."
+  },
+  "zh": {
+    "menu.copyMarkdown": "复制会话为 Markdown",
+    "toast.clipboardFailed": "无法写入剪贴板，请检查剪贴板权限后重试",
+    "toast.copied": "Session 已复制为 Markdown",
+    "toast.preparationFailed": "无法读取 Session 进行复制，请重试"
+  }
+}

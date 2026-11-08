@@ -1,6 +1,6 @@
 {
-  "harness": "0.2.0-rc.2",
-  "localeRu": "0.2.3",
+  "harness": "0.2.2-rc.1",
+  "localeRu": "0.3.0",
   "plugins": [
     {
       "name": "@hyzyn/dsh-codegraph",
@@ -46,16 +46,16 @@
     },
     {
       "name": "@hyzyn/dsh-docker",
-      "version": "0.15.0",
+      "version": "0.16.1",
       "ns": "docker",
       "keys": 564,
       "hasRu": false
     },
     {
       "name": "dshmarket",
-      "version": "1.73.12",
+      "version": "1.73.15",
       "ns": "dsh-market",
-      "keys": 783,
+      "keys": 788,
       "hasRu": false
     },
     {
@@ -64,13 +64,6 @@
       "ns": "agentTeams",
       "keys": 217,
       "hasRu": false
-    },
-    {
-      "name": "@xbzbing/dsh-git-panel",
-      "version": "1.12.0",
-      "ns": "gitPanel",
-      "keys": 554,
-      "hasRu": true
     },
     {
       "name": "@zoria-lind/dsh-token-optimizer",

@@ -86,6 +86,7 @@ export const dict: Record<string, string> = {
   'completing': 'Завершение входа…',
   'expired': 'Срок действия входа истек. Попробуйте снова.',
   'failed': 'Не удалось выполнить операцию. Попробуйте снова.',
+  'noResponse': 'Что-то пошло не так. Проверьте подключение к сети и повторите попытку.',
   'settingsSignedOutTitle': 'Вы не вошли в DeepSeek Harness',
   'settingsSignedOutDescription': 'Войдите в DeepSeek Harness, чтобы получить свой API-ключ',
   'signInDescription': 'Используйте свой аккаунт DeepSeek для начала работы.',

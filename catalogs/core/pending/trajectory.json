@@ -1,0 +1,25 @@
+{
+  "package": "@deepseek-ai/dsh",
+  "version": "0.2.2-rc.1",
+  "ns": "trajectory",
+  "en": {
+    "details.lastAttemptError": "Last attempt error",
+    "record.rawResult": "Raw result",
+    "record.rawResultUnavailable": "Raw results are only available for live tool calls",
+    "record.renderedResult": "Rendered result",
+    "request.collapsedTool": "subcalls",
+    "toolbar.collapseSubCalls": "Collapse subcalls",
+    "toolbar.expandSubCalls": "Expand subcalls",
+    "toolbar.subCalls": "Subcalls"
+  },
+  "zh": {
+    "details.lastAttemptError": "上次尝试错误",
+    "record.rawResult": "原始结果",
+    "record.rawResultUnavailable": "原始结果仅在实时工具调用中可用",
+    "record.renderedResult": "渲染结果",
+    "request.collapsedTool": "子调用",
+    "toolbar.collapseSubCalls": "收起所有子调用",
+    "toolbar.expandSubCalls": "展开所有子调用",
+    "toolbar.subCalls": "子调用"
+  }
+}

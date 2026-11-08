@@ -48,6 +48,12 @@ export const dict: Record<string, string> = {
   'noDescription': 'Нет описания.',
   'brokenBadge': 'Ошибка загрузки',
   'switchRefused': 'Не удалось переключиться на «{name}»: {reason}',
+  'standardUnavailable': 'Стандартный режим недоступен. Восстановите его или выберите другой доступный режим.',
   'close': 'Закрыть',
   'creatorDraft': 'Создать пользовательский пресет в режиме Creator',
+  'createPlugin': 'Позвольте агенту создать плагин',
+  'createPluginDescription': 'Войдите в режим Создателя и создайте свой собственный плагин DSH',
+  'createPluginChecking': 'Проверка доступности режима Создателя',
+  'createPluginUnavailable': 'Временно недоступен. Перезайдите в это меню для повторной попытки',
+  'createPluginMissing': 'Режим Создателя не включен в эту конфигурацию',
 }

@@ -14,4 +14,7 @@ export const dict: Record<string, string> = {
   'toggle.open': 'Открыть боковую панель',
   'toggle.collapse': 'Свернуть боковую панель',
   'panels.label': 'Глобальные панели',
+  'navigation.label': 'Навигация',
+  'panels.more': 'Другое',
+  'version.copied': 'Версия скопирована',
 }

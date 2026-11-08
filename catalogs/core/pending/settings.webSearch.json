@@ -1,0 +1,27 @@
+{
+  "package": "@deepseek-ai/dsh",
+  "version": "0.2.2-rc.1",
+  "ns": "settings.webSearch",
+  "en": {
+    "count": "Results per search",
+    "countHint": "Results returned per query: an integer from 1 to 50, default 10. This controls result count, not search calls. web_search keeps no more sources than its own result limit.",
+    "invalidCount": "Enter an integer from 1 to 50, or leave blank to use the default.",
+    "searchApiBaseUrl": "Search / Fetch API base URL",
+    "searchApiBaseUrlHint": "Include the API prefix, such as https://api.deepseek.com/v1/tools. The provider appends /search or /fetch. Leave blank to restore the default.",
+    "searchGuide": "Search & Fetch guide",
+    "searchGuideUrl": "https://api-docs.deepseek.com/guides/search",
+    "useSearchApi": "Use the new Web Search API",
+    "useSearchApiHint": "Off by default: search runs through DeepSeek Messages. For the new Web Search API's features and pricing, see the "
+  },
+  "zh": {
+    "count": "每次搜索结果数",
+    "countHint": "每个查询返回的结果条数，须为 1–50 的整数，默认 10；不控制搜索调用次数。web_search 保留的来源数不超过其自身的结果上限。",
+    "invalidCount": "请填 1–50 的整数；留空表示使用默认值。",
+    "searchApiBaseUrl": "Search / Fetch API 基础地址",
+    "searchApiBaseUrlHint": "填写含 API 前缀的地址，例如 https://api.deepseek.com/v1/tools；程序追加 /search 或 /fetch，留空恢复默认。",
+    "searchGuide": "网页搜索与抓取指南",
+    "searchGuideUrl": "https://api-docs.deepseek.com/zh-cn/guides/search",
+    "useSearchApi": "启用新版 Web 搜索 API",
+    "useSearchApiHint": "默认关闭，搜索通过 DeepSeek Messages 完成。新版 Web 搜索 API 功能与计费详见"
+  }
+}

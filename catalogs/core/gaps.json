@@ -1,7 +1,7 @@
 {
   "generatedFor": {
-    "harness": "639ed015397290b3745d163aafe02ffee4aa3f84",
-    "version": "0.2.0-rc.2"
+    "harness": "66491b05e3f05ad35bcdd4f6cd7ed26041d9e3db",
+    "version": "0.2.2-rc.1"
   },
   "namespaces": {
     "common": {
@@ -19,20 +19,20 @@
     "settings": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 34,
-      "coreKeys": 34
+      "ruKeys": 42,
+      "coreKeys": 42
     },
     "settings.theme": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 9,
-      "coreKeys": 9
+      "ruKeys": 25,
+      "coreKeys": 25
     },
     "settings.models": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 113,
-      "coreKeys": 113
+      "ruKeys": 137,
+      "coreKeys": 137
     },
     "settings.plugins": {
       "missing": [],
@@ -43,8 +43,8 @@
     "settings.pluginInventory": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 40,
-      "coreKeys": 40
+      "ruKeys": 37,
+      "coreKeys": 37
     },
     "settings.agentLoop": {
       "missing": [],
@@ -67,14 +67,14 @@
     "settings.webSearch": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 18,
-      "coreKeys": 18
+      "ruKeys": 27,
+      "coreKeys": 27
     },
     "settings.account": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 93,
-      "coreKeys": 93
+      "ruKeys": 94,
+      "coreKeys": 94
     },
     "shortcuts": {
       "missing": [],
@@ -85,8 +85,8 @@
     "settings.agentPreset": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 41,
-      "coreKeys": 41
+      "ruKeys": 47,
+      "coreKeys": 47
     },
     "agent-team": {
       "missing": [],
@@ -97,8 +97,8 @@
     "voice-input": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 101,
-      "coreKeys": 101
+      "ruKeys": 114,
+      "coreKeys": 114
     },
     "settings.permission": {
       "missing": [],
@@ -115,20 +115,20 @@
     "approval": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 5,
-      "coreKeys": 5
+      "ruKeys": 7,
+      "coreKeys": 7
     },
     "chat": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 183,
-      "coreKeys": 183
+      "ruKeys": 192,
+      "coreKeys": 192
     },
     "conversation": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 369,
-      "coreKeys": 369
+      "ruKeys": 383,
+      "coreKeys": 383
     },
     "cordis": {
       "missing": [],
@@ -151,8 +151,8 @@
     "deliverables": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 60,
-      "coreKeys": 60
+      "ruKeys": 57,
+      "coreKeys": 57
     },
     "directory-browser": {
       "missing": [],
@@ -169,8 +169,8 @@
     "job": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 37,
-      "coreKeys": 37
+      "ruKeys": 38,
+      "coreKeys": 38
     },
     "feedback": {
       "missing": [],
@@ -187,38 +187,38 @@
     "open-in-app": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 45,
-      "coreKeys": 45
+      "ruKeys": 58,
+      "coreKeys": 58
     },
     "plan": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 17,
-      "coreKeys": 17
+      "ruKeys": 16,
+      "coreKeys": 16
     },
     "pluginManager": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 189,
-      "coreKeys": 189
+      "ruKeys": 291,
+      "coreKeys": 291
     },
     "reference": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 11,
-      "coreKeys": 11
+      "ruKeys": 15,
+      "coreKeys": 15
     },
     "schedule.catalog": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 65,
-      "coreKeys": 65
+      "ruKeys": 71,
+      "coreKeys": 71
     },
     "schedule.manager": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 183,
-      "coreKeys": 183
+      "ruKeys": 210,
+      "coreKeys": 210
     },
     "settings.sessionLog": {
       "missing": [],
@@ -235,26 +235,26 @@
     "session-log-download": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 10,
-      "coreKeys": 10
+      "ruKeys": 14,
+      "coreKeys": 14
     },
     "sidebar": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 5,
-      "coreKeys": 5
+      "ruKeys": 8,
+      "coreKeys": 8
     },
     "sidebarRight": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 34,
-      "coreKeys": 34
+      "ruKeys": 38,
+      "coreKeys": 38
     },
     "sidebarFiles": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 17,
-      "coreKeys": 17
+      "ruKeys": 21,
+      "coreKeys": 21
     },
     "sidebarBrowser": {
       "missing": [],
@@ -325,14 +325,14 @@
     "subagent": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 37,
-      "coreKeys": 37
+      "ruKeys": 40,
+      "coreKeys": 40
     },
     "trajectory": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 190,
-      "coreKeys": 190
+      "ruKeys": 197,
+      "coreKeys": 197
     },
     "question": {
       "missing": [],
@@ -349,8 +349,8 @@
     "workspace": {
       "missing": [],
       "obsolete": [],
-      "ruKeys": 106,
-      "coreKeys": 106
+      "ruKeys": 113,
+      "coreKeys": 113
     }
   }
 }

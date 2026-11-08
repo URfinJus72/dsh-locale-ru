@@ -9,6 +9,17 @@ export const ns = 'open-in-app'
 
 /** Russian dictionary. */
 export const dict: Record<string, string> = {
+  'menu.openInSidebar': 'Открыть в боковой панели',
+  'menu.openInFloat': 'Открыть в плавающей панели',
+  'menu.finder': 'Показать в Finder',
+  'menu.reveal': 'Показать в папке',
+  'menu.defaultApp': 'Открыть в приложении по умолчанию',
+  'menu.external': 'Открыть во внешнем браузере',
+  'menu.copyLink': 'Скопировать ссылку',
+  'menu.copyPath': 'Скопировать путь файла',
+  'menu.copyDirectoryPath': 'Скопировать путь папки',
+  'menu.copied': 'Скопировано',
+  'menu.copyFailed': 'Не удалось скопировать. Проверьте доступность содержимого и повторите попытку.',
   'open.title': 'Открыть рабочую область в {app}',
   'path.appDefault': '{app} (по умолчанию)',
   'path.appsError': 'Не удалось загрузить приложения',
@@ -18,6 +29,8 @@ export const dict: Record<string, string> = {
   'path.open': 'Открыть',
   'path.more': 'Больше способов открытия',
   'path.reveal': 'Показать расположение файла',
+  'path.opened': 'Открыто на другом устройстве',
+  'path.revealed': 'Расположение файла показано на другом устройстве',
   'path.openError': 'Не удалось открыть. Попробуйте снова.',
   'path.revealError': 'Не удалось показать расположение файла. Попробуйте снова.',
   'app.cursor': 'Cursor',

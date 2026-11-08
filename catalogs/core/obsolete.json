@@ -1,0 +1,83 @@
+{
+  "settings.theme": [
+    "fontSize.decrease",
+    "fontSize.description",
+    "fontSize.increase",
+    "fontSize.title"
+  ],
+  "settings.models": [
+    "keyEnvLocked",
+    "keyPlaceholderNative",
+    "keyStored"
+  ],
+  "settings.pluginInventory": [
+    "countUnit",
+    "failedCountLabel",
+    "viewInPreset"
+  ],
+  "chat": [
+    "message.accountStopped"
+  ],
+  "deliverables": [
+    "presented.directoryOpened",
+    "presented.opened",
+    "presented.revealed"
+  ],
+  "plan": [
+    "preview.historyUnavailable"
+  ],
+  "pluginManager": [
+    "officialTitle"
+  ],
+  "schedule.manager": [
+    "cronForm.atMinute",
+    "cronForm.daily",
+    "cronForm.dateOption",
+    "cronForm.dates",
+    "cronForm.frequency",
+    "cronForm.minuteDecrease",
+    "cronForm.minuteIncrease",
+    "cronForm.monthly",
+    "cronForm.weekly",
+    "detail.frequency",
+    "detail.id",
+    "detail.next",
+    "detail.status",
+    "rule.cron",
+    "rule.cronInvalid",
+    "rule.cronLabel",
+    "rule.error.conflict",
+    "rule.error.notFound",
+    "rule.error.unknown",
+    "rule.everySeconds",
+    "rule.invalidPrompt",
+    "status.inactive",
+    "timing.conflict",
+    "timing.error",
+    "timing.inactive",
+    "timing.interval",
+    "timing.intervalHint.hour",
+    "timing.intervalHint.minute",
+    "timing.intervalHint.second",
+    "timing.invalid",
+    "timing.invalidInterval",
+    "timing.invalidInterval.hour",
+    "timing.invalidInterval.minute",
+    "timing.invalidInterval.second",
+    "timing.invalidZone",
+    "timing.notFound",
+    "timing.notFuture",
+    "timing.unit.hour",
+    "timing.unit.minute",
+    "timing.unit.second",
+    "timing.zoneNoStored",
+    "tool.invoked"
+  ],
+  "trajectory": [
+    "details.scheduled"
+  ],
+  "question": [
+    "reply.close",
+    "reply.open"
+  ]
+}

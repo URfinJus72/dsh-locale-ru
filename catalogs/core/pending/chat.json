@@ -1,0 +1,29 @@
+{
+  "package": "@deepseek-ai/dsh",
+  "version": "0.2.2-rc.1",
+  "ns": "chat",
+  "en": {
+    "message.failure.interrupted": "The DSH process exited before this turn finished (for example, it was killed, crashed, or timed out while shutting down), so the turn was closed when DSH restarted. Unfinished tool calls have unknown outcomes.",
+    "message.taskStopped": "Task stopped",
+    "settings.collapse.completion": "On completion",
+    "settings.collapse.description": "Choose when to automatically collapse work details",
+    "settings.collapse.nextInput": "On next message",
+    "settings.collapse.title": "When to Collapse Work Details",
+    "settings.foldedReplies.all": "All replies",
+    "settings.foldedReplies.description": "Choose which assistant replies stay visible when work details collapse",
+    "settings.foldedReplies.final": "Final answer only",
+    "settings.foldedReplies.title": "Replies After Collapse"
+  },
+  "zh": {
+    "message.failure.interrupted": "DSH 进程在本轮完成前退出（例如被强制结束、崩溃或关闭超时），重新启动后本轮已中止。未完成的工具调用结果未知。",
+    "message.taskStopped": "任务已停止",
+    "settings.collapse.completion": "回答结束后",
+    "settings.collapse.description": "选择何时自动收起工作步骤",
+    "settings.collapse.nextInput": "下次有新消息时",
+    "settings.collapse.title": "工作步骤收起时机",
+    "settings.foldedReplies.all": "全部回复",
+    "settings.foldedReplies.description": "工作步骤收起后，保留哪些助手回复",
+    "settings.foldedReplies.final": "仅最终回答",
+    "settings.foldedReplies.title": "收起后显示的回复"
+  }
+}

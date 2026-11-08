@@ -4,6 +4,66 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the package follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] — 2026-11-08
+
+Ядро под Harness `0.2.2-rc.1` (тег `dsh-v0.2.2-rc.1`): 341 новый ключ, 61 устаревший, синхронизация
+обновившихся плагинов и вывод `@xbzbing/dsh-git-panel` из управляемого набора.
+
+### Added
+
+- **Ядро под Harness `0.2.2-rc.1`**: 341 ключ в 24 namespace'ах — `pluginManager` 103, `schedule.manager` 69,
+  `settings.models` 27, `settings.theme` 20, `conversation` 14, `open-in-app` 13, `voice-input` 13, `chat` 10,
+  `settings.webSearch` 9, `settings` 8, `trajectory` 8, `workspace` 7, `schedule.catalog` 6,
+  `settings.agentPreset` 6, `reference` 4, `session-log-download` 4, `sidebarFiles` 4, `sidebarRight` 4,
+  `sidebar` 3, `subagent` 3, `approval` 2, `question` 2, `job` 1, `settings.account` 1.
+- `scripts/gaps-to-catalogs.mjs`: мостик `catalogs/core/gaps.json` → каталоги `translate.mjs`
+  (`catalogs/core/pending/<ns>.json`, по файлу на namespace; служебные `verbatim.json` / `obsolete.json`
+  лежат рядом, но **не** внутри каталога — `translate.mjs` валидирует каждый `*.json` в `--catalogs`).
+
+### Changed
+
+- `@hyzyn/dsh-docker` 0.16.1: словарь подтверждён на 564 ключа, новых нет.
+- `dshmarket` 1.73.15: словарь 783 → 788 ключей (`hostIncompatibleHeld*`, `restoreSelfPinned`).
+- `token-optimizer` 3.0.0: все 47 ключей сверены со свежим кэшем локальной модели.
+- `pluginManager` переработан под 0.2.2 (103 ключа: установка из Git/локального каталога, разрешение
+  build-скриптов, детали установки, совместимость версий).
+- `schedule.manager` переработан под 0.2.2: 69 новых ключей, интервальный UI (`timing.interval*`,
+  `timing.unit.*`, `cronForm.*` — 42 устаревших ключа) заменён cron-формой; для `toast.cleared` добавлены
+  русские формы числительных `.one/.few/.many/.other`.
+- `scripts/plugin-catalogs.mjs`: извлечение словарей больше не требует отдельного литерала namespace
+  (принимает префиксные ключи `"<ns>.<key>"`), резолвит словари, объявленные продолжением `var`-списка
+  (`},en={`), сохраняет строки `versions.json` для ручных снимков (`token-optimizer`), а
+  `DEFAULT_HARNESS_VERSION` поднят до `0.2.2-rc.1`.
+- `harness-compatibility.json`: `0.2.2-rc.1`, revision `66491b0…` (тег `dsh-v0.2.2-rc.1`).
+- `catalogs/versions.json`: Harness `0.2.2-rc.1`, `localeRu` `0.3.0`, матрица плагинов переснята.
+- Карточки плагинов перепатчены под новые версии (`pnpm run cards:apply`); `pnpm run cards:check` — drift 0.
+
+### Removed
+
+- `@xbzbing/dsh-git-panel` выведен из управляемого набора: с 1.13.2 плагин сам везёт полный русский словарь
+  (594 ключа, тот же набор ключей), наш дубль устаревал бы. Удалены снимок `catalogs/plugins/gitPanel.json`,
+  строка в `catalogs/versions.json` и запись в `PLUGINS`/`EXPECTED_KEYS`; собственного словаря у пакета не было.
+- 61 устаревший ключ: `schedule.manager` 42 (интервальный UI), `settings.theme` 4, `settings.models` 3,
+  `settings.pluginInventory` 3, `deliverables` 3, `question` 2, `chat` 1, `plan` 1, `trajectory` 1,
+  `pluginManager` 1 (`officialTitle`).
+
+### Fixed
+
+- Плейсхолдеры пяти старых строк приведены к Harness `0.2.2-rc.1`: `pluginManager.restartNotice` и
+  `installDoneRestart` получили `{reason}`, `reasonIncompatibleVersion` — `{requirements}` вместо `{peers}`;
+  `frequency.cron` / `frequency.cronLocal` в `schedule.catalog` и `schedule.manager` больше не содержат
+  выпиленный в ядре `{expression}`.
+- Порядок ключей в 27 словарях ядра приведён к порядку Harness-словарей (гейт `check:harness:keys`
+  проверяет и порядок); русские формы `.few/.many` стоят сразу за `.other`.
+
+### Compatibility
+
+- DeepSeek Harness `0.2.2-rc.1` (тег `dsh-v0.2.2-rc.1`): `DSH_HARNESS_ROOT=… pnpm run check:harness` —
+  зелёный, `verified 68 Russian dictionaries against DeepSeek Harness 0.2.2-rc.1`.
+- Node.js `^22.19.0 || >=24.0.0`, pnpm 12.
+- Плагины: 9 каталогов / 2 704 ключа; `@xbzbing/dsh-git-panel` в матрице больше нет — русский словарь
+  приходит из самого плагина.
+
 ## [0.2.3] — 2026-11-07
 
 Русские описания навыков в меню «/» и патчи двух плагинов без системы локалей.

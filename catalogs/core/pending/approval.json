@@ -1,0 +1,13 @@
+{
+  "package": "@deepseek-ai/dsh",
+  "version": "0.2.2-rc.1",
+  "ns": "approval",
+  "en": {
+    "allow": "Allow",
+    "allowAlways": "Always allow"
+  },
+  "zh": {
+    "allow": "允许",
+    "allowAlways": "始终允许"
+  }
+}

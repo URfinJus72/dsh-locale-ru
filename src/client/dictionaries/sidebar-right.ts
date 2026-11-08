@@ -9,6 +9,9 @@ export const ns = 'sidebarRight'
 
 /** Russian dictionary. */
 export const dict: Record<string, string> = {
+  'menu.close': 'Закрыть',
+  'menu.closeOthers': 'Закрыть другие вкладки',
+  'menu.closeRight': 'Закрыть вкладки справа',
   'command.close': 'Закрыть текущую страницу или окно',
   'command.refresh': 'Обновить текущую страницу',
   'command.noRefresh': 'Эту страницу нельзя обновить',
@@ -42,5 +45,6 @@ export const dict: Record<string, string> = {
   'dock.drop.top': 'Разделить сверху',
   'dock.drop.bottom': 'Разделить снизу',
   'tab.guide.title': 'Начало',
+  'tab.guide.more': 'Больше инструментов',
   'tab.unavailable': 'Для этого типа содержимого пока нет способа просмотра.',
 }

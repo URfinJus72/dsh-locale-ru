@@ -1,0 +1,15 @@
+{
+  "package": "@deepseek-ai/dsh",
+  "version": "0.2.2-rc.1",
+  "ns": "subagent",
+  "en": {
+    "catalog.migrationRequired": "Migration required",
+    "mode.external": "External task",
+    "open.floatWindow": "Open in floating panel"
+  },
+  "zh": {
+    "catalog.migrationRequired": "需要迁移",
+    "mode.external": "外部任务",
+    "open.floatWindow": "在浮窗中打开"
+  }
+}

@@ -42,6 +42,7 @@ export const dict: Record<string, string> = {
   'terminal.signal': 'сигнал {signal}',
   'terminal.exitCode': 'код {code}',
   'terminal.noExitCode': 'нет кода выхода',
+  'terminal.commandLine': 'Командная строка {n}',
   'terminal.running': 'запущен',
   'terminal.failed': 'ошибка',
   'terminal.done': 'завершено',

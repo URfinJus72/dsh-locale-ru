@@ -1,6 +1,6 @@
 {
   "package": "@hyzyn/dsh-docker",
-  "version": "0.15.0",
+  "version": "0.16.1",
   "ns": "docker",
   "en": {
     "badge.diagCritical": "Critical",

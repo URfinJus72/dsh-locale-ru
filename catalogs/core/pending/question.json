@@ -1,0 +1,13 @@
+{
+  "package": "@deepseek-ai/dsh",
+  "version": "0.2.2-rc.1",
+  "ns": "question",
+  "en": {
+    "text.collapse": "Collapse",
+    "text.expand": "Expand"
+  },
+  "zh": {
+    "text.collapse": "收起",
+    "text.expand": "展开"
+  }
+}

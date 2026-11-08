@@ -1,0 +1,35 @@
+{
+  "package": "@deepseek-ai/dsh",
+  "version": "0.2.2-rc.1",
+  "ns": "voice-input",
+  "en": {
+    "de": "German",
+    "deviceMissing": "Microphone unavailable. Choose another input device.",
+    "deviceUnavailable": "Unavailable",
+    "es": "Spanish",
+    "fr": "French",
+    "inputDevice": "Input device",
+    "inputLevel": "Microphone input level",
+    "pt": "Portuguese",
+    "ru": "Russian",
+    "systemMicrophone": "System default",
+    "systemMicrophoneNamed": "System default ({name})",
+    "unnamedMicrophone": "Microphone {number}",
+    "unnamedSelectedMicrophone": "Microphone"
+  },
+  "zh": {
+    "de": "德语",
+    "deviceMissing": "麦克风不可用，请选择其他输入设备",
+    "deviceUnavailable": "不可用",
+    "es": "西班牙语",
+    "fr": "法语",
+    "inputDevice": "输入设备",
+    "inputLevel": "麦克风输入电平",
+    "pt": "葡萄牙语",
+    "ru": "俄语",
+    "systemMicrophone": "系统默认",
+    "systemMicrophoneNamed": "系统默认（{name}）",
+    "unnamedMicrophone": "麦克风 {number}",
+    "unnamedSelectedMicrophone": "麦克风"
+  }
+}

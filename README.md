@@ -156,10 +156,10 @@ dsh plugin --profile web add github:URfinJus72/dsh-locale-ru
 
 ### Замена upstream на форк
 
-Если `@absolutemikhail/dsh-locale-ru` уже установлен из upstream, замените источник в `package.json` профиля:
+Если `dsh-locale-ru` уже установлен из upstream, замените источник в `package.json` профиля:
 
 ```json
-"@absolutemikhail/dsh-locale-ru": "github:URfinJus72/dsh-locale-ru"
+"dsh-locale-ru": "github:URfinJus72/dsh-locale-ru"
 ```
 
 и выполните `pnpm install` в каталоге профиля (`~/.dsh/profiles/web`).
@@ -185,7 +185,7 @@ dsh --profile web --dump-config
 
 ```yaml
 - id: locale-ru
-  name: '@absolutemikhail/dsh-locale-ru'
+  name: 'dsh-locale-ru'
   config:
     prompt: ru
 ```
@@ -260,8 +260,8 @@ DSH_HARNESS_ROOT=/path/to/deepseek-harness pnpm run check:harness:gaps
 ## Обновление и удаление
 
 ```sh
-dsh plugin --profile web update @absolutemikhail/dsh-locale-ru
-dsh plugin --profile web remove @absolutemikhail/dsh-locale-ru
+dsh plugin --profile web update dsh-locale-ru
+dsh plugin --profile web remove dsh-locale-ru
 ```
 
 Для GitHub-установки можно закрепить конкретный тег:

@@ -21,7 +21,7 @@ import { join } from 'node:path'
 import test from 'node:test'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
-const PACKAGE_ID = '@absolutemikhail/dsh-locale-ru'
+const PACKAGE_ID = 'dsh-locale-ru'
 
 /** CJK characters, kana and fullwidth forms that must never appear in a ru value. */
 const CJK = /[\u2E80-\u2EFF\u3000-\u303F\u3040-\u30FF\u3100-\u312F\u31A0-\u31BF\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF]/

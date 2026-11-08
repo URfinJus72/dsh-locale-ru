@@ -9,7 +9,7 @@ import { resolveHarnessRoot } from './harness-root.mjs'
 
 const execute = promisify(execFile)
 const REPOSITORY_ROOT = fileURLToPath(new URL('../', import.meta.url))
-const PACKAGE_ID = '@absolutemikhail/dsh-locale-ru'
+const PACKAGE_ID = 'dsh-locale-ru'
 
 async function run(command, args, options) {
   try {
@@ -64,7 +64,7 @@ try {
     cwd: harnessRoot,
     env: environment,
   })
-  assert.match(config.stdout, /id: locale-ru\s+name: '@absolutemikhail\/dsh-locale-ru'/)
+  assert.match(config.stdout, /id: locale-ru\s+name: 'dsh-locale-ru'/)
   console.log(`installed ${PACKAGE_ID} into an isolated real web profile and composed its locale-ru row`)
 } finally {
   await rm(temporary, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 })

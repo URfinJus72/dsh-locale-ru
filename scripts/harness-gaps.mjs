@@ -33,7 +33,7 @@ import { build } from 'esbuild'
 import { DIRECTORY_BROWSER_KEYS, NAMESPACES } from './harness-namespaces.mjs'
 import { resolveHarnessRoot } from './harness-root.mjs'
 
-const PACKAGE_ID = '@absolutemikhail/dsh-locale-ru'
+const PACKAGE_ID = 'dsh-locale-ru'
 const REPOSITORY_ROOT = fileURLToPath(new URL('../', import.meta.url))
 const PLURAL_SUFFIX = /\.(zero|one|two|few|many|other)$/
 

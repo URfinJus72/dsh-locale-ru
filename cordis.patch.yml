@@ -5,7 +5,7 @@
 
 - insert:
     - id: locale-ru
-      name: '@absolutemikhail/dsh-locale-ru'
+      name: 'dsh-locale-ru'
       config:
         prompt: ru
 

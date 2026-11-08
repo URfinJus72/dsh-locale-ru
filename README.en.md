@@ -160,11 +160,11 @@ Restart the profile, open **Settings → General settings → Language**, and se
 
 ### Replacing the upstream package
 
-If `@absolutemikhail/dsh-locale-ru` is already installed from upstream, change the source in the profile's
+If `dsh-locale-ru` is already installed from upstream, change the source in the profile's
 `package.json`:
 
 ```json
-"@absolutemikhail/dsh-locale-ru": "github:URfinJus72/dsh-locale-ru"
+"dsh-locale-ru": "github:URfinJus72/dsh-locale-ru"
 ```
 
 then run `pnpm install` in the profile directory (`~/.dsh/profiles/web`).
@@ -190,7 +190,7 @@ The assembled configuration should contain:
 
 ```yaml
 - id: locale-ru
-  name: '@absolutemikhail/dsh-locale-ru'
+  name: 'dsh-locale-ru'
   config:
     prompt: ru
 ```
@@ -264,8 +264,8 @@ Harness or plugin update it is regenerated and shows the exact scope of work.
 ## Update or remove
 
 ```sh
-dsh plugin --profile web update @absolutemikhail/dsh-locale-ru
-dsh plugin --profile web remove @absolutemikhail/dsh-locale-ru
+dsh plugin --profile web update dsh-locale-ru
+dsh plugin --profile web remove dsh-locale-ru
 ```
 
 You can pin a GitHub installation to a release tag:

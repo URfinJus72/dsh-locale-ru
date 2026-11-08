@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFile, readdir } from 'node:fs/promises'
 
-const PACKAGE_ID = '@absolutemikhail/dsh-locale-ru'
+const PACKAGE_ID = 'dsh-locale-ru'
 /** Core namespaces the pack has always owned; the plugin packs add more. */
 const CORE_DICTIONARIES = 48
 /** Namespaces declared by the plugin dictionaries that exist in this checkout. */
@@ -68,6 +68,6 @@ assert.equal(typeof host.apply, 'function')
 host.apply()
 
 const patch = await readFile(new URL('../cordis.patch.yml', import.meta.url), 'utf8')
-assert.match(patch, /id: locale-ru\s+name: '@absolutemikhail\/dsh-locale-ru'/)
+assert.match(patch, /id: locale-ru\s+name: 'dsh-locale-ru'/)
 
 console.log(`verified ${dictionaries.size} Russian dictionaries and the installable bundle layer`)

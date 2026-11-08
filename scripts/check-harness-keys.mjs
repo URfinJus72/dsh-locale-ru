@@ -7,7 +7,7 @@ import { build } from 'esbuild'
 import { DIRECTORY_BROWSER_KEYS, NAMESPACES } from './harness-namespaces.mjs'
 import { resolveHarnessRoot } from './harness-root.mjs'
 
-const PACKAGE_ID = '@absolutemikhail/dsh-locale-ru'
+const PACKAGE_ID = 'dsh-locale-ru'
 const PLURAL_EXTENSION = /^(.*)\.(zero|two|few|many)$/
 
 function placeholders(template) {

@@ -1,6 +1,6 @@
 {
-  "name": "@absolutemikhail/dsh-locale-ru",
-  "version": "0.3.1",
+  "name": "dsh-locale-ru",
+  "version": "0.4.0",
   "description": "Russian localization for DeepSeek Harness: web UI, plugin UI (@hyzyn/*, dshmarket, dsh-agent-teams) and agent-facing tool descriptions",
   "type": "module",
   "main": "lib/index.js",
@@ -52,17 +52,17 @@
     "ru"
   ],
   "author": {
-    "name": "AbsoluteMikhail",
-    "url": "https://github.com/AbsoluteMikhail"
+    "name": "URfinJus72",
+    "url": "https://github.com/URfinJus72"
   },
   "license": "MIT",
-  "homepage": "https://github.com/AbsoluteMikhail/dsh-locale-ru#readme",
+  "homepage": "https://github.com/URfinJus72/dsh-locale-ru#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AbsoluteMikhail/dsh-locale-ru.git"
+    "url": "git+https://github.com/URfinJus72/dsh-locale-ru.git"
   },
   "bugs": {
-    "url": "https://github.com/AbsoluteMikhail/dsh-locale-ru/issues"
+    "url": "https://github.com/URfinJus72/dsh-locale-ru/issues"
   },
   "engines": {
     "node": "^22.19.0 || >=24.0.0"
@@ -70,5 +70,11 @@
   "packageManager": "pnpm@12.4.2",
   "devDependencies": {
     "esbuild": "^0.28.1"
-  }
+  },
+  "contributors": [
+    {
+      "name": "AbsoluteMikhail",
+      "url": "https://github.com/AbsoluteMikhail"
+    }
+  ]
 }

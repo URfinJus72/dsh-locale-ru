@@ -4,6 +4,34 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the package follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] — 2026-11-08
+
+Пакет переименован и перестал представляться пакетом постороннего автора. **Ломающее изменение
+для тех, кто ставит пакет по имени.**
+
+### Changed
+
+- Имя пакета: `@absolutemikhail/dsh-locale-ru` → **`dsh-locale-ru`** (без npm-scope). Прежнее имя
+  несло scope автора апстрима, хотя это форк; из-за расхождения имён менеджер плагинов однажды
+  выполнил `pnpm remove 'github:AbsoluteMikhail/dsh-locale-ru'` по устаревшему состоянию вкладки
+  и снёс пакет из профиля — команда упала (exit 1), но манифест и `node_modules` уже очистились.
+- `package.json`: `homepage`, `repository`, `bugs` указывали на репозиторий апстрима — теперь на
+  форк `URfinJus72/dsh-locale-ru`; `author` — мейнтейнер форка, апстрим сохранён в `contributors`;
+  атрибуция в `LICENSE` и `NOTICE` сохранена (требование MIT), в `NOTICE` добавлены сведения о форке.
+- Обновлены все внутренние ссылки на имя: `cordis.patch.yml` (запись `locale-ru`), `PACKAGE_ID`
+  в `scripts/{build,check-harness-keys,harness-gaps,smoke-install,test}.mjs`, `tests/plugins.client.spec.ts`,
+  `README.md`, `README.en.md`.
+
+### Migration
+
+Профиль: заменить ключ зависимости и запись в `bundles` на `dsh-locale-ru`, затем `pnpm install` и,
+после инсталляции, `node scripts/patch-plugin-cards.mjs --apply` (установка снова сносит патчи карточек).
+
+### Compatibility
+
+- DeepSeek Harness `0.2.2-rc.1`, `verified 68 Russian dictionaries against DeepSeek Harness 0.2.2-rc.1`.
+- Состав словарей и матрица плагинов не менялись относительно `0.3.1`.
+
 ## [0.3.1] — 2026-11-08
 
 Редакционная вычитка строк рынка плагинов и унификация терминологии.

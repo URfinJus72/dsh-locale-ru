@@ -4,6 +4,27 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the package follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] — 2026-11-08
+
+Редакционная вычитка строк рынка плагинов и унификация терминологии.
+
+### Fixed
+
+- `dsh-market`: `hostIncompatibleHeldButton` / `…ButtonUnknown` — «Ожидание» заменено на
+  «Приостановлено»: в интерфейсе это состояние отказа в запуске, а не приглашение подождать.
+- `dsh-market`: `hostIncompatibleHeldTarget` / `…TargetUnknown` — переписаны без кальки
+  «он всё ещё в периоде ожидания релиза»; сохранены плейсхолдеры `{version}`, `{window}`, `{hours}`.
+- `dsh-market`: `restoreSelfPinned` — убрана строчная буква в начале предложения и тяжёлая
+  конструкция «замена её в процессе восстановления заменит работающий рынок».
+- `dsh-market`: терминология унифицирована — четыре строки `setSelf*` использовали «магазин»
+  при 17 остальных вхождениях «рынок» (`setSelfConfirm`, `setSelfPurge`, `setSelfPurgeOff`).
+
+### Compatibility
+
+- DeepSeek Harness `0.2.2-rc.1`: `DSH_HARNESS_ROOT=… node scripts/check-harness-keys.mjs` —
+  зелёный, `verified 68 Russian dictionaries against DeepSeek Harness 0.2.2-rc.1`.
+- Состав словарей и матрица плагинов не менялись относительно `0.3.0`.
+
 ## [0.3.0] — 2026-11-08
 
 Ядро под Harness `0.2.2-rc.1` (тег `dsh-v0.2.2-rc.1`): 341 новый ключ, 61 устаревший, синхронизация
